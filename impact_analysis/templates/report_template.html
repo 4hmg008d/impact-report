@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Impact Analysis Report</title>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .chart-container { width: 100%; height: 500px; margin-bottom: 30px; }
+        .tab-container { margin-bottom: 20px; }
+        .tab-buttons { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 10px; }
+        .tab-button { padding: 10px 15px; border: 1px solid #ddd; background: #f5f5f5; cursor: pointer; border-radius: 4px; }
+        .tab-button.active { background: #007bff; color: white; border-color: #007bff; }
+        .tab-content { display: none; padding: 15px; border: 1px solid #ddd; border-radius: 4px; }
+        .tab-content.active { display: block; }
+        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .summary-stats { background: #f8f9fa; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Impact Analysis Report</h1>
+    
+    <div class="summary-stats">
+        <h3>Overall Summary</h3>
+        <p><strong>Total Comparison Items:</strong> {{ comparison_analysis|length }}</p>
+        {% for item_name, analysis_data in comparison_analysis.items() %}
+        <p><strong>{{ item_name }} Policies:</strong> {{ analysis_data.overall.total_policies }}</p>
+        {% endfor %}
+    </div>
+
+    <div class="tab-container">
+        <div class="tab-buttons">
+            {% for item_name in comparison_analysis.keys() %}
+            <button class="tab-button {% if loop.first %}active{% endif %}" data-tab="{{ item_name|replace(' ', '_')|replace(':', '_')|lower }}">{{ item_name }}</button>
+            {% endfor %}
+        </div>
+        
+        {% for item_name, analysis_data in comparison_analysis.items() %}
+        <div class="tab-content {% if loop.first %}active{% endif %}" id="{{ item_name|replace(' ', '_')|replace(':', '_')|lower }}-tab">
+            <h2>{{ item_name }} - Overall Difference Distribution</h2>
+            
+            <div class="summary-stats">
+                <h3>Overall Summary</h3>
+                <p><strong>Total Policies Analyzed:</strong> {{ analysis_data.overall.total_policies }}</p>
+            </div>
+            
+            <div id="{{ item_name|replace(' ', '_')|replace(':', '_')|lower }}-chart" class="chart-container"></div>
+            
+            <h3>Band Distribution</h3>
+            <table>
+                <tr>
+                    <th>Band</th>
+                    <th>Count</th>
+                    <th>Percentage</th>
+                </tr>
+                {% for row in analysis_data.overall.band_counts %}
+                <tr>
+                    <td>{{ row.band }}</td>
+                    <td>{{ row.Count }}</td>
+                    <td>{{ "%.2f"|format(row.Percentage) }}%</td>
+                </tr>
+                {% endfor %}
+            </table>
+            
+            {% if analysis_data.segments_available %}
+            <h3>Segment Analysis</h3>
+            <div class="segment-tabs">
+                <div class="segment-tab-buttons">
+                    {% for segment_name, segment_data in analysis_data.segment_tabs.items() %}
+                    <button class="segment-tab-button {% if loop.first %}active{% endif %}" data-segment="{{ segment_name|replace(' ', '_')|replace(':', '_')|lower }}">{{ segment_name }}</button>
+                    {% endfor %}
+                </div>
+                
+                {% for segment_name, segment_data in analysis_data.segment_tabs.items() %}
+                <div class="segment-tab-content {% if loop.first %}active{% endif %}" id="{{ segment_name|replace(' ', '_')|replace(':', '_')|lower }}-segment">
+                    <h4>{{ segment_name }}</h4>
+                    <div class="summary-stats">
+                        <p><strong>Policies in Segment:</strong> {{ segment_data.total_policies }}</p>
+                    </div>
+                    <div id="{{ segment_name|replace(' ', '_')|replace(':', '_')|lower }}-chart" class="chart-container"></div>
+                    <h5>Band Distribution</h5>
+                    <table>
+                        <tr>
+                            <th>Band</th>
+                            <th>Count</th>
+                            <th>Percentage</th>
+                        </tr>
+                        {% for item in segment_data.chart_data %}
+                        <tr>
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.y }}</td>
+                            <td>{{ item.percentage }}%</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        // Tab switching functionality
+        $(document).ready(function() {
+            $('.tab-button').click(function() {
+                $('.tab-button').removeClass('active');
+                $('.tab-content').removeClass('active');
+                $(this).addClass('active');
+                $('#' + $(this).data('tab') + '-tab').addClass('active');
+            });
+            
+            // Segment tab switching
+            $('.segment-tab-button').click(function() {
+                var segmentContainer = $(this).closest('.segment-tabs');
+                segmentContainer.find('.segment-tab-button').removeClass('active');
+                segmentContainer.find('.segment-tab-content').removeClass('active');
+                $(this).addClass('active');
+                $('#' + $(this).data('segment') + '-segment').addClass('active');
+            });
+        });
+
+        // Charts generated using Highcharts Python
+        {% for item_name, item_charts in charts_html.items() %}
+        // {{ item_name }} charts
+        {% for chart_type, chart_js in item_charts.items() %}
+        {{ chart_js|safe }}
+        {% endfor %}
+        {% endfor %}
+    </script>
+</body>
+</html>

@@ -1,0 +1,259 @@
+2025-09-27 11:31:42,952 - __main__ - INFO - Starting impact analysis process
+2025-09-27 11:31:43,015 - __main__ - INFO - Loaded mapping data from mapping_column
+2025-09-27 11:31:43,015 - __main__ - INFO - ID Column: POLICY_NUMBER
+2025-09-27 11:31:43,015 - __main__ - INFO - Benchmark: impact_analysis/input/file1.xlsx -> PREMIUM_AMOUNT
+2025-09-27 11:31:43,016 - __main__ - INFO - Target: impact_analysis/input/file2.xlsx -> PREMIUM_AMOUNT
+2025-09-27 11:31:43,020 - __main__ - INFO - Loaded segments: ['BUILDING_CONSTRUCTION_TYPE']
+2025-09-27 11:31:43,024 - __main__ - INFO - Loaded band data with 21 bands
+2025-09-27 11:31:43,032 - __main__ - INFO - Loaded 47 rows from impact_analysis/input/file1.xlsx
+2025-09-27 11:31:43,032 - __main__ - INFO - After deduplication: 20 rows
+2025-09-27 11:31:43,040 - __main__ - INFO - Loaded 47 rows from impact_analysis/input/file2.xlsx
+2025-09-27 11:31:43,041 - __main__ - INFO - After deduplication: 20 rows
+2025-09-27 11:31:43,042 - __main__ - INFO - Merged data: 20 rows
+2025-09-27 11:31:43,043 - __main__ - INFO - Calculated differences for PREMIUM_AMOUNT
+2025-09-27 11:31:43,044 - __main__ - INFO - Saved merged data to: impact_analysis/output/merged_data.csv
+2025-09-27 11:31:43,044 - __main__ - WARNING - No valid segment columns found for aggregation
+2025-09-27 11:31:43,053 - __main__ - INFO - Mapped differences to 9 bands
+2025-09-27 11:31:43,053 - __main__ - INFO - Saved band distribution to: impact_analysis/output/band_distribution.csv
+2025-09-27 11:31:43,054 - __main__ - INFO - Generated Highcharts HTML report: impact_analysis/output/impact_analysis_report.html
+2025-09-27 11:31:43,054 - __main__ - INFO - Impact analysis completed successfully
+2025-09-27 11:32:55,770 - __main__ - INFO - Starting impact analysis process
+2025-09-27 11:32:55,833 - __main__ - INFO - Loaded mapping data from mapping_column
+2025-09-27 11:32:55,833 - __main__ - INFO - ID Column: POLICY_NUMBER
+2025-09-27 11:32:55,833 - __main__ - INFO - Benchmark: impact_analysis/input/file1.xlsx -> PREMIUM_AMOUNT
+2025-09-27 11:32:55,833 - __main__ - INFO - Target: impact_analysis/input/file2.xlsx -> PREMIUM_AMOUNT
+2025-09-27 11:32:55,838 - __main__ - INFO - Loaded segments: ['BUILDING_CONSTRUCTION_TYPE']
+2025-09-27 11:32:55,842 - __main__ - INFO - Loaded band data with 21 bands
+2025-09-27 11:32:55,849 - __main__ - INFO - Loaded 47 rows from impact_analysis/input/file1.xlsx
+2025-09-27 11:32:55,850 - __main__ - INFO - After deduplication: 20 rows
+2025-09-27 11:32:55,857 - __main__ - INFO - Loaded 47 rows from impact_analysis/input/file2.xlsx
+2025-09-27 11:32:55,858 - __main__ - INFO - After deduplication: 20 rows
+2025-09-27 11:32:55,859 - __main__ - INFO - Merged data: 20 rows
+2025-09-27 11:32:55,860 - __main__ - INFO - Calculated differences for PREMIUM_AMOUNT
+2025-09-27 11:32:55,861 - __main__ - INFO - Saved merged data to: impact_analysis/output/merged_data.csv
+2025-09-27 11:32:55,863 - __main__ - INFO - Aggregated data by 1 segments
+2025-09-27 11:32:55,864 - __main__ - INFO - Saved aggregated data to: impact_analysis/output/aggregated_by_segments.csv
+2025-09-27 11:32:55,871 - __main__ - INFO - Mapped differences to 9 bands
+2025-09-27 11:32:55,872 - __main__ - INFO - Saved band distribution to: impact_analysis/output/band_distribution.csv
+2025-09-27 11:32:55,873 - __main__ - INFO - Generated Highcharts HTML report: impact_analysis/output/impact_analysis_report.html
+2025-09-27 11:32:55,873 - __main__ - INFO - Impact analysis completed successfully
+2025-09-27 20:48:47,166 - src.impact_analysis.main - INFO - Starting modular impact analysis process
+2025-09-27 20:48:47,166 - src.impact_analysis.main - ERROR - Modular impact analysis failed: Failed to load mapping file: required package 'fastexcel' not found.
+Please install using the command `pip install fastexcel`.
+2025-09-27 20:49:12,283 - src.impact_analysis.main - INFO - Starting modular impact analysis process
+2025-09-27 20:49:12,285 - src.impact_analysis.main - ERROR - Modular impact analysis failed: Failed to load mapping file: No module named 'pyarrow'
+2025-09-27 20:49:41,073 - src.impact_analysis.main - INFO - Starting modular impact analysis process
+2025-09-27 20:49:41,208 - src.impact_analysis.main - INFO - Saved merged data to: impact_analysis/output/merged_data.csv
+2025-09-27 20:49:41,209 - src.impact_analysis.main - INFO - Saved band distribution to: impact_analysis/output/band_distribution.csv
+2025-09-27 20:49:41,209 - src.impact_analysis.main - INFO - Modular impact analysis completed successfully
+2025-09-27 20:50:38,619 - src.impact_analysis.main - INFO - Starting modular impact analysis process
+2025-09-27 20:50:38,759 - src.impact_analysis.main - INFO - Saved merged data to: impact_analysis/output/merged_data.csv
+2025-09-27 20:50:38,759 - src.impact_analysis.main - INFO - Saved band distribution to: impact_analysis/output/band_distribution.csv
+2025-09-27 20:50:38,760 - src.impact_analysis.main - INFO - Modular impact analysis completed successfully
+2025-09-27 23:01:59,183 - src.impact_analysis.main - INFO - Starting modular impact analysis process
+2025-09-27 23:01:59,300 - src.impact_analysis.main - INFO - Saved merged data to: impact_analysis/output/merged_data.csv
+2025-09-27 23:01:59,301 - src.impact_analysis.main - INFO - Saved band distribution to: impact_analysis/output/band_distribution.csv
+2025-09-27 23:01:59,301 - src.impact_analysis.main - INFO - Modular impact analysis completed successfully
+2025-09-27 23:06:00,902 - src.impact_analysis.main - INFO - Starting modular impact analysis process
+2025-09-27 23:06:01,014 - src.impact_analysis.main - INFO - Saved merged data to: impact_analysis/output/merged_data.csv
+2025-09-27 23:06:01,015 - src.impact_analysis.main - INFO - Saved band distribution to: impact_analysis/output/band_distribution.csv
+2025-09-27 23:06:01,015 - src.impact_analysis.main - INFO - Modular impact analysis completed successfully
+2025-09-27 23:07:01,861 - src.impact_analysis.main - INFO - Starting modular impact analysis process
+2025-09-27 23:07:01,979 - src.impact_analysis.main - INFO - Saved merged data to: impact_analysis/output/merged_data.csv
+2025-09-27 23:07:01,980 - src.impact_analysis.main - INFO - Saved band distribution to: impact_analysis/output/band_distribution.csv
+2025-09-27 23:07:01,980 - src.impact_analysis.main - INFO - Modular impact analysis completed successfully
+2025-09-27 23:07:23,343 - src.impact_analysis.main - INFO - Starting modular impact analysis process
+2025-09-27 23:07:23,464 - src.impact_analysis.main - INFO - Saved merged data to: impact_analysis/output/merged_data.csv
+2025-09-27 23:07:23,465 - src.impact_analysis.main - INFO - Saved band distribution to: impact_analysis/output/band_distribution.csv
+2025-09-27 23:07:23,465 - src.impact_analysis.main - INFO - Modular impact analysis completed successfully
+2025-09-28 00:04:53,193 - src.impact_analysis.main - INFO - Starting modular impact analysis process
+2025-09-28 00:04:53,314 - src.impact_analysis.main - INFO - Saved merged data to: impact_analysis/output/merged_data.csv
+2025-09-28 00:04:53,315 - src.impact_analysis.main - INFO - Saved band distribution to: impact_analysis/output/band_distribution.csv
+2025-09-28 00:04:53,563 - src.impact_analysis.main - INFO - Modular impact analysis completed successfully
+2025-09-28 00:26:22,657 - src.impact_analysis.main - INFO - Starting modular impact analysis process
+2025-09-28 00:26:22,787 - src.impact_analysis.main - INFO - Saved merged data to: impact_analysis/output/merged_data.csv
+2025-09-28 00:26:22,788 - src.impact_analysis.main - INFO - Saved band distribution to: impact_analysis/output/band_distribution.csv
+2025-09-28 00:26:23,014 - src.impact_analysis.main - INFO - Modular impact analysis completed successfully
+2025-09-28 23:49:52,858 - src.impact_analysis.main - INFO - Starting modular impact analysis process
+2025-09-28 23:49:53,034 - src.impact_analysis.main - INFO - Saved merged data to: impact_analysis/output/merged_data.csv
+2025-09-28 23:49:53,035 - src.impact_analysis.main - INFO - Saved band distribution to: impact_analysis/output/band_distribution.csv
+2025-09-28 23:49:53,261 - src.impact_analysis.main - INFO - Modular impact analysis completed successfully
+2025-09-30 19:18:57,973 - __main__ - INFO - Starting modular impact analysis process
+2025-09-30 19:18:58,164 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-09-30 19:18:58,165 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-09-30 19:18:58,396 - __main__ - INFO - Modular impact analysis completed successfully
+2025-09-30 20:49:56,032 - __main__ - INFO - Starting modular impact analysis process
+2025-09-30 20:49:56,182 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-09-30 20:49:56,183 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-09-30 20:49:56,425 - __main__ - INFO - Modular impact analysis completed successfully
+2025-09-30 20:54:20,614 - __main__ - INFO - Starting modular impact analysis process
+2025-09-30 20:54:20,761 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-09-30 20:54:20,762 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-09-30 20:54:20,839 - __main__ - INFO - Modular impact analysis completed successfully
+2025-09-30 21:00:26,255 - __main__ - INFO - Starting modular impact analysis process
+2025-09-30 21:00:26,401 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-09-30 21:00:26,402 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-09-30 21:00:26,490 - __main__ - INFO - Modular impact analysis completed successfully
+2025-09-30 21:03:24,616 - __main__ - INFO - Starting modular impact analysis process
+2025-09-30 21:03:24,770 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-09-30 21:03:24,771 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-09-30 21:03:24,855 - __main__ - INFO - Modular impact analysis completed successfully
+2025-09-30 21:04:26,347 - __main__ - INFO - Starting modular impact analysis process
+2025-09-30 21:04:26,488 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-09-30 21:04:26,489 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-09-30 21:04:26,577 - __main__ - INFO - Modular impact analysis completed successfully
+2025-09-30 21:11:37,098 - __main__ - INFO - Starting modular impact analysis process
+2025-09-30 21:11:37,242 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-09-30 21:11:37,243 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-09-30 21:11:37,326 - __main__ - INFO - Modular impact analysis completed successfully
+2025-09-30 21:13:36,633 - __main__ - INFO - Starting modular impact analysis process
+2025-09-30 21:13:36,795 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-09-30 21:13:36,796 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-09-30 21:13:36,880 - __main__ - INFO - Modular impact analysis completed successfully
+2025-09-30 21:13:51,048 - __main__ - INFO - Starting modular impact analysis process
+2025-09-30 21:13:51,183 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-09-30 21:13:51,184 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-09-30 21:13:51,264 - __main__ - INFO - Modular impact analysis completed successfully
+2025-09-30 21:14:47,626 - __main__ - INFO - Starting modular impact analysis process
+2025-09-30 21:14:47,763 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-09-30 21:14:47,764 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-09-30 21:14:47,845 - __main__ - INFO - Modular impact analysis completed successfully
+2025-09-30 21:17:50,233 - __main__ - INFO - Starting modular impact analysis process
+2025-09-30 21:17:50,376 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-09-30 21:17:50,377 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-09-30 21:17:50,462 - __main__ - INFO - Modular impact analysis completed successfully
+2025-09-30 21:25:18,567 - __main__ - INFO - Starting modular impact analysis process
+2025-09-30 21:25:18,704 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-09-30 21:25:18,705 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-09-30 21:25:18,786 - __main__ - INFO - Modular impact analysis completed successfully
+2025-09-30 21:31:42,031 - __main__ - INFO - Starting modular impact analysis process
+2025-09-30 21:31:42,171 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-09-30 21:31:42,171 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-09-30 21:31:42,181 - __main__ - ERROR - Modular impact analysis failed: value (-45) less than minimum (0)
+2025-09-30 21:33:41,208 - __main__ - INFO - Starting modular impact analysis process
+2025-09-30 21:33:41,345 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-09-30 21:33:41,346 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-09-30 21:33:41,491 - __main__ - INFO - Modular impact analysis completed successfully
+2025-09-30 21:37:58,856 - __main__ - INFO - Starting modular impact analysis process
+2025-09-30 21:37:58,995 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-09-30 21:37:58,996 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-09-30 21:37:59,005 - __main__ - ERROR - Modular impact analysis failed: 'count'
+2025-09-30 21:41:50,229 - __main__ - INFO - Starting modular impact analysis process
+2025-09-30 21:41:50,366 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-09-30 21:41:50,367 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-09-30 21:41:50,379 - __main__ - ERROR - Modular impact analysis failed: create_series_obj expects a value whose type is a SeriesBase or coercable to it, but received: list
+2025-09-30 21:42:21,637 - __main__ - INFO - Starting modular impact analysis process
+2025-09-30 21:42:21,774 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-09-30 21:42:21,774 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-09-30 21:42:21,922 - __main__ - INFO - Modular impact analysis completed successfully
+2025-09-30 21:48:16,028 - __main__ - INFO - Starting modular impact analysis process
+2025-09-30 21:48:16,306 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-09-30 21:48:16,307 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-09-30 21:53:09,437 - __main__ - INFO - Modular impact analysis completed successfully
+2025-09-30 21:56:32,281 - __main__ - INFO - Starting modular impact analysis process
+2025-09-30 21:56:32,420 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-09-30 21:56:32,421 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-09-30 21:56:32,566 - __main__ - INFO - Modular impact analysis completed successfully
+2025-09-30 21:57:09,368 - __main__ - INFO - Starting modular impact analysis process
+2025-09-30 21:57:09,639 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-09-30 21:57:09,640 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-09-30 22:00:55,911 - __main__ - INFO - Starting modular impact analysis process
+2025-09-30 22:00:56,048 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-09-30 22:00:56,049 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-09-30 22:00:56,194 - __main__ - INFO - Modular impact analysis completed successfully
+2025-09-30 22:05:42,670 - __main__ - INFO - Starting modular impact analysis process
+2025-09-30 22:05:42,806 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-09-30 22:05:42,807 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-09-30 22:05:42,956 - __main__ - INFO - Modular impact analysis completed successfully
+2025-09-30 22:07:26,777 - __main__ - INFO - Starting modular impact analysis process
+2025-09-30 22:07:26,914 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-09-30 22:07:26,915 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-09-30 22:07:27,078 - __main__ - INFO - Modular impact analysis completed successfully
+2025-09-30 22:08:50,111 - __main__ - INFO - Starting modular impact analysis process
+2025-09-30 22:08:50,248 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-09-30 22:08:50,249 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-09-30 22:08:50,394 - __main__ - INFO - Modular impact analysis completed successfully
+2025-09-30 22:09:33,231 - __main__ - INFO - Starting modular impact analysis process
+2025-09-30 22:09:33,368 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-09-30 22:09:33,369 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-09-30 22:09:33,527 - __main__ - INFO - Modular impact analysis completed successfully
+2025-09-30 22:10:22,362 - __main__ - INFO - Starting modular impact analysis process
+2025-09-30 22:10:22,500 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-09-30 22:10:22,500 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-09-30 22:10:22,665 - __main__ - INFO - Modular impact analysis completed successfully
+2025-09-30 22:13:28,490 - __main__ - INFO - Starting modular impact analysis process
+2025-09-30 22:13:28,628 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-09-30 22:13:28,629 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-09-30 22:13:28,738 - __main__ - INFO - Modular impact analysis completed successfully
+2025-09-30 22:14:30,568 - __main__ - INFO - Starting modular impact analysis process
+2025-09-30 22:14:30,708 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-09-30 22:14:30,708 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-09-30 22:14:30,866 - __main__ - INFO - Modular impact analysis completed successfully
+2025-09-30 22:22:56,591 - __main__ - INFO - Starting modular impact analysis process
+2025-09-30 22:22:56,729 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-09-30 22:22:56,730 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-09-30 22:22:56,743 - __main__ - ERROR - Modular impact analysis failed: Expecting value: line 2 column 21 (char 21)
+2025-09-30 22:23:36,004 - __main__ - INFO - Starting modular impact analysis process
+2025-09-30 22:23:36,145 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-09-30 22:23:36,146 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-09-30 22:23:36,291 - __main__ - INFO - Modular impact analysis completed successfully
+2025-09-30 22:23:56,984 - __main__ - INFO - Starting modular impact analysis process
+2025-09-30 22:23:57,119 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-09-30 22:23:57,120 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-09-30 22:23:57,134 - __main__ - ERROR - Modular impact analysis failed: Expecting value: line 2 column 21 (char 21)
+2025-09-30 22:33:55,480 - __main__ - INFO - Starting modular impact analysis process
+2025-09-30 22:33:55,618 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-09-30 22:33:55,618 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-09-30 22:33:55,767 - __main__ - INFO - Modular impact analysis completed successfully
+2025-09-30 22:35:57,752 - __main__ - INFO - Starting modular impact analysis process
+2025-09-30 22:35:57,896 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-09-30 22:35:57,897 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-09-30 22:35:58,032 - __main__ - INFO - Modular impact analysis completed successfully
+2025-09-30 22:42:40,601 - __main__ - INFO - Starting modular impact analysis process
+2025-09-30 22:42:40,743 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-09-30 22:42:40,744 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-09-30 22:42:40,854 - __main__ - INFO - Modular impact analysis completed successfully
+2025-09-30 22:48:47,871 - __main__ - INFO - Starting modular impact analysis process
+2025-09-30 22:48:48,023 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-09-30 22:48:48,024 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-09-30 22:48:48,119 - __main__ - INFO - Modular impact analysis completed successfully
+2025-09-30 23:05:13,362 - __main__ - INFO - Starting modular impact analysis process
+2025-09-30 23:05:13,537 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-09-30 23:05:13,539 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-09-30 23:05:13,745 - __main__ - ERROR - Modular impact analysis failed: 'overall_data' is undefined
+2025-09-30 23:07:23,501 - __main__ - INFO - Starting modular impact analysis process
+2025-09-30 23:07:23,672 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-09-30 23:07:23,673 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-09-30 23:07:23,877 - __main__ - INFO - Modular impact analysis completed successfully
+2025-09-30 23:08:55,223 - __main__ - INFO - Starting modular impact analysis process
+2025-09-30 23:08:55,392 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-09-30 23:08:55,392 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-09-30 23:08:55,397 - __main__ - ERROR - Modular impact analysis failed: 'NoneType' object has no attribute 'replace'
+2025-09-30 23:09:40,869 - __main__ - INFO - Starting modular impact analysis process
+2025-09-30 23:09:41,043 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-09-30 23:09:41,044 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-09-30 23:09:41,242 - __main__ - INFO - Modular impact analysis completed successfully
+2025-09-30 23:15:47,858 - __main__ - INFO - Starting modular impact analysis process
+2025-09-30 23:15:48,037 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-09-30 23:15:48,038 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-09-30 23:15:48,247 - __main__ - INFO - Modular impact analysis completed successfully
+2025-09-30 23:16:52,686 - __main__ - INFO - Starting modular impact analysis process
+2025-09-30 23:16:52,877 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-09-30 23:16:52,878 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-09-30 23:16:53,071 - __main__ - INFO - Modular impact analysis completed successfully
+2025-09-30 23:18:03,003 - __main__ - INFO - Starting modular impact analysis process
+2025-09-30 23:18:03,173 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-09-30 23:18:03,174 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-09-30 23:18:03,347 - __main__ - INFO - Modular impact analysis completed successfully
+2025-09-30 23:20:57,901 - __main__ - INFO - Starting modular impact analysis process
+2025-09-30 23:20:58,085 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-09-30 23:20:58,085 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-09-30 23:20:58,276 - __main__ - INFO - Modular impact analysis completed successfully
+2025-09-30 23:21:55,360 - __main__ - INFO - Starting modular impact analysis process
+2025-09-30 23:21:55,537 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-09-30 23:21:55,538 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-09-30 23:21:55,726 - __main__ - INFO - Modular impact analysis completed successfully
+2025-09-30 23:22:41,532 - __main__ - INFO - Starting modular impact analysis process
+2025-09-30 23:22:41,707 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-09-30 23:22:41,708 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-09-30 23:22:41,903 - __main__ - INFO - Modular impact analysis completed successfully

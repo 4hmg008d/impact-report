@@ -1,0 +1,9 @@
+pandas
+openpyxl
+PyYAML
+xlrd
+dash
+dash-bootstrap-components
+plotly
+highcharts-core
+highcharts-maps

@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Impact Analysis Report</title>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .chart-container { width: 100%; height: 500px; margin-bottom: 30px; }
+        .tab-container { margin-bottom: 20px; }
+        .tab-buttons { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 10px; }
+        .tab-button { padding: 10px 15px; border: 1px solid #ddd; background: #f5f5f5; cursor: pointer; border-radius: 4px; }
+        .tab-button.active { background: #007bff; color: white; border-color: #007bff; }
+        .tab-content { display: none; padding: 15px; border: 1px solid #ddd; border-radius: 4px; }
+        .tab-content.active { display: block; }
+        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .summary-stats { background: #f8f9fa; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Impact Analysis Report</h1>
+    
+    <div class="summary-stats">
+        <h3>Overall Summary</h3>
+        <p><strong>Total Comparison Items:</strong> 2</p>
+        
+        <p><strong>Property Policies:</strong> 20</p>
+        
+        <p><strong>BI Policies:</strong> 20</p>
+        
+    </div>
+
+    <div class="tab-container">
+        <div class="tab-buttons">
+            
+            <button class="tab-button active" data-tab="property">Property</button>
+            
+            <button class="tab-button " data-tab="bi">BI</button>
+            
+        </div>
+        
+        
+        <div class="tab-content active" id="property-tab">
+            <h2>Property - Overall Difference Distribution</h2>
+            
+            <div class="summary-stats">
+                <h3>Overall Summary</h3>
+                <p><strong>Total Policies Analyzed:</strong> 20</p>
+            </div>
+            
+            <div id="property-chart" class="chart-container"></div>
+            
+            <h3>Band Distribution</h3>
+            <table>
+                <tr>
+                    <th>Band</th>
+                    <th>Count</th>
+                    <th>Percentage</th>
+                </tr>
+                
+                <tr>
+                    <td>1.[-100%, -90%]</td>
+                    <td>1</td>
+                    <td>5.00%</td>
+                </tr>
+                
+                <tr>
+                    <td>5.[-60%, -50%]</td>
+                    <td>1</td>
+                    <td>5.00%</td>
+                </tr>
+                
+                <tr>
+                    <td>6.[-50%, -40%]</td>
+                    <td>2</td>
+                    <td>10.00%</td>
+                </tr>
+                
+                <tr>
+                    <td>9.[-20%, -10%]</td>
+                    <td>2</td>
+                    <td>10.00%</td>
+                </tr>
+                
+                <tr>
+                    <td>10.[-10%, 0%]</td>
+                    <td>3</td>
+                    <td>15.00%</td>
+                </tr>
+                
+                <tr>
+                    <td>11.[0%, 10%]</td>
+                    <td>7</td>
+                    <td>35.00%</td>
+                </tr>
+                
+                <tr>
+                    <td>12.[10%, 20%]</td>
+                    <td>1</td>
+                    <td>5.00%</td>
+                </tr>
+                
+                <tr>
+                    <td>16.[50%, 100%]</td>
+                    <td>2</td>
+                    <td>10.00%</td>
+                </tr>
+                
+                <tr>
+                    <td>17.[100%, 200%]</td>
+                    <td>1</td>
+                    <td>5.00%</td>
+                </tr>
+                
+            </table>
+            
+            
+        </div>
+        
+        <div class="tab-content " id="bi-tab">
+            <h2>BI - Overall Difference Distribution</h2>
+            
+            <div class="summary-stats">
+                <h3>Overall Summary</h3>
+                <p><strong>Total Policies Analyzed:</strong> 20</p>
+            </div>
+            
+            <div id="bi-chart" class="chart-container"></div>
+            
+            <h3>Band Distribution</h3>
+            <table>
+                <tr>
+                    <th>Band</th>
+                    <th>Count</th>
+                    <th>Percentage</th>
+                </tr>
+                
+                <tr>
+                    <td>11.[0%, 10%]</td>
+                    <td>2</td>
+                    <td>10.00%</td>
+                </tr>
+                
+                <tr>
+                    <td>12.[10%, 20%]</td>
+                    <td>2</td>
+                    <td>10.00%</td>
+                </tr>
+                
+                <tr>
+                    <td>14.[30%, 40%]</td>
+                    <td>4</td>
+                    <td>20.00%</td>
+                </tr>
+                
+                <tr>
+                    <td>16.[50%, 100%]</td>
+                    <td>5</td>
+                    <td>25.00%</td>
+                </tr>
+                
+                <tr>
+                    <td>17.[100%, 200%]</td>
+                    <td>3</td>
+                    <td>15.00%</td>
+                </tr>
+                
+                <tr>
+                    <td>18.[200%, 500%]</td>
+                    <td>2</td>
+                    <td>10.00%</td>
+                </tr>
+                
+                <tr>
+                    <td>19.[500%, 1000%]</td>
+                    <td>1</td>
+                    <td>5.00%</td>
+                </tr>
+                
+                <tr>
+                    <td>20.[1000%, 99900%]</td>
+                    <td>1</td>
+                    <td>5.00%</td>
+                </tr>
+                
+            </table>
+            
+            
+        </div>
+        
+    </div>
+
+    <script>
+        // Tab switching functionality
+        $(document).ready(function() {
+            $('.tab-button').click(function() {
+                $('.tab-button').removeClass('active');
+                $('.tab-content').removeClass('active');
+                $(this).addClass('active');
+                $('#' + $(this).data('tab') + '-tab').addClass('active');
+            });
+            
+            // Segment tab switching
+            $('.segment-tab-button').click(function() {
+                var segmentContainer = $(this).closest('.segment-tabs');
+                segmentContainer.find('.segment-tab-button').removeClass('active');
+                segmentContainer.find('.segment-tab-content').removeClass('active');
+                $(this).addClass('active');
+                $('#' + $(this).data('segment') + '-segment').addClass('active');
+            });
+        });
+
+        // Charts generated using Highcharts Python
+        
+        // Property charts
+        
+        document.addEventListener('DOMContentLoaded', function() {
+Highcharts.chart('property-chart',
+{
+  chart: {
+  renderTo: 'property-chart',
+  type: 'column'
+},
+  plotOptions: {
+  column: {
+  borderWidth: 0,
+  pointPadding: 0.2,
+  dataLabels: {
+  enabled: true,
+  format: '{y:.1f}%'
+},
+  type: 'column'
+}
+},
+  series: [{
+  data: [{
+  y: 5.0,
+  custom: {
+  'count': 1
+},
+  name: '1.[-100%, -90%]'
+},
+{
+  y: 5.0,
+  custom: {
+  'count': 1
+},
+  name: '5.[-60%, -50%]'
+},
+{
+  y: 10.0,
+  custom: {
+  'count': 2
+},
+  name: '6.[-50%, -40%]'
+},
+{
+  y: 10.0,
+  custom: {
+  'count': 2
+},
+  name: '9.[-20%, -10%]'
+},
+{
+  y: 15.0,
+  custom: {
+  'count': 3
+},
+  name: '10.[-10%, 0%]'
+},
+{
+  y: 35.0,
+  custom: {
+  'count': 7
+},
+  name: '11.[0%, 10%]'
+},
+{
+  y: 5.0,
+  custom: {
+  'count': 1
+},
+  name: '12.[10%, 20%]'
+},
+{
+  y: 10.0,
+  custom: {
+  'count': 2
+},
+  name: '16.[50%, 100%]'
+},
+{
+  y: 5.0,
+  custom: {
+  'count': 1
+},
+  name: '17.[100%, 200%]'
+}],
+  name: 'Policy Proportion',
+  colorByPoint: true,
+  type: 'column'
+}],
+  title: {
+  text: 'Property - Overall Difference Distribution'
+},
+  tooltip: {
+  headerFormat: '<span style="font-size:10px">{point.key}</span><br/>',
+  pointFormat: 'Count: <b>{point.custom.count}</b>',
+  shared: false,
+  useHTML: true
+},
+  xAxis: {
+  categories: ['1.[-100%, -90%]',
+'5.[-60%, -50%]',
+'6.[-50%, -40%]',
+'9.[-20%, -10%]',
+'10.[-10%, 0%]',
+'11.[0%, 10%]',
+'12.[10%, 20%]',
+'16.[50%, 100%]',
+'17.[100%, 200%]'],
+  labels: {
+  rotation: 315,
+  style: {'fontSize': '11px', 'fontFamily': 'Verdana, sans-serif'}
+},
+  title: {
+  text: 'Difference Bands'
+},
+  type: 'category'
+},
+  yAxis: {
+  max: 100,
+  min: 0,
+  title: {
+  text: 'Proportion of Policies (%)'
+}
+}
+},
+);
+});
+        
+        
+        // BI charts
+        
+        document.addEventListener('DOMContentLoaded', function() {
+Highcharts.chart('bi-chart',
+{
+  chart: {
+  renderTo: 'bi-chart',
+  type: 'column'
+},
+  plotOptions: {
+  column: {
+  borderWidth: 0,
+  pointPadding: 0.2,
+  dataLabels: {
+  enabled: true,
+  format: '{y:.1f}%'
+},
+  type: 'column'
+}
+},
+  series: [{
+  data: [{
+  y: 10.0,
+  custom: {
+  'count': 2
+},
+  name: '11.[0%, 10%]'
+},
+{
+  y: 10.0,
+  custom: {
+  'count': 2
+},
+  name: '12.[10%, 20%]'
+},
+{
+  y: 20.0,
+  custom: {
+  'count': 4
+},
+  name: '14.[30%, 40%]'
+},
+{
+  y: 25.0,
+  custom: {
+  'count': 5
+},
+  name: '16.[50%, 100%]'
+},
+{
+  y: 15.0,
+  custom: {
+  'count': 3
+},
+  name: '17.[100%, 200%]'
+},
+{
+  y: 10.0,
+  custom: {
+  'count': 2
+},
+  name: '18.[200%, 500%]'
+},
+{
+  y: 5.0,
+  custom: {
+  'count': 1
+},
+  name: '19.[500%, 1000%]'
+},
+{
+  y: 5.0,
+  custom: {
+  'count': 1
+},
+  name: '20.[1000%, 99900%]'
+}],
+  name: 'Policy Proportion',
+  colorByPoint: true,
+  type: 'column'
+}],
+  title: {
+  text: 'BI - Overall Difference Distribution'
+},
+  tooltip: {
+  headerFormat: '<span style="font-size:10px">{point.key}</span><br/>',
+  pointFormat: 'Count: <b>{point.custom.count}</b>',
+  shared: false,
+  useHTML: true
+},
+  xAxis: {
+  categories: ['11.[0%, 10%]',
+'12.[10%, 20%]',
+'14.[30%, 40%]',
+'16.[50%, 100%]',
+'17.[100%, 200%]',
+'18.[200%, 500%]',
+'19.[500%, 1000%]',
+'20.[1000%, 99900%]'],
+  labels: {
+  rotation: 315,
+  style: {'fontSize': '11px', 'fontFamily': 'Verdana, sans-serif'}
+},
+  title: {
+  text: 'Difference Bands'
+},
+  type: 'category'
+},
+  yAxis: {
+  max: 100,
+  min: 0,
+  title: {
+  text: 'Proportion of Policies (%)'
+}
+}
+},
+);
+});
+        
+        
+    </script>
+</body>
+</html>
