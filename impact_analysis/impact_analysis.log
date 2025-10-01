@@ -257,3 +257,16 @@ Please install using the command `pip install fastexcel`.
 2025-09-30 23:22:41,707 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
 2025-09-30 23:22:41,708 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
 2025-09-30 23:22:41,903 - __main__ - INFO - Modular impact analysis completed successfully
+2025-10-01 19:43:37,191 - __main__ - INFO - Starting modular impact analysis process
+2025-10-01 19:43:37,280 - __main__ - ERROR - Modular impact analysis failed: Failed to load file /home/leyang/Desktop/data-conversion/impact_analysis/data/input/file2.xlsx: [Errno 2] No such file or directory: '/home/leyang/Desktop/data-conversion/impact_analysis/data/input/file2.xlsx'
+2025-10-01 19:44:49,136 - __main__ - INFO - Starting modular impact analysis process
+2025-10-01 19:44:49,254 - __main__ - ERROR - Modular impact analysis failed: 'file1_PREMIUM_AMOUNT_Property'
+2025-10-01 19:45:41,067 - __main__ - INFO - Starting modular impact analysis process
+2025-10-01 19:45:41,178 - __main__ - ERROR - Modular impact analysis failed: 'file1_PREMIUM_AMOUNT_Property'
+2025-10-01 19:46:22,628 - __main__ - INFO - Starting modular impact analysis process
+2025-10-01 19:46:22,739 - __main__ - ERROR - Modular impact analysis failed: 'file1_PREMIUM_AMOUNT_Property'
+2025-10-01 19:47:19,700 - __main__ - INFO - Starting modular impact analysis process
+2025-10-01 19:47:19,811 - __main__ - ERROR - Modular impact analysis failed: 'file1_PREMIUM_AMOUNT_Property'
+2025-10-01 19:48:26,867 - __main__ - INFO - Starting modular impact analysis process
+2025-10-01 19:48:27,011 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-10-01 19:48:27,125 - __main__ - INFO - Modular impact analysis completed successfully
