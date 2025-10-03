@@ -163,14 +163,26 @@ class ImpactChartGenerator:
         )
         return chart.to_js_literal()
     
-    def generate_segment_chart_html(self, segment_data: Dict, segment_name: str) -> str:
+    def generate_step_chart_html(self, step_data: Dict, title: str, chart_id: str) -> str:
+        """Generate HTML for step distribution chart"""
+        band_order = self._get_band_order()
+        chart = self.create_bar_chart(
+            step_data['chart_data'],
+            title,
+            chart_id,
+            band_order
+        )
+        return chart.to_js_literal()
+
+    def generate_segment_chart_html(self, segment_data: Dict, segment_name: str, chart_id: str = None) -> str:
         """Generate HTML for segment distribution chart"""
-        tab_id = segment_name.replace(' ', '_').replace(':', '_').lower()
+        if chart_id is None:
+            chart_id = f"{segment_name.replace(' ', '_').replace(':', '_').lower()}-chart"
         band_order = self._get_band_order()
         chart = self.create_bar_chart(
             segment_data['chart_data'],
             f'{segment_name} - Difference Distribution',
-            f'{tab_id}-chart',
+            chart_id,
             band_order
         )
         return chart.to_js_literal()
@@ -183,16 +195,17 @@ class ImpactChartGenerator:
         if 'steps' in analysis_data:
             for step, step_data in analysis_data['steps'].items():
                 step_name = step_data['step_name']
-                chart_key = f"step_{step}_{step_name.replace(' ', '_')}"
+                # Create chart ID that matches the template: {item_name}-step-{step}-chart
+                chart_id = f"{item_name.replace(' ', '_').replace(':', '_').lower()}-step-{step}-chart"
                 
                 # Generate chart for this step
-                charts_html[chart_key] = self.generate_overall_chart_html(step_data, f"{item_name} - {step_name}")
+                charts_html[f"step_{step}"] = self.generate_step_chart_html(step_data, f"{item_name} - {step_name}", chart_id)
                 
                 # Generate segment charts for this step if available
                 if 'segment_tabs' in step_data:
                     for segment_name, segment_data in step_data['segment_tabs'].items():
-                        segment_key = f"{chart_key}_{segment_name}"
-                        charts_html[segment_key] = self.generate_segment_chart_html(segment_data, f"{step_name} - {segment_name}")
+                        segment_chart_id = f"{item_name.replace(' ', '_').replace(':', '_').lower()}-step-{step}-{segment_name.replace(' ', '_').lower()}-chart"
+                        charts_html[f"step_{step}_{segment_name}"] = self.generate_segment_chart_html(segment_data, f"{step_name} - {segment_name}", segment_chart_id)
         else:
             # Fallback to old structure for compatibility
             if 'overall' in analysis_data:

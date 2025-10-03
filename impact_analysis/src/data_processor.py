@@ -100,15 +100,44 @@ class DataProcessor:
         first_step_info = comparison_data[first_item]['steps'][1]
         first_file = first_step_info['file_path']
         
-        merged_df = file_data[first_file][[id_column]].copy()
+        # Start with ALL columns from the first file (not just ID column)
+        merged_df = file_data[first_file].copy()
+        print(f"Starting with all columns from first file: {first_file}")
+        print(f"Base columns: {list(merged_df.columns)}")
         
-        # Add all specified columns with new naming format
+        # Get list of columns that will be used for comparison (to rename them)
+        comparison_columns = set()
+        for item in items:
+            for step in comparison_data[item]['steps'].keys():
+                step_info = comparison_data[item]['steps'][step]
+                if step_info['file_path'] == first_file:
+                    comparison_columns.add(step_info['original_column'])
+        
+        # Rename comparison columns in the base dataframe
+        first_file_rename_map = {}
+        for item in items:
+            for step in sorted(comparison_data[item]['steps'].keys()):
+                step_info = comparison_data[item]['steps'][step]
+                if step_info['file_path'] == first_file:
+                    orig_col = step_info['original_column']
+                    new_col = step_info['renamed_column']
+                    first_file_rename_map[orig_col] = new_col
+        
+        if first_file_rename_map:
+            merged_df.rename(columns=first_file_rename_map, inplace=True)
+            print(f"Renamed columns in base file: {first_file_rename_map}")
+        
+        # Add comparison columns from other files
         for item in items:
             for step in sorted(comparison_data[item]['steps'].keys()):
                 step_info = comparison_data[item]['steps'][step]
                 file_path = step_info['file_path']
                 orig_col = step_info['original_column']
                 new_col = step_info['renamed_column']
+                
+                # Skip if this column is already in merged_df (from first file)
+                if new_col in merged_df.columns:
+                    continue
                 
                 if orig_col in file_data[file_path].columns:
                     # Merge this specific column
