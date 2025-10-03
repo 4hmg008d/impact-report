@@ -3,7 +3,7 @@ output:
   dir: "data/output"
 
 mapping:
-  file_path: "data/impact_analysis_config.xlsx"
+  file_path: "data/impact_analysis_config_new.xlsx"
   sheet_input: "mapping_column"
   sheet_segment: "segment"
   sheet_band: "band"

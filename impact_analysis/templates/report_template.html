@@ -8,104 +8,140 @@
         body { font-family: Arial, sans-serif; margin: 20px; }
         .chart-container { width: 100%; height: 500px; margin-bottom: 30px; }
         .tab-container { margin-bottom: 20px; }
+        .nested-tab-container { margin-bottom: 15px; }
         .tab-buttons { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 10px; }
-        .tab-button { padding: 10px 15px; border: 1px solid #ddd; background: #f5f5f5; cursor: pointer; border-radius: 4px; }
+        .nested-tab-buttons { display: flex; flex-wrap: wrap; gap: 3px; margin-bottom: 8px; }
+        .tab-button { padding: 10px 15px; border: 1px solid #ddd; background: #f5f5f5; cursor: pointer; border-radius: 4px; font-weight: bold; }
+        .nested-tab-button { padding: 8px 12px; border: 1px solid #ddd; background: #f9f9f9; cursor: pointer; border-radius: 3px; font-size: 0.9em; }
         .tab-button.active { background: #007bff; color: white; border-color: #007bff; }
+        .nested-tab-button.active { background: #28a745; color: white; border-color: #28a745; }
         .tab-content { display: none; padding: 15px; border: 1px solid #ddd; border-radius: 4px; }
+        .nested-tab-content { display: none; padding: 10px; border: 1px solid #e0e0e0; border-radius: 3px; margin-top: 10px; }
         .tab-content.active { display: block; }
+        .nested-tab-content.active { display: block; }
         table { border-collapse: collapse; width: 100%; margin-top: 20px; }
         th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
         th { background-color: #f2f2f2; }
         .summary-stats { background: #f8f9fa; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+        .summary-table { width: 100%; margin-bottom: 20px; }
+        .summary-table th { background-color: #e9ecef; }
+        .waterfall-container { margin-top: 20px; }
     </style>
 </head>
 <body>
     <h1>Impact Analysis Report</h1>
     
+    <!-- Summary Statistics Table -->
     <div class="summary-stats">
-        <h3>Overall Summary</h3>
-        <p><strong>Total Comparison Items:</strong> {{ comparison_analysis|length }}</p>
-        {% for item_name, analysis_data in comparison_analysis.items() %}
-        <p><strong>{{ item_name }} Policies:</strong> {{ analysis_data.overall.total_policies }}</p>
-        {% endfor %}
+        <h3>Summary Statistics - Total Values by Item and Step</h3>
+        <table class="summary-table">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    {% if comparison_analysis %}
+                        {% for step, step_name in comparison_analysis[comparison_analysis.keys()|first]['step_names'].items() %}
+                        <th>{{ step_name }}</th>
+                        {% endfor %}
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for item_name, analysis_data in comparison_analysis.items() %}
+                <tr>
+                    <td><strong>{{ item_name }}</strong></td>
+                    {% for step in analysis_data['step_names'].keys()|sort %}
+                        <td>
+                            {% if summary_stats and item_name in summary_stats and step in summary_stats[item_name] %}
+                                {{ summary_stats[item_name][step]['formatted'] }}
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 
-    <div class="tab-container">
-        <div class="tab-buttons">
-            {% for item_name in comparison_analysis.keys() %}
-            <button class="tab-button {% if loop.first %}active{% endif %}" data-tab="{{ item_name|replace(' ', '_')|replace(':', '_')|lower }}">{{ item_name }}</button>
+    <!-- Waterfall Charts Section -->
+    <div class="summary-stats">
+        <h3>Step Progression Waterfall Charts</h3>
+        <div class="tab-container">
+            <div class="tab-buttons">
+                {% for item_name in comparison_analysis.keys() %}
+                <button class="tab-button {% if loop.first %}active{% endif %}" data-tab="waterfall-{{ item_name|replace(' ', '_')|replace(':', '_')|lower }}">{{ item_name }} Waterfall</button>
+                {% endfor %}
+            </div>
+            
+            {% for item_name, analysis_data in comparison_analysis.items() %}
+            <div class="tab-content {% if loop.first %}active{% endif %}" id="waterfall-{{ item_name|replace(' ', '_')|replace(':', '_')|lower }}-tab">
+                <div id="waterfall-{{ item_name|replace(' ', '_')|replace(':', '_')|lower }}-chart" class="chart-container"></div>
+            </div>
             {% endfor %}
         </div>
-        
-        {% for item_name, analysis_data in comparison_analysis.items() %}
-        <div class="tab-content {% if loop.first %}active{% endif %}" id="{{ item_name|replace(' ', '_')|replace(':', '_')|lower }}-tab">
-            <h2>{{ item_name }} - Overall Difference Distribution</h2>
-            
-            <div class="summary-stats">
-                <h3>Overall Summary</h3>
-                <p><strong>Total Policies Analyzed:</strong> {{ analysis_data.overall.total_policies }}</p>
+    </div>
+
+    <!-- Distribution Charts - Nested Tabs -->
+    <div class="summary-stats">
+        <h3>Distribution Charts by Item and Step</h3>
+        <div class="tab-container">
+            <div class="tab-buttons">
+                {% for item_name in comparison_analysis.keys() %}
+                <button class="tab-button {% if loop.first %}active{% endif %}" data-tab="{{ item_name|replace(' ', '_')|replace(':', '_')|lower }}">{{ item_name }}</button>
+                {% endfor %}
             </div>
             
-            <div id="{{ item_name|replace(' ', '_')|replace(':', '_')|lower }}-chart" class="chart-container"></div>
-            
-            <h3>Band Distribution</h3>
-            <table>
-                <tr>
-                    <th>Band</th>
-                    <th>Count</th>
-                    <th>Percentage</th>
-                </tr>
-                {% for row in analysis_data.overall.band_counts %}
-                <tr>
-                    <td>{{ row.band }}</td>
-                    <td>{{ row.Count }}</td>
-                    <td>{{ "%.2f"|format(row.Percentage) }}%</td>
-                </tr>
-                {% endfor %}
-            </table>
-            
-            {% if analysis_data.segments_available %}
-            <h3>Segment Analysis</h3>
-            <div class="segment-tabs">
-                <div class="segment-tab-buttons">
-                    {% for segment_name, segment_data in analysis_data.segment_tabs.items() %}
-                    <button class="segment-tab-button {% if loop.first %}active{% endif %}" data-segment="{{ segment_name|replace(' ', '_')|replace(':', '_')|lower }}">{{ segment_name }}</button>
+            {% for item_name, analysis_data in comparison_analysis.items() %}
+            <div class="tab-content {% if loop.first %}active{% endif %}" id="{{ item_name|replace(' ', '_')|replace(':', '_')|lower }}-tab">
+                <h2>{{ item_name }} - Step-by-Step Analysis</h2>
+                
+                <div class="nested-tab-container">
+                    <div class="nested-tab-buttons">
+                        {% for step, step_data in analysis_data['steps'].items() %}
+                        <button class="nested-tab-button {% if loop.first %}active{% endif %}" data-tab="{{ item_name|replace(' ', '_')|replace(':', '_')|lower }}-step-{{ step }}">{{ step_data['step_name'] }}</button>
+                        {% endfor %}
+                    </div>
+                    
+                    {% for step, step_data in analysis_data['steps'].items() %}
+                    <div class="nested-tab-content {% if loop.first %}active{% endif %}" id="{{ item_name|replace(' ', '_')|replace(':', '_')|lower }}-step-{{ step }}-tab">
+                        <h3>{{ step_data['step_name'] }}</h3>
+                        <p><strong>Comparison:</strong> Step {{ step_data['from_step'] }} → Step {{ step_data['to_step'] }}</p>
+                        <p><strong>Total Policies:</strong> {{ step_data['total_policies'] }}</p>
+                        
+                        <div id="{{ item_name|replace(' ', '_')|replace(':', '_')|lower }}-step-{{ step }}-chart" class="chart-container"></div>
+                        
+                        <!-- Band Distribution Table -->
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Band</th>
+                                    <th>Count</th>
+                                    <th>Percentage</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for band_row in step_data['band_counts'] %}
+                                <tr>
+                                    <td>{{ band_row['band'] }}</td>
+                                    <td>{{ band_row['Count'] }}</td>
+                                    <td>{{ "%.2f"|format(band_row['Percentage']) }}%</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                     {% endfor %}
                 </div>
-                
-                {% for segment_name, segment_data in analysis_data.segment_tabs.items() %}
-                <div class="segment-tab-content {% if loop.first %}active{% endif %}" id="{{ segment_name|replace(' ', '_')|replace(':', '_')|lower }}-segment">
-                    <h4>{{ segment_name }}</h4>
-                    <div class="summary-stats">
-                        <p><strong>Policies in Segment:</strong> {{ segment_data.total_policies }}</p>
-                    </div>
-                    <div id="{{ segment_name|replace(' ', '_')|replace(':', '_')|lower }}-chart" class="chart-container"></div>
-                    <h5>Band Distribution</h5>
-                    <table>
-                        <tr>
-                            <th>Band</th>
-                            <th>Count</th>
-                            <th>Percentage</th>
-                        </tr>
-                        {% for item in segment_data.chart_data %}
-                        <tr>
-                            <td>{{ item.name }}</td>
-                            <td>{{ item.y }}</td>
-                            <td>{{ item.percentage }}%</td>
-                        </tr>
-                        {% endfor %}
-                    </table>
-                </div>
-                {% endfor %}
             </div>
-            {% endif %}
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
 
     <script>
         // Tab switching functionality
         $(document).ready(function() {
+            // Main tab switching
             $('.tab-button').click(function() {
                 $('.tab-button').removeClass('active');
                 $('.tab-content').removeClass('active');
@@ -113,14 +149,23 @@
                 $('#' + $(this).data('tab') + '-tab').addClass('active');
             });
             
-            // Segment tab switching
-            $('.segment-tab-button').click(function() {
-                var segmentContainer = $(this).closest('.segment-tabs');
-                segmentContainer.find('.segment-tab-button').removeClass('active');
-                segmentContainer.find('.segment-tab-content').removeClass('active');
+            // Nested tab switching
+            $('.nested-tab-button').click(function() {
+                var parentContainer = $(this).closest('.nested-tab-container');
+                parentContainer.find('.nested-tab-button').removeClass('active');
+                parentContainer.find('.nested-tab-content').removeClass('active');
                 $(this).addClass('active');
-                $('#' + $(this).data('segment') + '-segment').addClass('active');
+                $('#' + $(this).data('tab') + '-tab').addClass('active');
             });
+            
+            // Calculate and populate summary table values
+            {% for item_name, analysis_data in comparison_analysis.items() %}
+                {% for step, col_name in analysis_data['columns'].items() %}
+                // Calculate sum for {{ item_name }} step {{ step }}
+                // This would need actual data calculation - placeholder for now
+                $('#summary-{{ item_name }}-{{ step }}').text('Calculating...');
+                {% endfor %}
+            {% endfor %}
         });
 
         // Charts generated using Highcharts Python
@@ -129,6 +174,86 @@
         {% for chart_type, chart_js in item_charts.items() %}
         {{ chart_js|safe }}
         {% endfor %}
+        {% endfor %}
+        
+        // Waterfall charts with actual data
+        {% for item_name, analysis_data in comparison_analysis.items() %}
+        {% if summary_stats and item_name in summary_stats %}
+        {
+            const {{ item_name|replace(" ", "_")|replace(":", "_")|lower }}_data = [];
+            const steps = [{% for step in analysis_data['step_names'].keys()|sort %}{{ step }}{% if not loop.last %},{% endif %}{% endfor %}];
+            const stepNames = [{% for step in analysis_data['step_names'].keys()|sort %}'{{ analysis_data['step_names'][step] }}'{% if not loop.last %},{% endif %}{% endfor %}];
+            const values = [{% for step in analysis_data['step_names'].keys()|sort %}{{ summary_stats[item_name][step]['total'] if step in summary_stats[item_name] else 0 }}{% if not loop.last %},{% endif %}{% endfor %}];
+            
+            // Starting point
+            {{ item_name|replace(" ", "_")|replace(":", "_")|lower }}_data.push({
+                name: stepNames[0],
+                y: values[0],
+                isSum: false,
+                color: '#7cb5ec'
+            });
+            
+            // Intermediate changes
+            for (let i = 1; i < values.length; i++) {
+                const change = values[i] - values[i-1];
+                const percentChange = ((change / values[i-1]) * 100).toFixed(2);
+                {{ item_name|replace(" ", "_")|replace(":", "_")|lower }}_data.push({
+                    name: stepNames[i],
+                    y: change,
+                    isIntermediateSum: false,
+                    color: change >= 0 ? '#90ed7d' : '#f7a35c',
+                    dataLabels: {
+                        format: percentChange + '%'
+                    }
+                });
+            }
+            
+            // Final sum
+            {{ item_name|replace(" ", "_")|replace(":", "_")|lower }}_data.push({
+                name: 'Final',
+                isSum: true,
+                color: '#434348'
+            });
+            
+            Highcharts.chart('waterfall-{{ item_name|replace(" ", "_")|replace(":", "_")|lower }}-chart', {
+                chart: { type: 'waterfall' },
+                title: { text: '{{ item_name }} Step Progression Waterfall' },
+                xAxis: { type: 'category' },
+                yAxis: { 
+                    title: { text: 'Total Value' },
+                    labels: {
+                        formatter: function() {
+                            return this.value.toLocaleString();
+                        }
+                    }
+                },
+                tooltip: {
+                    pointFormat: '<b>{point.name}</b><br/>Value: {point.y:,.0f}<br/>Total: {point.stackTotal:,.0f}'
+                },
+                plotOptions: {
+                    waterfall: {
+                        dataLabels: {
+                            enabled: true,
+                            formatter: function() {
+                                if (this.point.isSum || this.point.isIntermediateSum) {
+                                    return this.point.stackTotal.toLocaleString();
+                                } else {
+                                    return ((this.point.y / this.point.stackTotal) * 100).toFixed(1) + '%';
+                                }
+                            },
+                            style: {
+                                fontWeight: 'bold'
+                            }
+                        }
+                    }
+                },
+                series: [{
+                    name: '{{ item_name }}',
+                    data: {{ item_name|replace(" ", "_")|replace(":", "_")|lower }}_data
+                }]
+            });
+        }
+        {% endif %}
         {% endfor %}
     </script>
 </body>

@@ -114,7 +114,7 @@ class ImpactAnalyzer:
         
         return tab_data
     
-    def generate_segment_analysis(self, merged_df: pd.DataFrame, comparison_data: Dict[str, str]) -> Dict:
+    def generate_segment_analysis(self, merged_df: pd.DataFrame, comparison_data: Dict[str, Dict]) -> Dict:
         """Generate comprehensive segment analysis for multiple comparison items using Pandas"""
         band_df = self.config_loader.load_band_data()
         segments = self.config_loader.load_segment_data()
@@ -122,32 +122,51 @@ class ImpactAnalyzer:
         # Process each comparison item
         comparison_analysis = {}
         
-        for item_name, diff_col in comparison_data.items():
-            print(f"Analyzing {item_name} with difference column: {diff_col}")
+        for item_name, item_data in comparison_data.items():
+            print(f"Analyzing {item_name} with data structure: {list(item_data.keys())}")
             
-            # Overall band distribution for this comparison
-            overall_band_counts = self.map_to_bands(merged_df, diff_col, band_df)
-            
-            # Segment-based tab data for this comparison
-            segment_tabs_data = self.create_segment_tabs_data(merged_df, diff_col, band_df, segments)
-            
-            # Prepare overall chart data for this comparison
-            overall_chart_data = []
-            for _, band_row in overall_band_counts.iterrows():
-                overall_chart_data.append({
-                    'name': band_row['band'],
-                    'y': int(band_row['Count']),
-                    'percentage': round(band_row['Percentage'], 2)
-                })
-            
+            # Initialize item analysis
             comparison_analysis[item_name] = {
-                'overall': {
-                    'chart_data': overall_chart_data,
-                    'total_policies': len(merged_df),
-                    'band_counts': overall_band_counts.to_dict('records')
-                },
-                'segment_tabs': segment_tabs_data,
-                'segments_available': len(segment_tabs_data) > 0
+                'steps': {},
+                'step_names': item_data['step_names'],
+                'segments_available': len(segments) > 0
             }
+            
+            # Process each difference column (step comparison)
+            if 'differences' in item_data:
+                for step, diff_info in item_data['differences'].items():
+                    diff_col = diff_info['diff_column']
+                    step_name = item_data['step_names'][step]
+                    
+                    print(f"Processing {item_name} step {step} ({step_name}) with column {diff_col}")
+                    
+                    # Band distribution for this step comparison
+                    step_band_counts = self.map_to_bands(merged_df, diff_col, band_df)
+                    
+                    # Segment-based tab data for this step comparison
+                    segment_tabs_data = self.create_segment_tabs_data(merged_df, diff_col, band_df, segments)
+                    
+                    # Prepare chart data for this step comparison
+                    step_chart_data = []
+                    for _, band_row in step_band_counts.iterrows():
+                        step_chart_data.append({
+                            'name': band_row['band'],
+                            'y': int(band_row['Count']),
+                            'percentage': round(band_row['Percentage'], 2)
+                        })
+                    
+                    comparison_analysis[item_name]['steps'][step] = {
+                        'step_name': step_name,
+                        'diff_column': diff_col,
+                        'chart_data': step_chart_data,
+                        'total_policies': len(merged_df),
+                        'band_counts': step_band_counts.to_dict('records'),
+                        'segment_tabs': segment_tabs_data,
+                        'from_step': diff_info['from_step'],
+                        'to_step': diff_info['to_step']
+                    }
+            
+            # Also store column information for summary calculations
+            comparison_analysis[item_name]['columns'] = item_data['columns']
         
         return comparison_analysis

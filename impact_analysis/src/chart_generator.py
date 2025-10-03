@@ -176,15 +176,31 @@ class ImpactChartGenerator:
         return chart.to_js_literal()
     
     def generate_all_charts_html(self, analysis_data: Dict, item_name: str = None) -> Dict[str, str]:
-        """Generate HTML for all charts in the analysis"""
+        """Generate HTML for all charts in the analysis with new nested structure"""
         charts_html = {}
         
-        # Overall chart
-        charts_html['overall'] = self.generate_overall_chart_html(analysis_data['overall'], item_name)
-        
-        # Segment charts
-        for segment_name, segment_data in analysis_data['segment_tabs'].items():
-            charts_html[segment_name] = self.generate_segment_chart_html(segment_data, segment_name)
+        # Handle new structure with steps
+        if 'steps' in analysis_data:
+            for step, step_data in analysis_data['steps'].items():
+                step_name = step_data['step_name']
+                chart_key = f"step_{step}_{step_name.replace(' ', '_')}"
+                
+                # Generate chart for this step
+                charts_html[chart_key] = self.generate_overall_chart_html(step_data, f"{item_name} - {step_name}")
+                
+                # Generate segment charts for this step if available
+                if 'segment_tabs' in step_data:
+                    for segment_name, segment_data in step_data['segment_tabs'].items():
+                        segment_key = f"{chart_key}_{segment_name}"
+                        charts_html[segment_key] = self.generate_segment_chart_html(segment_data, f"{step_name} - {segment_name}")
+        else:
+            # Fallback to old structure for compatibility
+            if 'overall' in analysis_data:
+                charts_html['overall'] = self.generate_overall_chart_html(analysis_data['overall'], item_name)
+            
+            if 'segment_tabs' in analysis_data:
+                for segment_name, segment_data in analysis_data['segment_tabs'].items():
+                    charts_html[segment_name] = self.generate_segment_chart_html(segment_data, segment_name)
         
         return charts_html
     

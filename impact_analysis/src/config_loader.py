@@ -13,6 +13,8 @@ class ConfigLoader:
     
     def __init__(self, config_path: str = "config_impact_analysis.yaml"):
         self.config_path = config_path
+        # Store the directory containing the config file for resolving relative paths
+        self.config_dir = os.path.dirname(os.path.abspath(config_path))
         self.config = self._load_config()
     
     def _load_config(self) -> Dict[str, Any]:
@@ -23,10 +25,17 @@ class ConfigLoader:
         with open(self.config_path, 'r') as file:
             return yaml.safe_load(file)
     
+    def _resolve_path(self, path: str) -> str:
+        """Resolve relative paths relative to the config file directory"""
+        if os.path.isabs(path):
+            return path
+        else:
+            return os.path.join(self.config_dir, path)
+    
     def load_mapping_data(self) -> pd.DataFrame:
         """Load mapping data from Excel file"""
         mapping_config = self.config['mapping']
-        mapping_file_path = mapping_config['file_path']
+        mapping_file_path = self._resolve_path(mapping_config['file_path'])
         sheet_name = mapping_config['sheet_input']
         
         try:
@@ -38,7 +47,7 @@ class ConfigLoader:
     def load_segment_data(self) -> List[str]:
         """Load segment columns from Excel file"""
         mapping_config = self.config['mapping']
-        mapping_file_path = mapping_config['file_path']
+        mapping_file_path = self._resolve_path(mapping_config['file_path'])
         sheet_name = mapping_config['sheet_segment']
         
         try:
@@ -51,7 +60,7 @@ class ConfigLoader:
     def load_band_data(self) -> pd.DataFrame:
         """Load band mapping from Excel file"""
         mapping_config = self.config['mapping']
-        mapping_file_path = mapping_config['file_path']
+        mapping_file_path = self._resolve_path(mapping_config['file_path'])
         sheet_name = mapping_config['sheet_band']
         
         try:
@@ -62,4 +71,4 @@ class ConfigLoader:
     
     def get_output_dir(self) -> str:
         """Get output directory from configuration"""
-        return self.config['output']['dir']
+        return self._resolve_path(self.config['output']['dir'])

@@ -27,7 +27,7 @@ class ReportVisualizer:
         # Add custom filters
         self.env.filters['format_percentage'] = lambda x: f"{x:.2f}%"
     
-    def generate_html_report(self, comparison_analysis: Dict, output_path: str) -> None:
+    def generate_html_report(self, comparison_analysis: Dict, output_path: str, merged_df=None) -> None:
         """Generate HTML report for multiple comparison items using Jinja2 template"""
         
         # Generate charts for all comparison items
@@ -35,11 +35,25 @@ class ReportVisualizer:
         for item_name, analysis_data in comparison_analysis.items():
             charts_html[item_name] = self.chart_generator.generate_all_charts_html(analysis_data, item_name)
         
+        # Calculate summary statistics if merged_df is provided
+        summary_stats = {}
+        if merged_df is not None:
+            for item_name, analysis_data in comparison_analysis.items():
+                summary_stats[item_name] = {}
+                for step, col_name in analysis_data['columns'].items():
+                    if col_name in merged_df.columns:
+                        total_value = merged_df[col_name].sum()
+                        summary_stats[item_name][step] = {
+                            'total': total_value,
+                            'formatted': f"{total_value:,.2f}"
+                        }
+        
         # Render template with all data
         template = self.env.get_template('report_template.html')
         rendered_html = template.render(
             comparison_analysis=comparison_analysis,
-            charts_html=charts_html
+            charts_html=charts_html,
+            summary_stats=summary_stats
         )
         
         # Save HTML file

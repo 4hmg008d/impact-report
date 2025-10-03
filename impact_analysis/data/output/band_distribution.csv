@@ -1,18 +1,14 @@
-Item,Band,Count,Percentage
-Property,"1.[-100%, -90%]",1,5.0
-Property,"5.[-60%, -50%]",1,5.0
-Property,"6.[-50%, -40%]",2,10.0
-Property,"9.[-20%, -10%]",2,10.0
-Property,"10.[-10%, 0%]",3,15.0
-Property,"11.[0%, 10%]",7,35.0
-Property,"12.[10%, 20%]",1,5.0
-Property,"16.[50%, 100%]",2,10.0
-Property,"17.[100%, 200%]",1,5.0
-BI,"11.[0%, 10%]",2,10.0
-BI,"12.[10%, 20%]",2,10.0
-BI,"14.[30%, 40%]",4,20.0
-BI,"16.[50%, 100%]",5,25.0
-BI,"17.[100%, 200%]",3,15.0
-BI,"18.[200%, 500%]",2,10.0
-BI,"19.[500%, 1000%]",1,5.0
-BI,"20.[1000%, 99900%]",1,5.0
+Item,Step,StepName,Band,Count,Percentage
+Property,2,Excess Change,"11.[0%, 10%]",1,5.0
+Property,2,Excess Change,"18.[200%, 500%]",1,5.0
+Property,2,Excess Change,"20.[1000%, 99900%]",6,30.0
+Property,2,Excess Change,"21.[99900%, Inf]",3,15.0
+Property,2,Excess Change,Out of Range,9,45.0
+Property,3,Inflation,"11.[0%, 10%]",20,100.0
+BI,2,Excess Change,"20.[1000%, 99900%]",3,15.0
+BI,2,Excess Change,"21.[99900%, Inf]",17,85.0
+BI,3,Inflation,"11.[0%, 10%]",1,5.0
+BI,3,Inflation,"18.[200%, 500%]",1,5.0
+BI,3,Inflation,"20.[1000%, 99900%]",6,30.0
+BI,3,Inflation,"21.[99900%, Inf]",3,15.0
+BI,3,Inflation,Out of Range,9,45.0

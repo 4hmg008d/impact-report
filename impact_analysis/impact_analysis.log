@@ -270,3 +270,45 @@ Please install using the command `pip install fastexcel`.
 2025-10-01 19:48:26,867 - __main__ - INFO - Starting modular impact analysis process
 2025-10-01 19:48:27,011 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
 2025-10-01 19:48:27,125 - __main__ - INFO - Modular impact analysis completed successfully
+2025-10-04 00:58:50,971 - __main__ - INFO - Starting modular impact analysis process
+2025-10-04 00:58:51,130 - __main__ - INFO - Saved merged data to: data/output/merged_data.csv
+2025-10-04 00:58:51,131 - __main__ - INFO - Saved band distribution to: data/output/band_distribution.csv
+2025-10-04 00:58:51,314 - __main__ - INFO - Modular impact analysis completed successfully
+2025-10-04 01:12:57,902 - impact_analysis.main - INFO - Starting modular impact analysis process
+2025-10-04 01:12:57,905 - impact_analysis.main - ERROR - Modular impact analysis failed: Failed to load mapping file: [Errno 2] No such file or directory: 'data/impact_analysis_config_new.xlsx'
+2025-10-04 01:14:05,409 - impact_analysis.main - INFO - Starting modular impact analysis process
+2025-10-04 01:14:05,470 - impact_analysis.main - ERROR - Modular impact analysis failed: Failed to load file data/input/file2.xlsx: [Errno 2] No such file or directory: 'data/input/file2.xlsx'
+2025-10-04 01:18:12,931 - impact_analysis.main - INFO - Starting modular impact analysis process
+2025-10-04 01:18:13,090 - impact_analysis.main - INFO - Saved merged data to: /home/leyang/Desktop/impact-report/impact_analysis/data/output/merged_data.csv
+2025-10-04 01:18:13,091 - impact_analysis.main - INFO - Saved band distribution to: /home/leyang/Desktop/impact-report/impact_analysis/data/output/band_distribution.csv
+2025-10-04 01:18:13,252 - impact_analysis.main - ERROR - Modular impact analysis failed: 'report_template.html' not found in search path: 'templates'
+2025-10-04 01:20:56,740 - impact_analysis.main - INFO - Starting modular impact analysis process
+2025-10-04 01:20:56,743 - impact_analysis.main - ERROR - Modular impact analysis failed: Failed to load mapping file: [Errno 2] No such file or directory: '/home/leyang/Desktop/impact-report/impact_analysis/impact_analysis/data/impact_analysis_config_new.xlsx'
+2025-10-04 01:21:51,162 - impact_analysis.main - INFO - Starting modular impact analysis process
+2025-10-04 01:21:51,165 - impact_analysis.main - ERROR - Modular impact analysis failed: Failed to load mapping file: [Errno 2] No such file or directory: '/home/leyang/Desktop/impact-report/impact_analysis/impact_analysis/data/impact_analysis_config_new.xlsx'
+2025-10-04 01:22:21,876 - impact_analysis.main - INFO - Starting modular impact analysis process
+2025-10-04 01:22:21,880 - impact_analysis.main - ERROR - Modular impact analysis failed: Failed to load mapping file: [Errno 2] No such file or directory: '/home/leyang/Desktop/impact-report/impact_analysis/impact_analysis/data/impact_analysis_config_new.xlsx'
+2025-10-04 01:22:54,742 - impact_analysis.main - INFO - Starting modular impact analysis process
+2025-10-04 01:22:54,801 - impact_analysis.main - ERROR - Modular impact analysis failed: Failed to load file impact_analysis/data/input/file1.xlsx: [Errno 2] No such file or directory: '/home/leyang/Desktop/impact-report/impact_analysis/impact_analysis/data/input/file1.xlsx'
+2025-10-04 01:24:13,187 - impact_analysis.main - INFO - Starting modular impact analysis process
+2025-10-04 01:24:13,354 - impact_analysis.main - INFO - Saved merged data to: /home/leyang/Desktop/impact-report/impact_analysis/data/output/merged_data.csv
+2025-10-04 01:24:13,355 - impact_analysis.main - INFO - Saved band distribution to: /home/leyang/Desktop/impact-report/impact_analysis/data/output/band_distribution.csv
+2025-10-04 01:24:13,523 - impact_analysis.main - ERROR - Modular impact analysis failed: 'report_template.html' not found in search path: 'templates'
+2025-10-04 01:25:15,605 - impact_analysis.main - INFO - Starting modular impact analysis process
+2025-10-04 01:25:15,765 - impact_analysis.main - INFO - Saved merged data to: /home/leyang/Desktop/impact-report/impact_analysis/data/output/merged_data.csv
+2025-10-04 01:25:15,766 - impact_analysis.main - INFO - Saved band distribution to: /home/leyang/Desktop/impact-report/impact_analysis/data/output/band_distribution.csv
+2025-10-04 01:25:15,945 - impact_analysis.main - INFO - Modular impact analysis completed successfully
+2025-10-04 01:53:38,501 - impact_analysis.main - INFO - Starting modular impact analysis process
+2025-10-04 01:53:38,662 - impact_analysis.main - ERROR - Modular impact analysis failed: Passing a dict as an indexer is not supported. Use a list instead.
+2025-10-04 01:54:58,241 - impact_analysis.main - INFO - Starting modular impact analysis process
+2025-10-04 01:54:58,450 - impact_analysis.main - INFO - Saved merged data to: /home/leyang/Desktop/impact-report/impact_analysis/data/output/merged_data.csv
+2025-10-04 01:54:58,450 - impact_analysis.main - INFO - Saved band distribution to: /home/leyang/Desktop/impact-report/impact_analysis/data/output/band_distribution.csv
+2025-10-04 01:54:58,451 - impact_analysis.main - ERROR - Modular impact analysis failed: 'overall'
+2025-10-04 01:58:02,217 - impact_analysis.main - INFO - Starting modular impact analysis process
+2025-10-04 01:58:02,435 - impact_analysis.main - INFO - Saved merged data to: /home/leyang/Desktop/impact-report/impact_analysis/data/output/merged_data.csv
+2025-10-04 01:58:02,436 - impact_analysis.main - INFO - Saved band distribution to: /home/leyang/Desktop/impact-report/impact_analysis/data/output/band_distribution.csv
+2025-10-04 01:58:02,710 - impact_analysis.main - INFO - Modular impact analysis completed successfully
+2025-10-04 02:00:13,752 - impact_analysis.main - INFO - Starting modular impact analysis process
+2025-10-04 02:00:13,968 - impact_analysis.main - INFO - Saved merged data to: /home/leyang/Desktop/impact-report/impact_analysis/data/output/merged_data.csv
+2025-10-04 02:00:13,969 - impact_analysis.main - INFO - Saved band distribution to: /home/leyang/Desktop/impact-report/impact_analysis/data/output/band_distribution.csv
+2025-10-04 02:00:14,234 - impact_analysis.main - INFO - Modular impact analysis completed successfully
