@@ -10,10 +10,10 @@ from typing import Dict
 # Add parent directory to path to import modules
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from src.config_loader import ConfigLoader
-from src.data_processor import DataProcessor
-from src.analyzer import ImpactAnalyzer
-from src.visualizer import ReportVisualizer
+from .src.config_loader import ConfigLoader
+from .src.data_processor import DataProcessor
+from .src.analyzer import ImpactAnalyzer
+from .src.visualizer import ReportVisualizer
 
 
 class ModularImpactAnalyzer:

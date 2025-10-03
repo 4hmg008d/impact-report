@@ -10,11 +10,11 @@ from typing import Dict
 # Add parent directory to path to import modules
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from src.config_loader import ConverterConfigLoader
-from src.mapping_processor import MappingProcessor
-from src.data_loader import DataLoader
-from src.data_converter import DataConverter
-from src.output_generator import OutputGenerator
+from .src.config_loader import ConverterConfigLoader
+from .src.mapping_processor import MappingProcessor
+from .src.data_loader import DataLoader
+from .src.data_converter import DataConverter
+from .src.output_generator import OutputGenerator
 
 
 class ModularDataConverter:

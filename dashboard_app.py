@@ -19,9 +19,9 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 # Import existing modules
 try:
-    from src.converter.main import ModularDataConverter
-    from src.impact_analysis.main import ModularImpactAnalyzer
-    from src.impact_analysis.chart_generator import generate_dash_compatible_charts
+    from converter.main import ModularDataConverter
+    from impact_analysis.main import ModularImpactAnalyzer
+    from impact_analysis.src.chart_generator import generate_dash_compatible_charts
     CONVERTER_AVAILABLE = True
 except ImportError as e:
     print(f"Warning: Could not import converter modules: {e}")
@@ -293,7 +293,7 @@ def load_config_file(config_path):
     [Input('url', 'pathname')]
 )
 def initialize_config_editor(pathname):
-    config = load_config_file('config_data_conversion.yaml')
+    config = load_config_file('converter/config_data_conversion.yaml')
     return yaml.dump(config, default_flow_style=False)
 
 @app.callback(
@@ -301,7 +301,7 @@ def initialize_config_editor(pathname):
     [Input('url', 'pathname')]
 )
 def initialize_impact_config_editor(pathname):
-    config = load_config_file('config_impact_analysis.yaml')
+    config = load_config_file('impact_analysis/config_impact_analysis.yaml')
     return yaml.dump(config, default_flow_style=False)
 
 # Configuration update callbacks
@@ -316,7 +316,7 @@ def update_configuration(n_clicks, config_text):
     
     try:
         config = yaml.safe_load(config_text)
-        with open('config_data_conversion.yaml', 'w') as file:
+        with open('converter/config_data_conversion.yaml', 'w') as file:
             yaml.dump(config, file, default_flow_style=False)
         
         return dbc.Alert("Configuration updated successfully!", color="success")
@@ -334,7 +334,7 @@ def update_impact_configuration(n_clicks, config_text):
     
     try:
         config = yaml.safe_load(config_text)
-        with open('config_impact_analysis.yaml', 'w') as file:
+        with open('impact_analysis/config_impact_analysis.yaml', 'w') as file:
             yaml.dump(config, file, default_flow_style=False)
         
         return dbc.Alert("Configuration updated successfully!", color="success")
@@ -388,7 +388,7 @@ def handle_conversion(start_clicks, clear_clicks, data_store, mapping_store):
         
         try:
             # Create converter instance
-            converter = ModularDataConverter('config_data_conversion.yaml')
+            converter = ModularDataConverter('converter/config_data_conversion.yaml')
             
             # Execute conversion
             success = converter.convert()
@@ -420,7 +420,7 @@ def run_impact_analysis(n_clicks):
     
     try:
         # Create analyzer instance
-        analyzer = ModularImpactAnalyzer('config_impact_analysis.yaml')
+        analyzer = ModularImpactAnalyzer('impact_analysis/config_impact_analysis.yaml')
         
         # Execute analysis
         success = analyzer.analyze()
@@ -442,7 +442,7 @@ def create_impact_results():
     """Create HTML for displaying impact analysis results with Highcharts"""
     try:
         # Load band distribution
-        band_df = pd.read_csv('impact_analysis/output/band_distribution.csv')
+        band_df = pd.read_csv('impact_analysis/data/output/band_distribution.csv')
         
         # Create simple table display
         table = dbc.Table.from_dataframe(band_df, striped=True, bordered=True, hover=True)
@@ -450,7 +450,7 @@ def create_impact_results():
         # Try to generate Highcharts charts if analysis data is available
         try:
             # Load merged data to generate chart data
-            merged_df = pd.read_csv('impact_analysis/output/merged_data.csv')
+            merged_df = pd.read_csv('impact_analysis/data/output/merged_data.csv')
             
             # Create simple chart data from band distribution
             chart_data = []
@@ -462,7 +462,7 @@ def create_impact_results():
                 })
             
             # Generate Highcharts chart configuration
-            if CONVERTER_AVAILABLE:
+            if CONVERTER_AVAILABLE and generate_dash_compatible_charts is not None:
                 charts_config = generate_dash_compatible_charts({
                     'overall': {
                         'chart_data': chart_data,
@@ -498,7 +498,7 @@ def create_impact_results():
                     chart_component,
                     html.H5("Band Distribution Table"),
                     table,
-                    html.P("Full report available at: impact_analysis/output/impact_analysis_report.html")
+                    html.P("Full report available at: impact_analysis/data/output/impact_analysis_report.html")
                 ])
         
         except Exception as chart_error:
@@ -507,13 +507,13 @@ def create_impact_results():
             return html.Div([
                 html.H4("Band Distribution Results"),
                 table,
-                html.P("Full report available at: impact_analysis/output/impact_analysis_report.html")
+                html.P("Full report available at: impact_analysis/data/output/impact_analysis_report.html")
             ])
         
         return html.Div([
             html.H4("Band Distribution Results"),
             table,
-            html.P("Full report available at: impact_analysis/output/impact_analysis_report.html")
+            html.P("Full report available at: impact_analysis/data/output/impact_analysis_report.html")
         ])
     except Exception as e:
         return html.Div(f"Could not load results: {str(e)}")
