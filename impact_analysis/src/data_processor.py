@@ -41,6 +41,7 @@ class DataProcessor:
         id_column = mapping_df.iloc[0]['ID']
         print(f"ID Column: {id_column}")
         
+        #TODO: put the requirement in md file and remove this check
         # Clean up file paths and load all files
         file_data = {}
         unique_files = set()
