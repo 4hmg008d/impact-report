@@ -30,12 +30,7 @@ class ReportVisualizer:
     def generate_html_report(self, comparison_analysis: Dict, output_path: str, merged_df=None) -> None:
         """Generate HTML report for multiple comparison items using Jinja2 template"""
         
-        # Generate charts for all comparison items
-        charts_html = {}
-        for item_name, analysis_data in comparison_analysis.items():
-            charts_html[item_name] = self.chart_generator.generate_all_charts_html(analysis_data, item_name)
-        
-        # Calculate summary statistics if merged_df is provided
+        # Calculate summary statistics first if merged_df is provided
         summary_stats = {}
         if merged_df is not None:
             for item_name, analysis_data in comparison_analysis.items():
@@ -47,6 +42,11 @@ class ReportVisualizer:
                             'total': total_value,
                             'formatted': f"{total_value:,.2f}"
                         }
+
+        # Generate charts for all comparison items (including waterfall charts)
+        charts_html = self.chart_generator.generate_all_charts_html(comparison_analysis, summary_stats)
+        
+
         
         # Render template with all data
         template = self.env.get_template('report_template.html')

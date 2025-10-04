@@ -170,10 +170,10 @@
 
         // Charts generated using Highcharts Python
         {% for item_name, item_charts in charts_html.items() %}
-        // {{ item_name }} charts
-        {% for chart_type, chart_js in item_charts.items() %}
-        {{ chart_js|safe }}
-        {% endfor %}
+            // {{ item_name }} charts
+            {% for chart_type, chart_js in item_charts.items() %}
+                {{ chart_js|safe }}
+            {% endfor %}
         {% endfor %}
         
         // Waterfall charts with actual data

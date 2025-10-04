@@ -393,9 +393,9 @@
 
         // Charts generated using Highcharts Python
         
-        // Property charts
-        
-        document.addEventListener('DOMContentLoaded', function() {
+            // Property charts
+            
+                document.addEventListener('DOMContentLoaded', function() {
 Highcharts.chart('property-step-2-chart',
 {
   chart: {
@@ -487,8 +487,8 @@ Highcharts.chart('property-step-2-chart',
 },
 );
 });
-        
-        document.addEventListener('DOMContentLoaded', function() {
+            
+                document.addEventListener('DOMContentLoaded', function() {
 Highcharts.chart('property-step-3-chart',
 {
   chart: {
@@ -548,11 +548,88 @@ Highcharts.chart('property-step-3-chart',
 },
 );
 });
+            
+                document.addEventListener('DOMContentLoaded', function() {
+Highcharts.chart('waterfall-property-chart',
+{
+  chart: {
+  renderTo: 'waterfall-property-chart',
+  type: 'waterfall'
+},
+  plotOptions: {
+  waterfall: {
+  dataLabels: {
+  enabled: true,
+  formatter: function() {
+
+                            if (this.point.isSum || this.point.isIntermediateSum) {
+                                return this.point.stackTotal.toLocaleString();
+                            } else {
+                                const percentage = ((this.point.y / this.point.stackTotal) * 100).toFixed(1);
+                                return percentage + '%';
+                            }
+                        },
+  style: {'fontWeight': 'bold'}
+},
+  type: 'waterfall'
+}
+},
+  series: [{
+  data: [{
+  isSum: false,
+  y: 417694.63999999996,
+  color: '#7cb5ec',
+  name: 'Start'
+},
+{
+  isIntermediateSum: false,
+  y: -896.9199999999837,
+  color: '#f7a35c',
+  name: 'Excess Change'
+},
+{
+  isIntermediateSum: false,
+  y: 0.0,
+  color: '#90ed7d',
+  name: 'Inflation'
+},
+{
+  isSum: true,
+  color: '#434348',
+  name: 'Final'
+}],
+  name: 'Property Step Progression Waterfall',
+  type: 'waterfall'
+}],
+  title: {
+  text: 'Property Step Progression Waterfall'
+},
+  tooltip: {
+  pointFormat: '<b>{point.name}</b><br/>Value: {point.y:,.0f}<br/>Total: {point.stackTotal:,.0f}'
+},
+  xAxis: {
+  title: {
+  text: 'Steps'
+},
+  type: 'category'
+},
+  yAxis: {
+  labels: {
+  formatter: function() {
+ return this.value.toLocaleString(); }
+},
+  title: {
+  text: 'Total Value'
+}
+}
+},
+);
+});
+            
         
-        
-        // BI charts
-        
-        document.addEventListener('DOMContentLoaded', function() {
+            // BI charts
+            
+                document.addEventListener('DOMContentLoaded', function() {
 Highcharts.chart('bi-step-2-chart',
 {
   chart: {
@@ -620,8 +697,8 @@ Highcharts.chart('bi-step-2-chart',
 },
 );
 });
-        
-        document.addEventListener('DOMContentLoaded', function() {
+            
+                document.addEventListener('DOMContentLoaded', function() {
 Highcharts.chart('bi-step-3-chart',
 {
   chart: {
@@ -713,7 +790,84 @@ Highcharts.chart('bi-step-3-chart',
 },
 );
 });
-        
+            
+                document.addEventListener('DOMContentLoaded', function() {
+Highcharts.chart('waterfall-bi-chart',
+{
+  chart: {
+  renderTo: 'waterfall-bi-chart',
+  type: 'waterfall'
+},
+  plotOptions: {
+  waterfall: {
+  dataLabels: {
+  enabled: true,
+  formatter: function() {
+
+                            if (this.point.isSum || this.point.isIntermediateSum) {
+                                return this.point.stackTotal.toLocaleString();
+                            } else {
+                                const percentage = ((this.point.y / this.point.stackTotal) * 100).toFixed(1);
+                                return percentage + '%';
+                            }
+                        },
+  style: {'fontWeight': 'bold'}
+},
+  type: 'waterfall'
+}
+},
+  series: [{
+  data: [{
+  isSum: false,
+  y: 213189.2259145,
+  color: '#7cb5ec',
+  name: 'Start'
+},
+{
+  isIntermediateSum: false,
+  y: 204505.41408549994,
+  color: '#90ed7d',
+  name: 'Excess Change'
+},
+{
+  isIntermediateSum: false,
+  y: -896.9199999999837,
+  color: '#f7a35c',
+  name: 'Inflation'
+},
+{
+  isSum: true,
+  color: '#434348',
+  name: 'Final'
+}],
+  name: 'BI Step Progression Waterfall',
+  type: 'waterfall'
+}],
+  title: {
+  text: 'BI Step Progression Waterfall'
+},
+  tooltip: {
+  pointFormat: '<b>{point.name}</b><br/>Value: {point.y:,.0f}<br/>Total: {point.stackTotal:,.0f}'
+},
+  xAxis: {
+  title: {
+  text: 'Steps'
+},
+  type: 'category'
+},
+  yAxis: {
+  labels: {
+  formatter: function() {
+ return this.value.toLocaleString(); }
+},
+  title: {
+  text: 'Total Value'
+}
+}
+},
+);
+});
+            
         
         
         // Waterfall charts with actual data
