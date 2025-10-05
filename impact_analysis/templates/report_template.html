@@ -121,7 +121,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for band_row in step_data['band_counts'] %}
+                                {% for band_row in step_data['summary_by_band'] %}
                                 <tr>
                                     <td>{{ band_row['band'] }}</td>
                                     <td>{{ band_row['Count'] }}</td>

@@ -467,9 +467,9 @@ def create_impact_results():
                     'overall': {
                         'chart_data': chart_data,
                         'total_policies': len(merged_df),
-                        'band_counts': band_df.to_dict('records')
+                        'summary_by_band': band_df.to_dict('records')
                     },
-                    'segment_tabs': {}
+                    'summary_by_band_segment': {}
                 })
                 
                 # Create Highcharts chart component

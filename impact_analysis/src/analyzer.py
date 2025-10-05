@@ -13,11 +13,11 @@ class ImpactAnalyzer:
     def __init__(self, config_loader):
         self.config_loader = config_loader
     
-    def map_to_bands(self, merged_df: pd.DataFrame, diff_col: str, band_df: pd.DataFrame) -> pd.DataFrame:
+    def map_to_bands(self, merged_df: pd.DataFrame, value_col: str, band_df: pd.DataFrame) -> pd.DataFrame:
         """Map differences to bands and count frequencies using Pandas"""
         # Create band mapping function
-        def map_to_band(diff_value):
-            if pd.isna(diff_value):
+        def map_to_band(value):
+            if pd.isna(value):
                 return "Missing"
             
             for _, band_row in band_df.iterrows():
@@ -26,28 +26,28 @@ class ImpactAnalyzer:
                 band_name = band_row['Name']
                 
                 # Handle infinity values
-                if pd.isna(to_val) and diff_value >= from_val:
+                if pd.isna(to_val) and value >= from_val:
                     return band_name
-                elif from_val <= diff_value < to_val:
+                elif from_val <= value < to_val:
                     return band_name
             
             return "Out of Range"
         
         # Apply band mapping using Pandas with .loc to avoid SettingWithCopyWarning
         merged_df = merged_df.copy()  # Create a copy to avoid modifying a slice
-        merged_df.loc[:, 'band'] = merged_df[diff_col].apply(map_to_band)
+        merged_df.loc[:, 'band'] = merged_df[value_col].apply(map_to_band)
         
         # Count frequencies by band using Pandas
         total_count = len(merged_df)
-        band_counts = merged_df.groupby('band').size().reset_index(name='Count')
-        band_counts['Percentage'] = (band_counts['Count'] / total_count * 100).round(2)
+        band_summary = merged_df.groupby('band').size().reset_index(name='Count')
+        band_summary['Percentage'] = (band_summary['Count'] / total_count * 100).round(2)
         
         # Get the original band order from configuration
         band_order = self.config_loader.load_band_data()['Name'].tolist()
         
-        # Reorder band_counts to match the original band order
+        # Reorder band_summary to match the original band order
         # Create a mapping from band name to row data
-        band_map = {row['band']: row for _, row in band_counts.iterrows()}
+        band_map = {row['band']: row for _, row in band_summary.iterrows()}
         
         # Create ordered list of bands that exist in the data
         ordered_bands = []
@@ -56,15 +56,15 @@ class ImpactAnalyzer:
                 ordered_bands.append(band_map[band_name])
         
         # Add any remaining bands that weren't in the original order but have data
-        for band_name in band_counts['band']:
+        for band_name in band_summary['band']:
             if band_name not in band_order and band_name not in [b['band'] for b in ordered_bands]:
                 ordered_bands.append(band_map[band_name])
         
         # Convert back to DataFrame
-        band_counts_ordered = pd.DataFrame(ordered_bands)
+        band_summary_ordered = pd.DataFrame(ordered_bands)
         
-        print(f"Mapped differences to {len(band_counts_ordered)} bands")
-        return band_counts_ordered
+        print(f"Mapped differences to {len(band_summary_ordered)} bands")
+        return band_summary_ordered
     
     def get_segment_values(self, merged_df: pd.DataFrame, segment_col: str) -> List[str]:
         """Get unique values for a segment column using Pandas"""
@@ -73,8 +73,8 @@ class ImpactAnalyzer:
             return [str(val) for val in unique_values]
         return []
     
-    def create_segment_tabs_data(
-        self, merged_df: pd.DataFrame, diff_col: str, 
+    def create_summary_by_band_segment(
+        self, merged_df: pd.DataFrame, value_col: str, 
         band_df: pd.DataFrame, segments: List[str]
     ) -> Dict[str, List]:
         """Create data for segment-based tabs using Pandas"""
@@ -94,11 +94,11 @@ class ImpactAnalyzer:
                     
                     if len(filtered_df) > 0:
                         # Map to bands for filtered data
-                        band_counts = self.map_to_bands(filtered_df, diff_col, band_df)
+                        band_summary = self.map_to_bands(filtered_df, value_col, band_df)
                         
                         # Prepare chart data
                         chart_data = []
-                        for _, band_row in band_counts.iterrows():
+                        for _, band_row in band_summary.iterrows():
                             chart_data.append({
                                 'name': band_row['band'],
                                 'y': int(band_row['Count']),
@@ -114,7 +114,7 @@ class ImpactAnalyzer:
         
         return tab_data
     
-    def generate_segment_analysis(self, merged_df: pd.DataFrame, comparison_data: Dict[str, Dict]) -> Dict:
+    def generate_impact_analysis(self, merged_df: pd.DataFrame, comparison_mapping: Dict[str, Dict]) -> Dict:
         """Generate comprehensive segment analysis for multiple comparison items using Pandas"""
         band_df = self.config_loader.load_band_data()
         segments = self.config_loader.load_segment_data()
@@ -122,8 +122,8 @@ class ImpactAnalyzer:
         # Process each comparison item
         comparison_analysis = {}
         
-        for item_name, item_data in comparison_data.items():
-            print(f"Analyzing {item_name} with data structure: {list(item_data.keys())}")
+        for item_name, item_data in comparison_mapping.items():
+            print(f"Assessing {item_name} Impact...")
             
             # Initialize item analysis
             comparison_analysis[item_name] = {
@@ -135,20 +135,18 @@ class ImpactAnalyzer:
             # Process each difference column (step comparison)
             if 'differences' in item_data:
                 for step, diff_info in item_data['differences'].items():
-                    diff_col = diff_info['diff_column']
+                    diff_col = diff_info['percent_diff_column']
                     step_name = item_data['step_names'][step]
                     
-                    print(f"Processing {item_name} step {step} ({step_name}) with column {diff_col}")
-                    
                     # Band distribution for this step comparison
-                    step_band_counts = self.map_to_bands(merged_df, diff_col, band_df)
+                    summary_by_band = self.map_to_bands(merged_df, diff_col, band_df)
                     
                     # Segment-based tab data for this step comparison
-                    segment_tabs_data = self.create_segment_tabs_data(merged_df, diff_col, band_df, segments)
+                    summary_by_band_segment = self.create_summary_by_band_segment(merged_df, diff_col, band_df, segments)
                     
                     # Prepare chart data for this step comparison
                     step_chart_data = []
-                    for _, band_row in step_band_counts.iterrows():
+                    for _, band_row in summary_by_band.iterrows():
                         step_chart_data.append({
                             'name': band_row['band'],
                             'y': int(band_row['Count']),
@@ -157,11 +155,11 @@ class ImpactAnalyzer:
                     
                     comparison_analysis[item_name]['steps'][step] = {
                         'step_name': step_name,
-                        'diff_column': diff_col,
+                        'percent_diff_column': diff_col,
                         'chart_data': step_chart_data,
                         'total_policies': len(merged_df),
-                        'band_counts': step_band_counts.to_dict('records'),
-                        'segment_tabs': segment_tabs_data,
+                        'summary_by_band': summary_by_band.to_dict('records'),
+                        'summary_by_band_segment': summary_by_band_segment,
                         'from_step': diff_info['from_step'],
                         'to_step': diff_info['to_step']
                     }

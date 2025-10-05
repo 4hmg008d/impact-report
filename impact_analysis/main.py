@@ -66,9 +66,9 @@ class ModularImpactAnalyzer:
             if 'steps' in analysis_data:
                 for step, step_data in analysis_data['steps'].items():
                     step_name = step_data['step_name']
-                    band_counts = step_data['band_counts']
-                    if band_counts:
-                        for band_row in band_counts:
+                    summary_by_band = step_data['summary_by_band']
+                    if summary_by_band:
+                        for band_row in summary_by_band:
                             all_band_data.append({
                                 'Item': item_name,
                                 'Step': step,
@@ -91,10 +91,10 @@ class ModularImpactAnalyzer:
             self.logger.info("Starting modular impact analysis process")
             
             # Step 1: Process data
-            merged_df, comparison_data = self.data_processor.process_data()
+            merged_df, comparison_mapping = self.data_processor.process_data()
             
             # Step 2: Analyze data for all comparison items
-            comparison_analysis = self.analyzer.generate_segment_analysis(merged_df, comparison_data)
+            comparison_analysis = self.analyzer.generate_impact_analysis(merged_df, comparison_mapping)
             
             # Step 3: Save output files
             self.save_output_files(merged_df, comparison_analysis)

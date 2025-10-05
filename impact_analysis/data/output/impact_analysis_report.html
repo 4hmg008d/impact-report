@@ -170,15 +170,21 @@
                             <tbody>
                                 
                                 <tr>
+                                    <td>18.[200%, 500%]</td>
+                                    <td>2</td>
+                                    <td>10.00%</td>
+                                </tr>
+                                
+                                <tr>
                                     <td>20.[1000%, 99900%]</td>
-                                    <td>3</td>
-                                    <td>15.00%</td>
+                                    <td>17</td>
+                                    <td>85.00%</td>
                                 </tr>
                                 
                                 <tr>
                                     <td>21.[99900%, Inf]</td>
-                                    <td>17</td>
-                                    <td>85.00%</td>
+                                    <td>1</td>
+                                    <td>5.00%</td>
                                 </tr>
                                 
                             </tbody>
@@ -205,26 +211,32 @@
                                 
                                 <tr>
                                     <td>11.[0%, 10%]</td>
+                                    <td>2</td>
+                                    <td>10.00%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>13.[20%, 30%]</td>
                                     <td>1</td>
                                     <td>5.00%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>15.[40%, 50%]</td>
+                                    <td>2</td>
+                                    <td>10.00%</td>
                                 </tr>
                                 
                                 <tr>
                                     <td>18.[200%, 500%]</td>
-                                    <td>1</td>
-                                    <td>5.00%</td>
+                                    <td>2</td>
+                                    <td>10.00%</td>
                                 </tr>
                                 
                                 <tr>
                                     <td>20.[1000%, 99900%]</td>
-                                    <td>6</td>
-                                    <td>30.00%</td>
-                                </tr>
-                                
-                                <tr>
-                                    <td>21.[99900%, Inf]</td>
-                                    <td>3</td>
-                                    <td>15.00%</td>
+                                    <td>4</td>
+                                    <td>20.00%</td>
                                 </tr>
                                 
                                 <tr>
@@ -273,26 +285,32 @@
                                 
                                 <tr>
                                     <td>11.[0%, 10%]</td>
+                                    <td>2</td>
+                                    <td>10.00%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>13.[20%, 30%]</td>
                                     <td>1</td>
                                     <td>5.00%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>15.[40%, 50%]</td>
+                                    <td>2</td>
+                                    <td>10.00%</td>
                                 </tr>
                                 
                                 <tr>
                                     <td>18.[200%, 500%]</td>
-                                    <td>1</td>
-                                    <td>5.00%</td>
+                                    <td>2</td>
+                                    <td>10.00%</td>
                                 </tr>
                                 
                                 <tr>
                                     <td>20.[1000%, 99900%]</td>
-                                    <td>6</td>
-                                    <td>30.00%</td>
-                                </tr>
-                                
-                                <tr>
-                                    <td>21.[99900%, Inf]</td>
-                                    <td>3</td>
-                                    <td>15.00%</td>
+                                    <td>4</td>
+                                    <td>20.00%</td>
                                 </tr>
                                 
                                 <tr>
@@ -415,16 +433,23 @@ Highcharts.chart('bi-step-2-chart',
 },
   series: [{
   data: [{
-  y: 15.0,
+  y: 10.0,
   custom: {
-  'count': 3
+  'count': 2
 },
-  name: '20.[1000%, 99900%]'
+  name: '18.[200%, 500%]'
 },
 {
   y: 85.0,
   custom: {
   'count': 17
+},
+  name: '20.[1000%, 99900%]'
+},
+{
+  y: 5.0,
+  custom: {
+  'count': 1
 },
   name: '21.[99900%, Inf]'
 }],
@@ -442,7 +467,8 @@ Highcharts.chart('bi-step-2-chart',
   useHTML: true
 },
   xAxis: {
-  categories: ['20.[1000%, 99900%]',
+  categories: ['18.[200%, 500%]',
+'20.[1000%, 99900%]',
 '21.[99900%, Inf]'],
   labels: {
   rotation: 315,
@@ -484,9 +510,9 @@ Highcharts.chart('bi-step-3-chart',
 },
   series: [{
   data: [{
-  y: 5.0,
+  y: 10.0,
   custom: {
-  'count': 1
+  'count': 2
 },
   name: '11.[0%, 10%]'
 },
@@ -495,21 +521,28 @@ Highcharts.chart('bi-step-3-chart',
   custom: {
   'count': 1
 },
+  name: '13.[20%, 30%]'
+},
+{
+  y: 10.0,
+  custom: {
+  'count': 2
+},
+  name: '15.[40%, 50%]'
+},
+{
+  y: 10.0,
+  custom: {
+  'count': 2
+},
   name: '18.[200%, 500%]'
 },
 {
-  y: 30.0,
+  y: 20.0,
   custom: {
-  'count': 6
+  'count': 4
 },
   name: '20.[1000%, 99900%]'
-},
-{
-  y: 15.0,
-  custom: {
-  'count': 3
-},
-  name: '21.[99900%, Inf]'
 },
 {
   y: 45.0,
@@ -533,9 +566,10 @@ Highcharts.chart('bi-step-3-chart',
 },
   xAxis: {
   categories: ['11.[0%, 10%]',
+'13.[20%, 30%]',
+'15.[40%, 50%]',
 '18.[200%, 500%]',
 '20.[1000%, 99900%]',
-'21.[99900%, Inf]',
 'Out of Range'],
   labels: {
   rotation: 315,
@@ -657,9 +691,9 @@ Highcharts.chart('property-step-2-chart',
 },
   series: [{
   data: [{
-  y: 5.0,
+  y: 10.0,
   custom: {
-  'count': 1
+  'count': 2
 },
   name: '11.[0%, 10%]'
 },
@@ -668,21 +702,28 @@ Highcharts.chart('property-step-2-chart',
   custom: {
   'count': 1
 },
+  name: '13.[20%, 30%]'
+},
+{
+  y: 10.0,
+  custom: {
+  'count': 2
+},
+  name: '15.[40%, 50%]'
+},
+{
+  y: 10.0,
+  custom: {
+  'count': 2
+},
   name: '18.[200%, 500%]'
 },
 {
-  y: 30.0,
+  y: 20.0,
   custom: {
-  'count': 6
+  'count': 4
 },
   name: '20.[1000%, 99900%]'
-},
-{
-  y: 15.0,
-  custom: {
-  'count': 3
-},
-  name: '21.[99900%, Inf]'
 },
 {
   y: 45.0,
@@ -706,9 +747,10 @@ Highcharts.chart('property-step-2-chart',
 },
   xAxis: {
   categories: ['11.[0%, 10%]',
+'13.[20%, 30%]',
+'15.[40%, 50%]',
 '18.[200%, 500%]',
 '20.[1000%, 99900%]',
-'21.[99900%, Inf]',
 'Out of Range'],
   labels: {
   rotation: 315,

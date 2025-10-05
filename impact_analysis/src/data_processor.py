@@ -59,11 +59,11 @@ class DataProcessor:
         
         # Build the merged dataframe with renamed columns
         merged_df = None
-        comparison_data = {}
+        comparison_mapping = {}
 
         for item in impact_items:
             item_mapping = mapping_df[mapping_df['Item'] == item].sort_values('Step')
-            comparison_data[item] = {
+            comparison_mapping[item] = {
                 'steps': {},
                 'step_names': {},
                 'columns': {}
@@ -84,18 +84,18 @@ class DataProcessor:
                 new_col_name = f"{item}_{step}"
                 
                 # Store step information
-                comparison_data[item]['steps'][step] = {
+                comparison_mapping[item]['steps'][step] = {
                     'file_path': file_path,
                     'original_column': column,
                     'renamed_column': new_col_name,
                     'step_name': step_name
                 }
-                comparison_data[item]['step_names'][step] = step_name
-                comparison_data[item]['columns'][step] = new_col_name
+                comparison_mapping[item]['step_names'][step] = step_name
+                comparison_mapping[item]['columns'][step] = new_col_name
         
         # Start with the first step of the first item to establish the base dataframe
         first_item = impact_items[0]
-        first_step_info = comparison_data[first_item]['steps'][1]
+        first_step_info = comparison_mapping[first_item]['steps'][1]
         first_file = first_step_info['file_path']
         
         # Start with ALL columns from the first file (not just ID column)
@@ -106,8 +106,8 @@ class DataProcessor:
         # Rename comparison columns in the base dataframe
         first_file_rename_map = {}
         for item in impact_items:
-            for step in sorted(comparison_data[item]['steps'].keys()):
-                step_info = comparison_data[item]['steps'][step]
+            for step in sorted(comparison_mapping[item]['steps'].keys()):
+                step_info = comparison_mapping[item]['steps'][step]
                 if step_info['file_path'] == first_file:
                     orig_col = step_info['original_column']
                     new_col = step_info['renamed_column']
@@ -119,8 +119,8 @@ class DataProcessor:
         
         # Add comparison columns from other files
         for item in impact_items:
-            for step in sorted(comparison_data[item]['steps'].keys()):
-                step_info = comparison_data[item]['steps'][step]
+            for step in sorted(comparison_mapping[item]['steps'].keys()):
+                step_info = comparison_mapping[item]['steps'][step]
                 file_path = step_info['file_path']
                 orig_col = step_info['original_column']
                 new_col = step_info['renamed_column']
@@ -141,26 +141,39 @@ class DataProcessor:
         
         # Step 2: Calculate step-by-step differences (step 2 vs step 1, step 3 vs step 2, etc.)
         for item in impact_items:
-            steps = sorted(comparison_data[item]['steps'].keys())
+            steps = sorted(comparison_mapping[item]['steps'].keys())
 
             for i in range(1, len(steps)):
+
+                # TODO: check if need first_step
                 prev_step = steps[i-1]
                 curr_step = steps[i]
+                first_step = steps[0]
                 
-                prev_col = comparison_data[item]['columns'][prev_step]
-                curr_col = comparison_data[item]['columns'][curr_step]
+                prev_col = comparison_mapping[item]['columns'][prev_step]
+                curr_col = comparison_mapping[item]['columns'][curr_step]
+                first_col = comparison_mapping[item]['columns'][first_step]
                 
                 # Create difference column: diff_{Item}_step_{higher_step}
                 diff_col = f"diff_{item}_step_{curr_step}"
                 merged_df[diff_col] = merged_df[curr_col] - merged_df[prev_col]
+
+                diff_col_percent = f"percent_diff_{item}_step_{curr_step}"
+                # Avoid division by zero
+                merged_df[diff_col_percent] = merged_df.apply(
+                    lambda row: (row[diff_col] / row[prev_col] * 100) if row[prev_col] != 0 else None, axis=1
+                )
                 
-                print(f"Calculated {diff_col}: {curr_col} - {prev_col}")
+                # Debug print
+                # print(f"Calculated {diff_col}: {curr_col} - {prev_col}")
                 
                 # Store difference column info
-                if 'differences' not in comparison_data[item]:
-                    comparison_data[item]['differences'] = {}
-                comparison_data[item]['differences'][curr_step] = {
+                if 'differences' not in comparison_mapping[item]:
+                    comparison_mapping[item]['differences'] = {}
+
+                comparison_mapping[item]['differences'][curr_step] = {
                     'diff_column': diff_col,
+                    'percent_diff_column': diff_col_percent,
                     'from_step': prev_step,
                     'to_step': curr_step,
                     'from_column': prev_col,
@@ -169,4 +182,4 @@ class DataProcessor:
         
         print(f"Final merged data columns: {list(merged_df.columns)}")
         
-        return merged_df, comparison_data
+        return merged_df, comparison_mapping
