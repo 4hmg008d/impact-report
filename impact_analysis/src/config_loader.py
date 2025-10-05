@@ -25,7 +25,7 @@ class ConfigLoader:
         with open(self.config_path, 'r') as file:
             return yaml.safe_load(file)
     
-    def _resolve_path(self, path: str) -> str:
+    def _abs_path(self, path: str) -> str:
         """Resolve relative paths relative to the config file directory"""
         if os.path.isabs(path):
             return path
@@ -35,7 +35,7 @@ class ConfigLoader:
     def load_mapping_data(self) -> pd.DataFrame:
         """Load mapping data from Excel file"""
         mapping_config = self.config['mapping']
-        mapping_file_path = self._resolve_path(mapping_config['file_path'])
+        mapping_file_path = self._abs_path(mapping_config['file_path'])
         sheet_name = mapping_config['sheet_input']
         
         try:
@@ -47,7 +47,7 @@ class ConfigLoader:
     def load_segment_data(self) -> List[str]:
         """Load segment columns from Excel file"""
         mapping_config = self.config['mapping']
-        mapping_file_path = self._resolve_path(mapping_config['file_path'])
+        mapping_file_path = self._abs_path(mapping_config['file_path'])
         sheet_name = mapping_config['sheet_segment']
         
         try:
@@ -60,7 +60,7 @@ class ConfigLoader:
     def load_band_data(self) -> pd.DataFrame:
         """Load band mapping from Excel file"""
         mapping_config = self.config['mapping']
-        mapping_file_path = self._resolve_path(mapping_config['file_path'])
+        mapping_file_path = self._abs_path(mapping_config['file_path'])
         sheet_name = mapping_config['sheet_band']
         
         try:
@@ -71,4 +71,4 @@ class ConfigLoader:
     
     def get_output_dir(self) -> str:
         """Get output directory from configuration"""
-        return self._resolve_path(self.config['output']['dir'])
+        return self._abs_path(self.config['output']['dir'])

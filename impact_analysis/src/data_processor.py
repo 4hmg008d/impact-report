@@ -30,7 +30,7 @@ class DataProcessor:
     def process_data(self) -> Tuple[pd.DataFrame, Dict[str, Dict]]:
         """Execute the complete data processing pipeline with new step-based approach"""
         # Load mapping data
-        mapping_df = self.config_loader.load_mapping_data()
+        mapping_df = self.config_loader.load_mapping_data().sort_values(by=['Item', 'Step'])
         if len(mapping_df) == 0:
             raise ValueError("No mapping data found")
         
@@ -40,32 +40,28 @@ class DataProcessor:
         # Get ID column and unique files
         id_column = mapping_df.iloc[0]['ID']
         print(f"ID Column: {id_column}")
+
+        # Get full file paths
+        mapping_df['File'] = mapping_df['File'].apply(self.config_loader._abs_path)
         
         #TODO: put the requirement in md file and remove this check
         # Clean up file paths and load all files
-        file_data = {}
-        unique_files = set()
-        for _, row in mapping_df.iterrows():
-            file_path = row['File']
-            # Clean up file path - remove impact_analysis/ prefix if it exists
-            if file_path.startswith('impact_analysis/'):
-                file_path = file_path[len('impact_analysis/'):]
-            unique_files.add(file_path)
+        dict_data = {}
+        unique_file_paths = mapping_df['File'].unique()
         
         # Load and deduplicate all files
-        for file_path in unique_files:
-            resolved_path = self.config_loader._resolve_path(file_path)
-            file_data[file_path] = self.load_and_deduplicate_file(resolved_path, id_column)
+        for file_path in unique_file_paths:
+            dict_data[file_path] = self.load_and_deduplicate_file(file_path, id_column)
         
         # Step 1: Start with the first file as base and merge only specified columns with new naming
         # Group by Item and Step to understand the structure
-        items = mapping_df['Item'].unique()
+        impact_items = mapping_df['Item'].unique()
         
         # Build the merged dataframe with renamed columns
         merged_df = None
         comparison_data = {}
-        
-        for item in items:
+
+        for item in impact_items:
             item_mapping = mapping_df[mapping_df['Item'] == item].sort_values('Step')
             comparison_data[item] = {
                 'steps': {},
@@ -79,12 +75,13 @@ class DataProcessor:
                 file_path = row['File']
                 column = row['Column']
                 
+                #TODO: put the requirement in md file and remove this check
                 # Clean up file path
                 if file_path.startswith('impact_analysis/'):
                     file_path = file_path[len('impact_analysis/'):]
                 
-                # Create new column name: {Column}_{Item}_{Step}
-                new_col_name = f"{column}_{item}_{step}"
+                # Create new column name: {Item}_{Step}
+                new_col_name = f"{item}_{step}"
                 
                 # Store step information
                 comparison_data[item]['steps'][step] = {
@@ -97,26 +94,18 @@ class DataProcessor:
                 comparison_data[item]['columns'][step] = new_col_name
         
         # Start with the first step of the first item to establish the base dataframe
-        first_item = items[0]
+        first_item = impact_items[0]
         first_step_info = comparison_data[first_item]['steps'][1]
         first_file = first_step_info['file_path']
         
         # Start with ALL columns from the first file (not just ID column)
-        merged_df = file_data[first_file].copy()
+        merged_df = dict_data[first_file].copy()
         print(f"Starting with all columns from first file: {first_file}")
         print(f"Base columns: {list(merged_df.columns)}")
         
-        # Get list of columns that will be used for comparison (to rename them)
-        comparison_columns = set()
-        for item in items:
-            for step in comparison_data[item]['steps'].keys():
-                step_info = comparison_data[item]['steps'][step]
-                if step_info['file_path'] == first_file:
-                    comparison_columns.add(step_info['original_column'])
-        
         # Rename comparison columns in the base dataframe
         first_file_rename_map = {}
-        for item in items:
+        for item in impact_items:
             for step in sorted(comparison_data[item]['steps'].keys()):
                 step_info = comparison_data[item]['steps'][step]
                 if step_info['file_path'] == first_file:
@@ -129,7 +118,7 @@ class DataProcessor:
             print(f"Renamed columns in base file: {first_file_rename_map}")
         
         # Add comparison columns from other files
-        for item in items:
+        for item in impact_items:
             for step in sorted(comparison_data[item]['steps'].keys()):
                 step_info = comparison_data[item]['steps'][step]
                 file_path = step_info['file_path']
@@ -140,20 +129,20 @@ class DataProcessor:
                 if new_col in merged_df.columns:
                     continue
                 
-                if orig_col in file_data[file_path].columns:
+                if orig_col in dict_data[file_path].columns:
                     # Merge this specific column
-                    temp_df = file_data[file_path][[id_column, orig_col]].copy()
+                    temp_df = dict_data[file_path][[id_column, orig_col]].copy()
                     temp_df = temp_df.rename(columns={orig_col: new_col})
-                    merged_df = merged_df.merge(temp_df, on=id_column, how='outer')
+                    merged_df = merged_df.merge(temp_df, on=id_column, how='inner')
                     print(f"Added column {new_col} from {file_path}")
         
         print(f"Merged data: {len(merged_df)} rows")
         print(f"Merged columns: {list(merged_df.columns)}")
         
         # Step 2: Calculate step-by-step differences (step 2 vs step 1, step 3 vs step 2, etc.)
-        for item in items:
+        for item in impact_items:
             steps = sorted(comparison_data[item]['steps'].keys())
-            
+
             for i in range(1, len(steps)):
                 prev_step = steps[i-1]
                 curr_step = steps[i]
