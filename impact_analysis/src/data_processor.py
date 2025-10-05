@@ -163,9 +163,9 @@ class DataProcessor:
                 merged_df[overall_diff_col_percent] = merged_df.apply(
                     lambda row: (row[overall_diff_col] / row[first_col] * 100) if row[first_col] != 0 else None, axis=1
                 )
-                
-                # Store overall difference as step 0 with name "All Steps"
-                comparison_mapping[item]['differences'][0] = {
+
+                # Store overall difference as step 1 with name "All Steps"
+                comparison_mapping[item]['differences'][1] = {
                     'diff_column': overall_diff_col,
                     'percent_diff_column': overall_diff_col_percent,
                     'from_step': first_step,
@@ -173,8 +173,8 @@ class DataProcessor:
                     'from_column': first_col,
                     'to_column': last_col
                 }
-                # Add step name for step 0
-                comparison_mapping[item]['step_names'][0] = 'All Steps'
+                # Add step name for step 1
+                comparison_mapping[item]['step_names'][1] = 'All Steps'
 
             # Calculate step-by-step differences
             for i in range(1, len(steps)):
