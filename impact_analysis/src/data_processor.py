@@ -143,16 +143,48 @@ class DataProcessor:
         for item in impact_items:
             steps = sorted(comparison_mapping[item]['steps'].keys())
 
+            # Initialize differences dictionary
+            if 'differences' not in comparison_mapping[item]:
+                comparison_mapping[item]['differences'] = {}
+            
+            # Calculate overall difference (last step vs first step) - Step 0
+            if len(steps) >= 2:
+                first_step = steps[0]
+                last_step = steps[-1]
+                first_col = comparison_mapping[item]['columns'][first_step]
+                last_col = comparison_mapping[item]['columns'][last_step]
+                
+                # Create overall difference column: diff_{Item}_step_all
+                overall_diff_col = f"diff_{item}_step_all"
+                merged_df[overall_diff_col] = merged_df[last_col] - merged_df[first_col]
+                
+                overall_diff_col_percent = f"percent_diff_{item}_step_all"
+                # Avoid division by zero
+                merged_df[overall_diff_col_percent] = merged_df.apply(
+                    lambda row: (row[overall_diff_col] / row[first_col] * 100) if row[first_col] != 0 else None, axis=1
+                )
+                
+                # Store overall difference as step 0 with name "All Steps"
+                comparison_mapping[item]['differences'][0] = {
+                    'diff_column': overall_diff_col,
+                    'percent_diff_column': overall_diff_col_percent,
+                    'from_step': first_step,
+                    'to_step': last_step,
+                    'from_column': first_col,
+                    'to_column': last_col
+                }
+                # Add step name for step 0
+                comparison_mapping[item]['step_names'][0] = 'All Steps'
+
+            # Calculate step-by-step differences
             for i in range(1, len(steps)):
 
                 # TODO: check if need first_step
                 prev_step = steps[i-1]
                 curr_step = steps[i]
-                first_step = steps[0]
                 
                 prev_col = comparison_mapping[item]['columns'][prev_step]
                 curr_col = comparison_mapping[item]['columns'][curr_step]
-                first_col = comparison_mapping[item]['columns'][first_step]
                 
                 # Create difference column: diff_{Item}_step_{higher_step}
                 diff_col = f"diff_{item}_step_{curr_step}"
@@ -168,9 +200,6 @@ class DataProcessor:
                 # print(f"Calculated {diff_col}: {curr_col} - {prev_col}")
                 
                 # Store difference column info
-                if 'differences' not in comparison_mapping[item]:
-                    comparison_mapping[item]['differences'] = {}
-
                 comparison_mapping[item]['differences'][curr_step] = {
                     'diff_column': diff_col,
                     'percent_diff_column': diff_col_percent,

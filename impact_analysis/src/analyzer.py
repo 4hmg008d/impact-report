@@ -134,7 +134,11 @@ class ImpactAnalyzer:
             
             # Process each difference column (step comparison)
             if 'differences' in item_data:
-                for step, diff_info in item_data['differences'].items():
+                # Sort steps to ensure step 0 (All Steps) comes first
+                sorted_steps = sorted(item_data['differences'].keys())
+                
+                for step in sorted_steps:
+                    diff_info = item_data['differences'][step]
                     diff_col = diff_info['percent_diff_column']
                     step_name = item_data['step_names'][step]
                     

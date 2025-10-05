@@ -62,21 +62,19 @@ class ModularImpactAnalyzer:
         # Save band distribution for all comparison items and steps
         all_band_data = []
         for item_name, analysis_data in comparison_analysis.items():
-            # Handle new nested structure with steps
-            if 'steps' in analysis_data:
-                for step, step_data in analysis_data['steps'].items():
-                    step_name = step_data['step_name']
-                    summary_by_band = step_data['summary_by_band']
-                    if summary_by_band:
-                        for band_row in summary_by_band:
-                            all_band_data.append({
-                                'Item': item_name,
-                                'Step': step,
-                                'StepName': step_name,
-                                'Band': band_row['band'],
-                                'Count': band_row['Count'],
-                                'Percentage': band_row['Percentage']
-                            })
+            for step, step_data in analysis_data['steps'].items():
+                step_name = step_data['step_name']
+                summary_by_band = step_data['summary_by_band']
+                if summary_by_band:
+                    for band_row in summary_by_band:
+                        all_band_data.append({
+                            'Item': item_name,
+                            'Step': step,
+                            'StepName': step_name,
+                            'Band': band_row['band'],
+                            'Count': band_row['Count'],
+                            'Percentage': band_row['Percentage']
+                        })
         
         if all_band_data:
             import pandas as pd

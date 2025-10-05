@@ -98,12 +98,13 @@
                 
                 <div class="nested-tab-container">
                     <div class="nested-tab-buttons">
-                        {% for step, step_data in analysis_data['steps'].items() %}
-                        <button class="nested-tab-button {% if loop.first %}active{% endif %}" data-tab="{{ item_name|replace(' ', '_')|replace(':', '_')|lower }}-step-{{ step }}">{{ step_data['step_name'] }}</button>
+                        {% for step in analysis_data['steps'].keys()|sort %}
+                        <button class="nested-tab-button {% if loop.first %}active{% endif %}" data-tab="{{ item_name|replace(' ', '_')|replace(':', '_')|lower }}-step-{{ step }}">{{ analysis_data['steps'][step]['step_name'] }}</button>
                         {% endfor %}
                     </div>
                     
-                    {% for step, step_data in analysis_data['steps'].items() %}
+                    {% for step in analysis_data['steps'].keys()|sort %}
+                    {% set step_data = analysis_data['steps'][step] %}
                     <div class="nested-tab-content {% if loop.first %}active{% endif %}" id="{{ item_name|replace(' ', '_')|replace(':', '_')|lower }}-step-{{ step }}-tab">
                         <h3>{{ step_data['step_name'] }}</h3>
                         <p><strong>Comparison:</strong> Step {{ step_data['from_step'] }} → Step {{ step_data['to_step'] }}</p>

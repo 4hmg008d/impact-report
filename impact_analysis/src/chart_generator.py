@@ -273,8 +273,10 @@ class ImpactChartGenerator:
         for item_name, item_analysis in analysis_data.items():
             charts_html[item_name] = {}
             
-            # Generate distribution charts for each step
-            for step, step_data in item_analysis['steps'].items():
+            # Generate distribution charts for each step (sorted to ensure step 0 comes first)
+            sorted_steps = sorted(item_analysis['steps'].keys())
+            for step in sorted_steps:
+                step_data = item_analysis['steps'][step]
                 chart_id = f"{item_name.replace(' ', '_').replace(':', '_').lower()}-step-{step}-chart"
                 # Use the consistent generate_step_chart_html pattern
                 chart_html = self.generate_step_chart_html(step_data, f"{item_name} - {step_data['step_name']}", chart_id)
