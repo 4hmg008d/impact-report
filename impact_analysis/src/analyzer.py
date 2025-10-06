@@ -120,13 +120,13 @@ class ImpactAnalyzer:
         segments = self.config_loader.load_segment_data()
         
         # Process each comparison item
-        comparison_analysis = {}
+        dict_distribution_summary = {}
         
         for item_name, item_data in comparison_mapping.items():
             print(f"Assessing {item_name} Impact...")
             
             # Initialize item analysis
-            comparison_analysis[item_name] = {
+            dict_distribution_summary[item_name] = {
                 'steps': {},
                 'step_names': item_data['step_names'],
                 'segments_available': len(segments) > 0
@@ -157,7 +157,7 @@ class ImpactAnalyzer:
                             'percentage': round(band_row['Percentage'], 2)
                         })
                     
-                    comparison_analysis[item_name]['steps'][step] = {
+                    dict_distribution_summary[item_name]['steps'][step] = {
                         'step_name': step_name,
                         'percent_diff_column': diff_col,
                         'chart_data': step_chart_data,
@@ -169,108 +169,68 @@ class ImpactAnalyzer:
                     }
             
             # Also store column information for summary calculations
-            comparison_analysis[item_name]['columns'] = item_data['columns']
+            dict_distribution_summary[item_name]['columns'] = item_data['columns']
         
-        return comparison_analysis
-    
-    def generate_summary_table(self, merged_df: pd.DataFrame, comparison_mapping: Dict[str, Dict]) -> pd.DataFrame:
-        """Generate summary table with total values by item and steps, with percentage differences
+        return dict_distribution_summary
+
+    def generate_waterfall_chart_data(self, df_summary: pd.DataFrame, comparison_mapping: Dict[str, Dict]) -> pd.DataFrame:
+        """Generate waterfall chart data for each comparison item using Pandas"""
+        waterfall_data = []
         
-        Args:
-            merged_df: The merged dataframe containing all data
-            comparison_mapping: Mapping containing step and difference information
+        for item_name, item_data in comparison_mapping.items():
+            if 'columns' not in item_data:
+                continue
             
-        Returns:
-            DataFrame with summary table containing:
-            - Item column (rows)
-            - Step columns with total values
-            - Percentage difference columns for each step (recalculated based on aggregated totals)
-            - All Steps percentage difference at the very right
-        """
-        summary_data = []
-        
-        # Get all items from comparison_mapping
-        items = list(comparison_mapping.keys())
-        
-        for item_name in items:
-            item_data = comparison_mapping[item_name]
-            row_data = {'Item': item_name}
+            step_names = item_data['step_names']
+            columns = item_data['columns']
             
-            # Dictionary to store total values for each step (for percentage calculation)
-            step_totals = {}
+            # Extract values for each step
+            values = []
+            for step in sorted(columns.keys()):
+                col_name = columns[step]
+                if col_name in df_summary.columns:
+                    total_value = df_summary[col_name].sum()
+                    values.append(total_value)
+                else:
+                    values.append(0)
             
-            # Get step columns for this item (original values)
-            if 'steps' in item_data:
-                steps = sorted(item_data['steps'].keys())
+            if len(values) != len(step_names):
+                print(f"Warning: Mismatch in number of steps and columns for {item_name}")
+                continue
+            
+            # Prepare waterfall data
+            waterfall_data_item = []
+            # Initial value
+            waterfall_data_item.append({
+                'name': step_names[0],
+                'y': values[0],
+                'isSum': True,
+                'color': '#7cb5ec'
+            })
+            
+            # Intermediate steps
+            for i in range(1, len(values) - 1):
+                change = values[i] - values[i - 1]
+                color = '#90ed7d' if change >= 0 else '#f15c80'
                 
-                # Add step columns with total values using renamed_column
-                for step in steps:
-                    step_info = item_data['steps'][step]
-                    step_col = step_info['renamed_column']
-                    step_name = step_info['step_name']
-                    
-                    if step_col in merged_df.columns:
-                        total_value = merged_df[step_col].sum()
-                        row_data[f'{step_name}'] = total_value
-                        step_totals[step] = total_value
+                waterfall_data_item.append({
+                    'name': step_names[i],
+                    'y': change,
+                    'isSum': False,
+                    'color': color
+                })
             
-            # Calculate and add percentage difference columns based on aggregated totals
-            if 'differences' in item_data and 'steps' in item_data:
-                diff_steps = sorted(item_data['differences'].keys())
-                
-                # Separate "All Steps" from other steps
-                all_steps_diff = None
-                other_diffs = []
-                
-                for diff_step in diff_steps:
-                    diff_info = item_data['differences'][diff_step]
-                    from_step = diff_info['from_step']
-                    to_step = diff_info['to_step']
-                    
-                    # Get total values for from_step and to_step
-                    from_total = step_totals.get(from_step, 0)
-                    to_total = step_totals.get(to_step, 0)
-                    
-                    # Calculate percentage difference based on aggregated totals
-                    if from_total != 0:
-                        percent_diff = ((to_total - from_total) / from_total) * 100
-                    else:
-                        percent_diff = None
-                    
-                    # Use naming convention: percent_diff_step_{curr_step}
-                    if diff_step == 1 and item_data.get('step_names', {}).get(1) == 'All Steps':
-                        # This is the "All Steps" comparison - save for later
-                        col_name = f'percent_diff_step_all'
-                        all_steps_diff = (col_name, percent_diff)
-                    else:
-                        # Regular step-to-step comparison
-                        col_name = f'percent_diff_step_{to_step}'
-                        other_diffs.append((col_name, percent_diff))
-                
-                # Add other diffs first
-                for col_name, value in other_diffs:
-                    row_data[col_name] = value
-                
-                # Add "All Steps" diff last (if it exists)
-                if all_steps_diff:
-                    row_data[all_steps_diff[0]] = all_steps_diff[1]
+            # Final sum
+            waterfall_data_item.append({
+                'name': 'Final',
+                'y': values[-1],
+                'isSum': True,
+                'color': '#434348'
+            })
             
-            summary_data.append(row_data)
+            waterfall_data.append({
+                'item_name': item_name,
+                'data': waterfall_data_item
+            })
         
-        # Create summary DataFrame
-        summary_df = pd.DataFrame(summary_data)
-        
-        # Reorder columns to ensure proper grouping:
-        # Item, Step columns, percentage diff columns (regular), All Steps column
-        if not summary_df.empty:
-            cols = list(summary_df.columns)
-            item_col = ['Item']
-            step_cols = [col for col in cols if col not in item_col and not col.startswith('percent_diff_')]
-            percent_diff_cols = [col for col in cols if col.startswith('percent_diff_') and 'step_all' not in col]
-            all_steps_col = [col for col in cols if 'step_all' in col]
-            
-            # Reorder: Item, Step columns, percentage diff columns, All Steps column
-            ordered_cols = item_col + step_cols + percent_diff_cols + all_steps_col
-            summary_df = summary_df[ordered_cols]
-        
-        return summary_df
+        return pd.DataFrame(waterfall_data)

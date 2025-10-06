@@ -49,7 +49,7 @@ class ModularImpactAnalyzer:
         )
         return logging.getLogger(__name__)
     
-    def save_output_files(self, merged_df, comparison_analysis: Dict, comparison_mapping: Dict) -> None:
+    def save_output_files(self, merged_df, dict_distribution_summary: Dict, comparison_mapping: Dict) -> None:
         """Save all output files using Pandas"""
         import pandas as pd
         output_dir = self.config_loader.get_output_dir()
@@ -61,14 +61,21 @@ class ModularImpactAnalyzer:
         self.logger.info(f"Saved merged data to: {merged_output_path}")
         
         # Generate and save summary table using ImpactAnalyzer
-        summary_df, summary_comparison_mapping = self.data_processor.generate_aggregated_summary(merged_df, comparison_mapping)
+        summary_df, summary_comparison_mapping = self.data_processor.aggregate_merged_data(merged_df, comparison_mapping)
+
+        # Debug
+        # print("Summary DataFrame:")
+        # print(summary_df)
+        print("Summary Comparison Mapping:")
+        print(summary_comparison_mapping)
+
         summary_output_path = os.path.join(output_dir, "summary_table.csv")
         summary_df.to_csv(summary_output_path, index=False)
         self.logger.info(f"Saved summary table to: {summary_output_path}")
         
         # Save band distribution for all comparison items and steps
         all_band_summary = []
-        for item_name, analysis_data in comparison_analysis.items():
+        for item_name, analysis_data in dict_distribution_summary.items():
             for step, step_data in analysis_data['steps'].items():
                 step_name = step_data['step_name']
                 summary_by_band = step_data['summary_by_band']
@@ -98,16 +105,21 @@ class ModularImpactAnalyzer:
             merged_df_w_diff, comparison_mapping = self.data_processor.process_data()
             
             # Step 2: Analyze data for all comparison items
-            comparison_analysis = self.analyzer.generate_distribution_summary(merged_df_w_diff, comparison_mapping)
+            dict_distribution_summary = self.analyzer.generate_distribution_summary(merged_df_w_diff, comparison_mapping)
             
+            # Debug
+            print("Distribution Summary:")
+            print(dict_distribution_summary)
+
             # Step 3: Save output files
-            self.save_output_files(merged_df_w_diff, comparison_analysis, comparison_mapping)
+            self.save_output_files(merged_df_w_diff, dict_distribution_summary, comparison_mapping)
             
             # Step 4: Generate HTML report
             output_dir = self.config_loader.get_output_dir()
             html_output_path = os.path.join(output_dir, "impact_analysis_report.html")
-            self.visualizer.generate_html_report(comparison_analysis, html_output_path, merged_df_w_diff)
-            
+            summary_df, summary_comparison_mapping = self.data_processor.aggregate_merged_data(merged_df_w_diff, comparison_mapping)
+            self.visualizer.generate_html_report(dict_distribution_summary, summary_df, summary_comparison_mapping, html_output_path)
+
             self.logger.info("Modular impact analysis completed successfully")
             return True
             

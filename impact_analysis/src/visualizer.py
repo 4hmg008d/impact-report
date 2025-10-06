@@ -27,33 +27,21 @@ class ReportVisualizer:
         # Add custom filters
         self.env.filters['format_percentage'] = lambda x: f"{x:.2f}%"
     
-    def generate_html_report(self, comparison_analysis: Dict, output_path: str, merged_df=None) -> None:
+    def generate_html_report(self, dict_distribution_summary: Dict, summary_df: pd.DataFrame, summary_comparison_mapping: Dict, output_path: str) -> None:
         """Generate HTML report for multiple comparison items using Jinja2 template"""
         
-        # Calculate summary statistics first if merged_df is provided
-        summary_stats = {}
-        if merged_df is not None:
-            for item_name, analysis_data in comparison_analysis.items():
-                summary_stats[item_name] = {}
-                for step, col_name in analysis_data['columns'].items():
-                    if col_name in merged_df.columns:
-                        total_value = merged_df[col_name].sum()
-                        summary_stats[item_name][step] = {
-                            'total': total_value,
-                            'formatted': f"{total_value:,.2f}"
-                        }
+
 
         # Generate charts for all comparison items (including waterfall charts)
-        charts_html = self.chart_generator.generate_all_charts_html(comparison_analysis, summary_stats)
+        charts_html = self.chart_generator.generate_all_charts_html(dict_distribution_summary, summary_df, summary_comparison_mapping)
         
 
         
         # Render template with all data
         template = self.env.get_template('report_template.html')
         rendered_html = template.render(
-            comparison_analysis=comparison_analysis,
-            charts_html=charts_html,
-            summary_stats=summary_stats
+            dict_distribution_summary=dict_distribution_summary,
+            charts_html=charts_html
         )
         
         # Save HTML file

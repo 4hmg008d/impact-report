@@ -263,25 +263,24 @@ class DataProcessor:
         
         return merged_df_w_diff, comparison_mapping
     
-    def generate_aggregated_summary(self, merged_df: pd.DataFrame, comparison_mapping: Dict[str, Dict]) -> Tuple[pd.DataFrame, Dict[str, Dict]]:
+    def aggregate_merged_data(self, merged_df: pd.DataFrame, comparison_mapping: Dict[str, Dict]) -> Tuple[pd.DataFrame, Dict[str, Dict]]:
         """Generate aggregated summary table with totals and percentage differences
         
         This method:
-        1. Aggregates merged_df by summing all rows for each step column
-        2. Creates one row per item with step totals
-        3. Calculates percentage differences based on aggregated totals
+        1. Extracts all renamed columns from comparison_mapping for each item and step
+        2. Aggregates merged_df by summing all rows for each step column
+        3. Creates a single-row summary DataFrame with column totals
+        4. Calls generate_differences to compute difference columns and percentage differences
         
         Args:
             merged_df: The merged dataframe containing all data rows
             comparison_mapping: Mapping containing step information (must have 'steps' component, 
-                              'differences' component is optional and will be computed if missing)
+                      'differences' component is optional and will be computed)
             
         Returns:
-            DataFrame with summary table containing:
-            - Item column (rows - one per item)
-            - Step columns with total values
-            - Percentage difference columns for each step
-            - All Steps percentage difference at the very right
+            Tuple of (summary_df, summary_comparison_mapping) where:
+            - summary_df: Single-row DataFrame with summed totals and computed differences
+            - summary_comparison_mapping: Updated comparison_mapping with 'differences' component
         """
         
         # get all renamed columns for each item and step

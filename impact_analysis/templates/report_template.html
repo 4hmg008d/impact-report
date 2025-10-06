@@ -38,15 +38,15 @@
             <thead>
                 <tr>
                     <th>Item</th>
-                    {% if comparison_analysis %}
-                        {% for step, step_name in comparison_analysis[comparison_analysis.keys()|first]['step_names'].items() %}
+                    {% if dict_distribution_summary %}
+                        {% for step, step_name in dict_distribution_summary[dict_distribution_summary.keys()|first]['step_names'].items() %}
                         <th>{{ step_name }}</th>
                         {% endfor %}
                     {% endif %}
                 </tr>
             </thead>
             <tbody>
-                {% for item_name, analysis_data in comparison_analysis.items() %}
+                {% for item_name, analysis_data in dict_distribution_summary.items() %}
                 <tr>
                     <td><strong>{{ item_name }}</strong></td>
                     {% for step in analysis_data['step_names'].keys()|sort %}
@@ -69,12 +69,12 @@
         <h3>Step Progression Waterfall Charts</h3>
         <div class="tab-container">
             <div class="tab-buttons">
-                {% for item_name in comparison_analysis.keys() %}
+                {% for item_name in dict_distribution_summary.keys() %}
                 <button class="tab-button {% if loop.first %}active{% endif %}" data-tab="waterfall-{{ item_name|replace(' ', '_')|replace(':', '_')|lower }}">{{ item_name }} Waterfall</button>
                 {% endfor %}
             </div>
             
-            {% for item_name, analysis_data in comparison_analysis.items() %}
+            {% for item_name, analysis_data in dict_distribution_summary.items() %}
             <div class="tab-content {% if loop.first %}active{% endif %}" id="waterfall-{{ item_name|replace(' ', '_')|replace(':', '_')|lower }}-tab">
                 <div id="waterfall-{{ item_name|replace(' ', '_')|replace(':', '_')|lower }}-chart" class="chart-container"></div>
             </div>
@@ -87,12 +87,12 @@
         <h3>Distribution Charts by Item and Step</h3>
         <div class="tab-container">
             <div class="tab-buttons">
-                {% for item_name in comparison_analysis.keys() %}
+                {% for item_name in dict_distribution_summary.keys() %}
                 <button class="tab-button {% if loop.first %}active{% endif %}" data-tab="{{ item_name|replace(' ', '_')|replace(':', '_')|lower }}">{{ item_name }}</button>
                 {% endfor %}
             </div>
             
-            {% for item_name, analysis_data in comparison_analysis.items() %}
+            {% for item_name, analysis_data in dict_distribution_summary.items() %}
             <div class="tab-content {% if loop.first %}active{% endif %}" id="{{ item_name|replace(' ', '_')|replace(':', '_')|lower }}-tab">
                 <h2>{{ item_name }} - Step-by-Step Analysis</h2>
                 
@@ -160,7 +160,7 @@
             });
             
             // Calculate and populate summary table values
-            {% for item_name, analysis_data in comparison_analysis.items() %}
+            {% for item_name, analysis_data in dict_distribution_summary.items() %}
                 {% for step, col_name in analysis_data['columns'].items() %}
                 // Calculate sum for {{ item_name }} step {{ step }}
                 // This would need actual data calculation - placeholder for now
@@ -178,7 +178,7 @@
         {% endfor %}
         
         // Waterfall charts with actual data
-        {% for item_name, analysis_data in comparison_analysis.items() %}
+        {% for item_name, analysis_data in dict_distribution_summary.items() %}
         {% if summary_stats and item_name in summary_stats %}
         {
             const {{ item_name|replace(" ", "_")|replace(":", "_")|lower }}_data = [];

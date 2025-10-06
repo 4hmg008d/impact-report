@@ -9,6 +9,7 @@ from highcharts_core.options.axes.y_axis import YAxis
 from highcharts_core.options.series.bar import ColumnSeries
 from highcharts_core.options.series.bar import WaterfallSeries
 from typing import Dict, List, Any
+import pandas as pd
 
 
 class ImpactChartGenerator:
@@ -17,6 +18,21 @@ class ImpactChartGenerator:
     def __init__(self, config_loader=None):
         self.config_loader = config_loader
     
+    
+    def _get_band_order(self) -> List[str]:
+        """Get the original band order from the configuration"""
+        if not self.config_loader:
+            return None
+        
+        try:
+            band_df = self.config_loader.load_band_data()
+            # Return band names in the order they appear in the configuration
+            return band_df['Name'].tolist()
+        except Exception as e:
+            print(f"Warning: Could not load band order from configuration: {e}")
+            return None
+
+
     def create_bar_chart(self, chart_data: List[Dict], title: str, chart_id: str = None, band_order: List[str] = None) -> Chart:
         """Create a vertical bar chart from chart data with bands in original order"""
         
@@ -101,54 +117,46 @@ class ImpactChartGenerator:
         return Chart.from_options(options)
 
 
-    def create_waterfall_chart(self, item_data: Dict, summary_stats: Dict, title: str, chart_id: str = None) -> Chart:
+    def create_waterfall_chart(self, dict_waterfall: Dict, title: str, chart_id: str = None) -> Chart:
         """Create a waterfall chart from summary statistics data"""
-        if not summary_stats:
-            return None
         
         # Debug: Print the summary stats to see what's being used
-        # print(f"Creating waterfall chart for {title} with summary stats: {summary_stats}")
+        # print(f"Creating waterfall chart for {title} with summary stats: {dict_waterfall}")
         # print(f"Item data: {item_data}")
 
-        # Prepare waterfall data
-        steps = sorted(item_data['step_names'].keys())
-        step_names = [item_data['step_names'][step] for step in steps]
-        values = []
-        
-        # Get values for each step
-        for step in steps:
-            if step in summary_stats and 'total' in summary_stats[step]:
-                values.append(summary_stats[step]['total'])
-            else:
-                values.append(0)
-        
-        if not values:
-            return None
-        
+        # dict_waterfall[step] = {
+        #     'name': step_name,
+        #     'value_total': value_total,
+        #     'value_total_formatted': f"{value_total:,.2f}",
+        #     'value_diff': value_diff,
+        #     'value_diff_formatted': f"{value_diff:,.2f}"
+        # }
+
         # Create waterfall series data
         waterfall_data = []
         
         # Starting point
         waterfall_data.append({
-            'name': step_names[0],
-            'y': values[0],
-            'isSum': False,
+            'name': dict_waterfall[0]['name'],
+            'y': dict_waterfall[0]['value_total'],
+            'isSum': True,
             'color': '#7cb5ec'
         })
         
         # Intermediate changes
-        for i in range(1, len(values)):
-            change = values[i] - values[i-1]
+        for i in range(1, len(dict_waterfall)):
+            change = dict_waterfall[i]['value_diff']
             waterfall_data.append({
-                'name': step_names[i],
+                'name': dict_waterfall[i]['name'],
                 'y': change,
-                'isIntermediateSum': False,
+                'isSum': False,
                 'color': '#90ed7d' if change >= 0 else '#f7a35c'
             })
         
         # Final sum
         waterfall_data.append({
             'name': 'Final',
+            'y': dict_waterfall[-1]['value_total'],
             'isSum': True,
             'color': '#434348'
         })
@@ -197,95 +205,45 @@ class ImpactChartGenerator:
         )
         
         return Chart.from_options(options)
-    
-    
-    def _get_band_order(self) -> List[str]:
-        """Get the original band order from the configuration"""
-        if not self.config_loader:
-            return None
-        
-        try:
-            band_df = self.config_loader.load_band_data()
-            # Return band names in the order they appear in the configuration
-            return band_df['Name'].tolist()
-        except Exception as e:
-            print(f"Warning: Could not load band order from configuration: {e}")
-            return None
-    
-    def generate_chart_html(self, chart_data: List[Dict], title: str, chart_id: str) -> str:
-        """Generate HTML for a single chart"""
-        band_order = self._get_band_order()
-        chart = self.create_bar_chart(chart_data, title, chart_id, band_order)
-        return chart.to_js_literal()
-    
-    def generate_overall_chart_html(self, overall_data: Dict, item_name: str) -> str:
-        """Generate HTML for overall distribution chart"""
-        band_order = self._get_band_order()
-        chart_id = f"{item_name.replace(' ', '_').replace(':', '_').lower()}-chart"
-        chart = self.create_bar_chart(
-            overall_data['chart_data'],
-            f'{item_name} - Overall Difference Distribution',
-            chart_id,
-            band_order
-        )
-        return chart.to_js_literal()
-    
-    
-    def generate_step_chart_html(self, step_data: Dict, title: str, chart_id: str = None) -> str:
-        """Generate HTML for step distribution chart"""
-        band_order = self._get_band_order()
-        chart = self.create_bar_chart(
-            step_data['chart_data'],
-            title,
-            chart_id,
-            band_order
-        )
-        return chart.to_js_literal()
 
 
-    def generate_waterfall_chart_html(self, item_name: str, item_data: Dict, summary_stats: Dict, chart_id: str) -> str:
-        """Generate HTML/JS for waterfall chart using highcharts_core package"""
-        title = f'{item_name} Step Progression Waterfall'
-        chart = self.create_waterfall_chart(item_data, summary_stats, title, chart_id)
-        
-        if not chart:
-            return f"// No data available for {item_name} waterfall chart"
-        
-        return chart.to_js_literal()
-
-    def generate_segment_chart_html(self, segment_data: Dict, segment_name: str, chart_id: str = None) -> str:
-        """Generate HTML for segment distribution chart"""
-        if chart_id is None:
-            chart_id = f"{segment_name.replace(' ', '_').replace(':', '_').lower()}-chart"
-        band_order = self._get_band_order()
-        chart = self.create_bar_chart(
-            segment_data['chart_data'],
-            f'{segment_name} - Difference Distribution',
-            chart_id,
-            band_order
-        )
-        return chart.to_js_literal()
-    
-    def generate_all_charts_html(self, analysis_data, summary_stats=None):
+    def generate_all_charts_html(self, dict_distribution_summary: Dict, summary_df: pd.DataFrame, summary_comparison_mapping: Dict) -> Dict:
         """Generate all charts HTML for the analysis data - consistent pattern"""
         charts_html = {}
         
-        for item_name, item_analysis in analysis_data.items():
+        for item_name, item_analysis in dict_distribution_summary.items():
             charts_html[item_name] = {}
             
-            # Generate distribution charts for each step (sorted to ensure step 0 comes first)
+            # Generate distribution charts for each step (sorted by step number)
             sorted_steps = sorted(item_analysis['steps'].keys())
             for step in sorted_steps:
-                step_data = item_analysis['steps'][step]
+                chart_data = item_analysis['steps'][step]
+                chart_title = f"{item_name} - {chart_data['step_name']}"
                 chart_id = f"{item_name.replace(' ', '_').replace(':', '_').lower()}-step-{step}-chart"
-                # Use the consistent generate_step_chart_html pattern
-                chart_html = self.generate_step_chart_html(step_data, f"{item_name} - {step_data['step_name']}", chart_id)
+                band_order = self._get_band_order()
+                chart_html = self.create_bar_chart(chart_data, chart_title, chart_id, band_order).to_js_literal()
                 charts_html[item_name][f'step_{step}'] = chart_html
             
             # Generate waterfall chart for this item if summary stats available
-            if summary_stats and item_name in summary_stats:
+            if item_name in summary_comparison_mapping.keys():
+                item_dict = summary_comparison_mapping[item_name]
+                step_name = item_dict['steps'][step]['step_name']
+                col_name = item_dict['columns'][step]
+                diff_col_name = item_dict['differences'][step]['diff_column']
+                value_total = summary_df[col_name].sum()
+                value_diff = summary_df[diff_col_name].sum()
+
+                dict_waterfall = {}
+                dict_waterfall[step] = {
+                    'name': step_name,
+                    'value_total': value_total,
+                    'value_total_formatted': f"{value_total:,.2f}",
+                    'value_diff': value_diff,
+                    'value_diff_formatted': f"{value_diff:,.2f}"
+                }
+                waterfall_title = f"{item_name} - Waterfall Chart"
                 waterfall_chart_id = f"waterfall-{item_name.replace(' ', '_').replace(':', '_').lower()}-chart"
-                waterfall_html = self.generate_waterfall_chart_html(item_name, item_analysis, summary_stats[item_name], waterfall_chart_id)
+                waterfall_html = self.create_waterfall_chart(dict_waterfall, waterfall_title, waterfall_chart_id).to_js_literal()
                 charts_html[item_name]['waterfall'] = waterfall_html
     
         return charts_html
