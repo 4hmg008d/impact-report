@@ -124,8 +124,8 @@ class ImpactChartGenerator:
         # print(f"Creating waterfall chart for {title} with summary stats: {dict_waterfall}")
         # print(f"Item data: {item_data}")
 
-        # dict_waterfall[step] = {
-        #     'name': step_name,
+        # dict_waterfall[index] = {
+        #     'name': stage_name,
         #     'value_total': value_total,
         #     'value_total_formatted': f"{value_total:,.2f}",
         #     'value_diff': value_diff,
@@ -135,28 +135,33 @@ class ImpactChartGenerator:
         # Create waterfall series data
         waterfall_data = []
         
+        # Get sorted indices
+        sorted_indices = sorted(dict_waterfall.keys())
+        
         # Starting point
         waterfall_data.append({
-            'name': dict_waterfall[0]['name'],
-            'y': dict_waterfall[0]['value_total'],
+            'name': dict_waterfall[sorted_indices[0]]['stage_name'],
+            'y': dict_waterfall[sorted_indices[0]]['value_total'],
             'isSum': True,
             'color': '#7cb5ec'
         })
         
         # Intermediate changes
-        for i in range(1, len(dict_waterfall)):
-            change = dict_waterfall[i]['value_diff']
+        for i in range(1, len(sorted_indices)):
+            idx = sorted_indices[i]
+            change = dict_waterfall[idx]['value_diff']
             waterfall_data.append({
-                'name': dict_waterfall[i]['name'],
+                'name': dict_waterfall[idx]['stage_name'],
                 'y': change,
                 'isSum': False,
                 'color': '#90ed7d' if change >= 0 else '#f7a35c'
             })
         
         # Final sum
+        last_idx = sorted_indices[-1]
         waterfall_data.append({
             'name': 'Final',
-            'y': dict_waterfall[-1]['value_total'],
+            'y': dict_waterfall[last_idx]['value_total'],
             'isSum': True,
             'color': '#434348'
         })
@@ -167,7 +172,7 @@ class ImpactChartGenerator:
             title={'text': title},
             x_axis=XAxis(
                 type='category',
-                title={'text': 'Steps'}
+                title={'text': 'Stages'}
             ),
             y_axis=YAxis(
                 title={'text': 'Total Value'},
@@ -207,7 +212,7 @@ class ImpactChartGenerator:
         return Chart.from_options(options)
 
 
-    def generate_all_charts_html(self, dict_distribution_summary: Dict, summary_df: pd.DataFrame, summary_comparison_mapping: Dict) -> Dict:
+    def generate_all_charts_html(self, dict_distribution_summary: Dict, dict_comparison_summary: Dict) -> Dict:
         """Generate all charts HTML for the analysis data - consistent pattern"""
         charts_html = {}
         
@@ -216,35 +221,20 @@ class ImpactChartGenerator:
             
             # Generate distribution charts for each step (sorted by step number)
             sorted_steps = sorted(item_analysis['steps'].keys())
-            for step in sorted_steps:
-                chart_data = item_analysis['steps'][step]
+            for step_num in sorted_steps:
+                chart_data = item_analysis['steps'][step_num]
                 chart_title = f"{item_name} - {chart_data['step_name']}"
-                chart_id = f"{item_name.replace(' ', '_').replace(':', '_').lower()}-step-{step}-chart"
+                chart_id = f"{item_name.replace(' ', '_').replace(':', '_').lower()}-step-{step_num}-chart"
                 band_order = self._get_band_order()
-                chart_html = self.create_bar_chart(chart_data, chart_title, chart_id, band_order).to_js_literal()
-                charts_html[item_name][f'step_{step}'] = chart_html
+                chart_html = self.create_bar_chart(chart_data['chart_data'], chart_title, chart_id, band_order).to_js_literal()
+                charts_html[item_name][f'step_{step_num}'] = chart_html
             
             # Generate waterfall chart for this item if summary stats available
-            if item_name in summary_comparison_mapping.keys():
-                item_dict = summary_comparison_mapping[item_name]
-                step_name = item_dict['steps'][step]['step_name']
-                col_name = item_dict['columns'][step]
-                diff_col_name = item_dict['differences'][step]['diff_column']
-                value_total = summary_df[col_name].sum()
-                value_diff = summary_df[diff_col_name].sum()
-
-                dict_waterfall = {}
-                dict_waterfall[step] = {
-                    'name': step_name,
-                    'value_total': value_total,
-                    'value_total_formatted': f"{value_total:,.2f}",
-                    'value_diff': value_diff,
-                    'value_diff_formatted': f"{value_diff:,.2f}"
-                }
-                waterfall_title = f"{item_name} - Waterfall Chart"
-                waterfall_chart_id = f"waterfall-{item_name.replace(' ', '_').replace(':', '_').lower()}-chart"
-                waterfall_html = self.create_waterfall_chart(dict_waterfall, waterfall_title, waterfall_chart_id).to_js_literal()
-                charts_html[item_name]['waterfall'] = waterfall_html
+        for item_name, item_dict in dict_comparison_summary.items():
+            waterfall_title = f"{item_name} - Waterfall Chart"
+            waterfall_chart_id = f"waterfall-{item_name.replace(' ', '_').replace(':', '_').lower()}-chart"
+            waterfall_html = self.create_waterfall_chart(item_dict, waterfall_title, waterfall_chart_id).to_js_literal()
+            charts_html[item_name]['waterfall'] = waterfall_html
     
         return charts_html
     

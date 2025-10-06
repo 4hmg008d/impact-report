@@ -9,3 +9,6 @@ df = pd.DataFrame({
 selected_columns = ['A', 'C']
 summed_df = pd.DataFrame([df[selected_columns].sum()])
 print(summed_df)
+
+summed_df_dict = summed_df.to_dict(orient='records')
+print(summed_df_dict)

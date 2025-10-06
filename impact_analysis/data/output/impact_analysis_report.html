@@ -33,14 +33,15 @@
     
     <!-- Summary Statistics Table -->
     <div class="summary-stats">
-        <h3>Summary Statistics - Total Values by Item and Step</h3>
+        <h3>Summary Statistics - Total Values by Item and Stage</h3>
         <table class="summary-table">
             <thead>
                 <tr>
                     <th>Item</th>
                     
                         
-                        <th>All Steps</th>
+                        
+                        <th>Start</th>
                         
                         <th>Excess Change</th>
                         
@@ -54,46 +55,22 @@
                 <tr>
                     <td><strong>BI</strong></td>
                     
-                        <td>
-                            
-                                213,189.23
-                            
-                        </td>
+                        <td>213,189.23</td>
                     
-                        <td>
-                            
-                                417,694.64
-                            
-                        </td>
+                        <td>417,694.64</td>
                     
-                        <td>
-                            
-                                416,797.72
-                            
-                        </td>
+                        <td>416,797.72</td>
                     
                 </tr>
                 
                 <tr>
                     <td><strong>Property</strong></td>
                     
-                        <td>
-                            
-                                417,694.64
-                            
-                        </td>
+                        <td>417,694.64</td>
                     
-                        <td>
-                            
-                                416,797.72
-                            
-                        </td>
+                        <td>416,797.72</td>
                     
-                        <td>
-                            
-                                416,797.72
-                            
-                        </td>
+                        <td>416,797.72</td>
                     
                 </tr>
                 
@@ -144,22 +121,22 @@
                 <div class="nested-tab-container">
                     <div class="nested-tab-buttons">
                         
-                        <button class="nested-tab-button active" data-tab="bi-step-1">All Steps</button>
+                        <button class="nested-tab-button active" data-tab="bi-step-0">Overall</button>
                         
-                        <button class="nested-tab-button " data-tab="bi-step-2">Excess Change</button>
+                        <button class="nested-tab-button " data-tab="bi-step-1">Excess Change</button>
                         
-                        <button class="nested-tab-button " data-tab="bi-step-3">Inflation</button>
+                        <button class="nested-tab-button " data-tab="bi-step-2">Inflation</button>
                         
                     </div>
                     
                     
                     
-                    <div class="nested-tab-content active" id="bi-step-1-tab">
-                        <h3>All Steps</h3>
-                        <p><strong>Comparison:</strong> Step 1 → Step 3</p>
+                    <div class="nested-tab-content active" id="bi-step-0-tab">
+                        <h3>Overall</h3>
+                        <p><strong>Comparison:</strong> Step  → Step </p>
                         <p><strong>Total Policies:</strong> 20</p>
                         
-                        <div id="bi-step-1-chart" class="chart-container"></div>
+                        <div id="bi-step-0-chart" class="chart-container"></div>
                         
                         <!-- Band Distribution Table -->
                         <table>
@@ -201,12 +178,12 @@
                     </div>
                     
                     
-                    <div class="nested-tab-content " id="bi-step-2-tab">
+                    <div class="nested-tab-content " id="bi-step-1-tab">
                         <h3>Excess Change</h3>
-                        <p><strong>Comparison:</strong> Step 1 → Step 2</p>
+                        <p><strong>Comparison:</strong> Step  → Step </p>
                         <p><strong>Total Policies:</strong> 20</p>
                         
-                        <div id="bi-step-2-chart" class="chart-container"></div>
+                        <div id="bi-step-1-chart" class="chart-container"></div>
                         
                         <!-- Band Distribution Table -->
                         <table>
@@ -242,12 +219,12 @@
                     </div>
                     
                     
-                    <div class="nested-tab-content " id="bi-step-3-tab">
+                    <div class="nested-tab-content " id="bi-step-2-tab">
                         <h3>Inflation</h3>
-                        <p><strong>Comparison:</strong> Step 2 → Step 3</p>
+                        <p><strong>Comparison:</strong> Step  → Step </p>
                         <p><strong>Total Policies:</strong> 20</p>
                         
-                        <div id="bi-step-3-chart" class="chart-container"></div>
+                        <div id="bi-step-2-chart" class="chart-container"></div>
                         
                         <!-- Band Distribution Table -->
                         <table>
@@ -309,19 +286,78 @@
                 <div class="nested-tab-container">
                     <div class="nested-tab-buttons">
                         
-                        <button class="nested-tab-button active" data-tab="property-step-1">All Steps</button>
+                        <button class="nested-tab-button active" data-tab="property-step-0">Overall</button>
                         
-                        <button class="nested-tab-button " data-tab="property-step-2">Excess Change</button>
+                        <button class="nested-tab-button " data-tab="property-step-1">Excess Change</button>
                         
-                        <button class="nested-tab-button " data-tab="property-step-3">Inflation</button>
+                        <button class="nested-tab-button " data-tab="property-step-2">Inflation</button>
                         
                     </div>
                     
                     
                     
-                    <div class="nested-tab-content active" id="property-step-1-tab">
-                        <h3>All Steps</h3>
-                        <p><strong>Comparison:</strong> Step 1 → Step 3</p>
+                    <div class="nested-tab-content active" id="property-step-0-tab">
+                        <h3>Overall</h3>
+                        <p><strong>Comparison:</strong> Step  → Step </p>
+                        <p><strong>Total Policies:</strong> 20</p>
+                        
+                        <div id="property-step-0-chart" class="chart-container"></div>
+                        
+                        <!-- Band Distribution Table -->
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Band</th>
+                                    <th>Count</th>
+                                    <th>Percentage</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                <tr>
+                                    <td>11.[0%, 10%]</td>
+                                    <td>2</td>
+                                    <td>10.00%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>13.[20%, 30%]</td>
+                                    <td>1</td>
+                                    <td>5.00%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>15.[40%, 50%]</td>
+                                    <td>2</td>
+                                    <td>10.00%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>18.[200%, 500%]</td>
+                                    <td>2</td>
+                                    <td>10.00%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>20.[1000%, 99900%]</td>
+                                    <td>4</td>
+                                    <td>20.00%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>Out of Range</td>
+                                    <td>9</td>
+                                    <td>45.00%</td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    
+                    <div class="nested-tab-content " id="property-step-1-tab">
+                        <h3>Excess Change</h3>
+                        <p><strong>Comparison:</strong> Step  → Step </p>
                         <p><strong>Total Policies:</strong> 20</p>
                         
                         <div id="property-step-1-chart" class="chart-container"></div>
@@ -379,70 +415,11 @@
                     
                     
                     <div class="nested-tab-content " id="property-step-2-tab">
-                        <h3>Excess Change</h3>
-                        <p><strong>Comparison:</strong> Step 1 → Step 2</p>
+                        <h3>Inflation</h3>
+                        <p><strong>Comparison:</strong> Step  → Step </p>
                         <p><strong>Total Policies:</strong> 20</p>
                         
                         <div id="property-step-2-chart" class="chart-container"></div>
-                        
-                        <!-- Band Distribution Table -->
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Band</th>
-                                    <th>Count</th>
-                                    <th>Percentage</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                
-                                <tr>
-                                    <td>11.[0%, 10%]</td>
-                                    <td>2</td>
-                                    <td>10.00%</td>
-                                </tr>
-                                
-                                <tr>
-                                    <td>13.[20%, 30%]</td>
-                                    <td>1</td>
-                                    <td>5.00%</td>
-                                </tr>
-                                
-                                <tr>
-                                    <td>15.[40%, 50%]</td>
-                                    <td>2</td>
-                                    <td>10.00%</td>
-                                </tr>
-                                
-                                <tr>
-                                    <td>18.[200%, 500%]</td>
-                                    <td>2</td>
-                                    <td>10.00%</td>
-                                </tr>
-                                
-                                <tr>
-                                    <td>20.[1000%, 99900%]</td>
-                                    <td>4</td>
-                                    <td>20.00%</td>
-                                </tr>
-                                
-                                <tr>
-                                    <td>Out of Range</td>
-                                    <td>9</td>
-                                    <td>45.00%</td>
-                                </tr>
-                                
-                            </tbody>
-                        </table>
-                    </div>
-                    
-                    
-                    <div class="nested-tab-content " id="property-step-3-tab">
-                        <h3>Inflation</h3>
-                        <p><strong>Comparison:</strong> Step 2 → Step 3</p>
-                        <p><strong>Total Policies:</strong> 20</p>
-                        
-                        <div id="property-step-3-chart" class="chart-container"></div>
                         
                         <!-- Band Distribution Table -->
                         <table>
@@ -490,37 +467,6 @@
                 $(this).addClass('active');
                 $('#' + $(this).data('tab') + '-tab').addClass('active');
             });
-            
-            // Calculate and populate summary table values
-            
-                
-                // Calculate sum for BI step 1
-                // This would need actual data calculation - placeholder for now
-                $('#summary-BI-1').text('Calculating...');
-                
-                // Calculate sum for BI step 2
-                // This would need actual data calculation - placeholder for now
-                $('#summary-BI-2').text('Calculating...');
-                
-                // Calculate sum for BI step 3
-                // This would need actual data calculation - placeholder for now
-                $('#summary-BI-3').text('Calculating...');
-                
-            
-                
-                // Calculate sum for Property step 1
-                // This would need actual data calculation - placeholder for now
-                $('#summary-Property-1').text('Calculating...');
-                
-                // Calculate sum for Property step 2
-                // This would need actual data calculation - placeholder for now
-                $('#summary-Property-2').text('Calculating...');
-                
-                // Calculate sum for Property step 3
-                // This would need actual data calculation - placeholder for now
-                $('#summary-Property-3').text('Calculating...');
-                
-            
         });
 
         // Charts generated using Highcharts Python
@@ -528,10 +474,10 @@
             // BI charts
             
                 document.addEventListener('DOMContentLoaded', function() {
-Highcharts.chart('bi-step-1-chart',
+Highcharts.chart('bi-step-0-chart',
 {
   chart: {
-  renderTo: 'bi-step-1-chart',
+  renderTo: 'bi-step-0-chart',
   type: 'column'
 },
   plotOptions: {
@@ -579,7 +525,7 @@ Highcharts.chart('bi-step-1-chart',
   type: 'column'
 }],
   title: {
-  text: 'BI - All Steps'
+  text: 'BI - Overall'
 },
   tooltip: {
   headerFormat: '<span style="font-size:10px">{point.key}</span><br/>',
@@ -613,10 +559,10 @@ Highcharts.chart('bi-step-1-chart',
 });
             
                 document.addEventListener('DOMContentLoaded', function() {
-Highcharts.chart('bi-step-2-chart',
+Highcharts.chart('bi-step-1-chart',
 {
   chart: {
-  renderTo: 'bi-step-2-chart',
+  renderTo: 'bi-step-1-chart',
   type: 'column'
 },
   plotOptions: {
@@ -690,10 +636,10 @@ Highcharts.chart('bi-step-2-chart',
 });
             
                 document.addEventListener('DOMContentLoaded', function() {
-Highcharts.chart('bi-step-3-chart',
+Highcharts.chart('bi-step-2-chart',
 {
   chart: {
-  renderTo: 'bi-step-3-chart',
+  renderTo: 'bi-step-2-chart',
   type: 'column'
 },
   plotOptions: {
@@ -817,40 +763,41 @@ Highcharts.chart('waterfall-bi-chart',
 },
   series: [{
   data: [{
-  isSum: false,
+  isSum: true,
   y: 213189.2259145,
   color: '#7cb5ec',
-  name: 'All Steps'
+  name: 'Start'
 },
 {
-  isIntermediateSum: false,
+  isSum: false,
   y: 204505.41408549994,
   color: '#90ed7d',
   name: 'Excess Change'
 },
 {
-  isIntermediateSum: false,
+  isSum: false,
   y: -896.9199999999837,
   color: '#f7a35c',
   name: 'Inflation'
 },
 {
   isSum: true,
+  y: 416797.72,
   color: '#434348',
   name: 'Final'
 }],
-  name: 'BI Step Progression Waterfall',
+  name: 'BI',
   type: 'waterfall'
 }],
   title: {
-  text: 'BI Step Progression Waterfall'
+  text: 'BI - Waterfall Chart'
 },
   tooltip: {
   pointFormat: '<b>{point.name}</b><br/>Value: {point.y:,.0f}<br/>Total: {point.stackTotal:,.0f}'
 },
   xAxis: {
   title: {
-  text: 'Steps'
+  text: 'Stages'
 },
   type: 'category'
 },
@@ -871,10 +818,10 @@ Highcharts.chart('waterfall-bi-chart',
             // Property charts
             
                 document.addEventListener('DOMContentLoaded', function() {
-Highcharts.chart('property-step-1-chart',
+Highcharts.chart('property-step-0-chart',
 {
   chart: {
-  renderTo: 'property-step-1-chart',
+  renderTo: 'property-step-0-chart',
   type: 'column'
 },
   plotOptions: {
@@ -936,7 +883,7 @@ Highcharts.chart('property-step-1-chart',
   type: 'column'
 }],
   title: {
-  text: 'Property - All Steps'
+  text: 'Property - Overall'
 },
   tooltip: {
   headerFormat: '<span style="font-size:10px">{point.key}</span><br/>',
@@ -972,10 +919,10 @@ Highcharts.chart('property-step-1-chart',
 });
             
                 document.addEventListener('DOMContentLoaded', function() {
-Highcharts.chart('property-step-2-chart',
+Highcharts.chart('property-step-1-chart',
 {
   chart: {
-  renderTo: 'property-step-2-chart',
+  renderTo: 'property-step-1-chart',
   type: 'column'
 },
   plotOptions: {
@@ -1073,10 +1020,10 @@ Highcharts.chart('property-step-2-chart',
 });
             
                 document.addEventListener('DOMContentLoaded', function() {
-Highcharts.chart('property-step-3-chart',
+Highcharts.chart('property-step-2-chart',
 {
   chart: {
-  renderTo: 'property-step-3-chart',
+  renderTo: 'property-step-2-chart',
   type: 'column'
 },
   plotOptions: {
@@ -1160,40 +1107,41 @@ Highcharts.chart('waterfall-property-chart',
 },
   series: [{
   data: [{
-  isSum: false,
+  isSum: true,
   y: 417694.63999999996,
   color: '#7cb5ec',
-  name: 'All Steps'
+  name: 'Start'
 },
 {
-  isIntermediateSum: false,
+  isSum: false,
   y: -896.9199999999837,
   color: '#f7a35c',
   name: 'Excess Change'
 },
 {
-  isIntermediateSum: false,
+  isSum: false,
   y: 0.0,
   color: '#90ed7d',
   name: 'Inflation'
 },
 {
   isSum: true,
+  y: 416797.72,
   color: '#434348',
   name: 'Final'
 }],
-  name: 'Property Step Progression Waterfall',
+  name: 'Property',
   type: 'waterfall'
 }],
   title: {
-  text: 'Property Step Progression Waterfall'
+  text: 'Property - Waterfall Chart'
 },
   tooltip: {
   pointFormat: '<b>{point.name}</b><br/>Value: {point.y:,.0f}<br/>Total: {point.stackTotal:,.0f}'
 },
   xAxis: {
   title: {
-  text: 'Steps'
+  text: 'Stages'
 },
   type: 'category'
 },
@@ -1210,163 +1158,6 @@ Highcharts.chart('waterfall-property-chart',
 );
 });
             
-        
-        
-        // Waterfall charts with actual data
-        
-        
-        {
-            const bi_data = [];
-            const steps = [1,2,3];
-            const stepNames = ['All Steps','Excess Change','Inflation'];
-            const values = [213189.2259145,417694.63999999996,416797.72];
-            
-            // Starting point
-            bi_data.push({
-                name: stepNames[0],
-                y: values[0],
-                isSum: false,
-                color: '#7cb5ec'
-            });
-            
-            // Intermediate changes
-            for (let i = 1; i < values.length; i++) {
-                const change = values[i] - values[i-1];
-                const percentChange = ((change / values[i-1]) * 100).toFixed(2);
-                bi_data.push({
-                    name: stepNames[i],
-                    y: change,
-                    isIntermediateSum: false,
-                    color: change >= 0 ? '#90ed7d' : '#f7a35c',
-                    dataLabels: {
-                        format: percentChange + '%'
-                    }
-                });
-            }
-            
-            // Final sum
-            bi_data.push({
-                name: 'Final',
-                isSum: true,
-                color: '#434348'
-            });
-            
-            Highcharts.chart('waterfall-bi-chart', {
-                chart: { type: 'waterfall' },
-                title: { text: 'BI Step Progression Waterfall' },
-                xAxis: { type: 'category' },
-                yAxis: { 
-                    title: { text: 'Total Value' },
-                    labels: {
-                        formatter: function() {
-                            return this.value.toLocaleString();
-                        }
-                    }
-                },
-                tooltip: {
-                    pointFormat: '<b>{point.name}</b><br/>Value: {point.y:,.0f}<br/>Total: {point.stackTotal:,.0f}'
-                },
-                plotOptions: {
-                    waterfall: {
-                        dataLabels: {
-                            enabled: true,
-                            formatter: function() {
-                                if (this.point.isSum || this.point.isIntermediateSum) {
-                                    return this.point.stackTotal.toLocaleString();
-                                } else {
-                                    return ((this.point.y / this.point.stackTotal) * 100).toFixed(1) + '%';
-                                }
-                            },
-                            style: {
-                                fontWeight: 'bold'
-                            }
-                        }
-                    }
-                },
-                series: [{
-                    name: 'BI',
-                    data: bi_data
-                }]
-            });
-        }
-        
-        
-        
-        {
-            const property_data = [];
-            const steps = [1,2,3];
-            const stepNames = ['All Steps','Excess Change','Inflation'];
-            const values = [417694.63999999996,416797.72,416797.72];
-            
-            // Starting point
-            property_data.push({
-                name: stepNames[0],
-                y: values[0],
-                isSum: false,
-                color: '#7cb5ec'
-            });
-            
-            // Intermediate changes
-            for (let i = 1; i < values.length; i++) {
-                const change = values[i] - values[i-1];
-                const percentChange = ((change / values[i-1]) * 100).toFixed(2);
-                property_data.push({
-                    name: stepNames[i],
-                    y: change,
-                    isIntermediateSum: false,
-                    color: change >= 0 ? '#90ed7d' : '#f7a35c',
-                    dataLabels: {
-                        format: percentChange + '%'
-                    }
-                });
-            }
-            
-            // Final sum
-            property_data.push({
-                name: 'Final',
-                isSum: true,
-                color: '#434348'
-            });
-            
-            Highcharts.chart('waterfall-property-chart', {
-                chart: { type: 'waterfall' },
-                title: { text: 'Property Step Progression Waterfall' },
-                xAxis: { type: 'category' },
-                yAxis: { 
-                    title: { text: 'Total Value' },
-                    labels: {
-                        formatter: function() {
-                            return this.value.toLocaleString();
-                        }
-                    }
-                },
-                tooltip: {
-                    pointFormat: '<b>{point.name}</b><br/>Value: {point.y:,.0f}<br/>Total: {point.stackTotal:,.0f}'
-                },
-                plotOptions: {
-                    waterfall: {
-                        dataLabels: {
-                            enabled: true,
-                            formatter: function() {
-                                if (this.point.isSum || this.point.isIntermediateSum) {
-                                    return this.point.stackTotal.toLocaleString();
-                                } else {
-                                    return ((this.point.y / this.point.stackTotal) * 100).toFixed(1) + '%';
-                                }
-                            },
-                            style: {
-                                fontWeight: 'bold'
-                            }
-                        }
-                    }
-                },
-                series: [{
-                    name: 'Property',
-                    data: property_data
-                }]
-            });
-        }
-        
         
     </script>
 </body>

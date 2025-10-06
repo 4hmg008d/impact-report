@@ -116,6 +116,14 @@ I've updated my impact_analysis_config_new.xlsx again, added new steps, and new 
 
 ---
 
+i realised that i need to distinguish "stage" and "step" in my code:
+- stage indicates a single point with value at that stage, stage 1 represents the starting point
+- step indicates the difference / impact going from one stage to the next, step 1 is going from stage 1 to stage 2, step 0 is the overall impact between the last and the first stage
+
+refactor my code to distinguish the 2 and assign the correct dict name and column names to the variables and outputs
+
+---
+
 ## Dashboard App
 
 Create a dash dashboard in Python which serves as a front end for 2 functions:

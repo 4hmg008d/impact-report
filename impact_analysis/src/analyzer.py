@@ -134,13 +134,13 @@ class ImpactAnalyzer:
             
             # Process each difference column (step comparison)
             if 'differences' in item_data:
-                # Sort steps to ensure step 0 (All Steps) comes first
+                # Sort steps to ensure step 0 (Overall) comes first
                 sorted_steps = sorted(item_data['differences'].keys())
                 
-                for step in sorted_steps:
-                    diff_info = item_data['differences'][step]
+                for step_num in sorted_steps:
+                    diff_info = item_data['differences'][step_num]
                     diff_col = diff_info['percent_diff_column']
-                    step_name = item_data['step_names'][step]
+                    step_name = item_data['step_names'][step_num]
                     
                     # Band distribution for this step comparison
                     summary_by_band = self.map_to_bands(merged_df, diff_col, band_df)
@@ -157,15 +157,15 @@ class ImpactAnalyzer:
                             'percentage': round(band_row['Percentage'], 2)
                         })
                     
-                    dict_distribution_summary[item_name]['steps'][step] = {
+                    dict_distribution_summary[item_name]['steps'][step_num] = {
                         'step_name': step_name,
                         'percent_diff_column': diff_col,
                         'chart_data': step_chart_data,
                         'total_policies': len(merged_df),
                         'summary_by_band': summary_by_band.to_dict('records'),
                         'summary_by_band_segment': summary_by_band_segment,
-                        'from_step': diff_info['from_step'],
-                        'to_step': diff_info['to_step']
+                        'from_stage': diff_info['from_stage'],
+                        'to_stage': diff_info['to_stage']
                     }
             
             # Also store column information for summary calculations
@@ -173,64 +173,64 @@ class ImpactAnalyzer:
         
         return dict_distribution_summary
 
-    def generate_waterfall_chart_data(self, df_summary: pd.DataFrame, comparison_mapping: Dict[str, Dict]) -> pd.DataFrame:
-        """Generate waterfall chart data for each comparison item using Pandas"""
-        waterfall_data = []
+    # def generate_waterfall_chart_data(self, df_summary: pd.DataFrame, comparison_mapping: Dict[str, Dict]) -> pd.DataFrame:
+    #     """Generate waterfall chart data for each comparison item using Pandas"""
+    #     waterfall_data = []
         
-        for item_name, item_data in comparison_mapping.items():
-            if 'columns' not in item_data:
-                continue
+    #     for item_name, item_data in comparison_mapping.items():
+    #         if 'columns' not in item_data:
+    #             continue
             
-            step_names = item_data['step_names']
-            columns = item_data['columns']
+    #         stage_names = item_data['stage_names']
+    #         columns = item_data['columns']
             
-            # Extract values for each step
-            values = []
-            for step in sorted(columns.keys()):
-                col_name = columns[step]
-                if col_name in df_summary.columns:
-                    total_value = df_summary[col_name].sum()
-                    values.append(total_value)
-                else:
-                    values.append(0)
+    #         # Extract values for each stage
+    #         values = []
+    #         for stage in sorted(columns.keys()):
+    #             col_name = columns[stage]
+    #             if col_name in df_summary.columns:
+    #                 total_value = df_summary[col_name].sum()
+    #                 values.append(total_value)
+    #             else:
+    #                 values.append(0)
             
-            if len(values) != len(step_names):
-                print(f"Warning: Mismatch in number of steps and columns for {item_name}")
-                continue
+    #         if len(values) != len(stage_names):
+    #             print(f"Warning: Mismatch in number of stages and columns for {item_name}")
+    #             continue
             
-            # Prepare waterfall data
-            waterfall_data_item = []
-            # Initial value
-            waterfall_data_item.append({
-                'name': step_names[0],
-                'y': values[0],
-                'isSum': True,
-                'color': '#7cb5ec'
-            })
+    #         # Prepare waterfall data
+    #         waterfall_data_item = []
+    #         # Initial value
+    #         waterfall_data_item.append({
+    #             'name': stage_names[sorted(stage_names.keys())[0]],
+    #             'y': values[0],
+    #             'isSum': True,
+    #             'color': '#7cb5ec'
+    #         })
             
-            # Intermediate steps
-            for i in range(1, len(values) - 1):
-                change = values[i] - values[i - 1]
-                color = '#90ed7d' if change >= 0 else '#f15c80'
+    #         # Intermediate steps (showing changes between stages)
+    #         for i in range(1, len(values) - 1):
+    #             change = values[i] - values[i - 1]
+    #             color = '#90ed7d' if change >= 0 else '#f15c80'
                 
-                waterfall_data_item.append({
-                    'name': step_names[i],
-                    'y': change,
-                    'isSum': False,
-                    'color': color
-                })
+    #             waterfall_data_item.append({
+    #                 'name': stage_names[sorted(stage_names.keys())[i]],
+    #                 'y': change,
+    #                 'isSum': False,
+    #                 'color': color
+    #             })
             
-            # Final sum
-            waterfall_data_item.append({
-                'name': 'Final',
-                'y': values[-1],
-                'isSum': True,
-                'color': '#434348'
-            })
+    #         # Final sum
+    #         waterfall_data_item.append({
+    #             'name': 'Final',
+    #             'y': values[-1],
+    #             'isSum': True,
+    #             'color': '#434348'
+    #         })
             
-            waterfall_data.append({
-                'item_name': item_name,
-                'data': waterfall_data_item
-            })
+    #         waterfall_data.append({
+    #             'item_name': item_name,
+    #             'data': waterfall_data_item
+    #         })
         
-        return pd.DataFrame(waterfall_data)
+    #     return pd.DataFrame(waterfall_data)

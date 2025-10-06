@@ -61,16 +61,14 @@ class ModularImpactAnalyzer:
         self.logger.info(f"Saved merged data to: {merged_output_path}")
         
         # Generate and save summary table using ImpactAnalyzer
-        summary_df, summary_comparison_mapping = self.data_processor.aggregate_merged_data(merged_df, comparison_mapping)
+        dict_comparison_summary = self.data_processor.aggregate_merged_data(merged_df, comparison_mapping)
 
         # Debug
-        # print("Summary DataFrame:")
-        # print(summary_df)
         print("Summary Comparison Mapping:")
-        print(summary_comparison_mapping)
+        print(dict_comparison_summary)
 
         summary_output_path = os.path.join(output_dir, "summary_table.csv")
-        summary_df.to_csv(summary_output_path, index=False)
+        pd.DataFrame(dict_comparison_summary).to_csv(summary_output_path, index=False)
         self.logger.info(f"Saved summary table to: {summary_output_path}")
         
         # Save band distribution for all comparison items and steps
@@ -117,14 +115,18 @@ class ModularImpactAnalyzer:
             # Step 4: Generate HTML report
             output_dir = self.config_loader.get_output_dir()
             html_output_path = os.path.join(output_dir, "impact_analysis_report.html")
-            summary_df, summary_comparison_mapping = self.data_processor.aggregate_merged_data(merged_df_w_diff, comparison_mapping)
-            self.visualizer.generate_html_report(dict_distribution_summary, summary_df, summary_comparison_mapping, html_output_path)
+            dict_comparison_summary = self.data_processor.aggregate_merged_data(merged_df_w_diff, comparison_mapping)
+
+
+            self.visualizer.generate_html_report(dict_distribution_summary, dict_comparison_summary, html_output_path)
 
             self.logger.info("Modular impact analysis completed successfully")
             return True
             
         except Exception as e:
+            import traceback
             self.logger.error(f"Modular impact analysis failed: {e}")
+            self.logger.error(traceback.format_exc())
             return False
 
 

@@ -33,30 +33,25 @@
     
     <!-- Summary Statistics Table -->
     <div class="summary-stats">
-        <h3>Summary Statistics - Total Values by Item and Step</h3>
+        <h3>Summary Statistics - Total Values by Item and Stage</h3>
         <table class="summary-table">
             <thead>
                 <tr>
                     <th>Item</th>
-                    {% if dict_distribution_summary %}
-                        {% for step, step_name in dict_distribution_summary[dict_distribution_summary.keys()|first]['step_names'].items() %}
-                        <th>{{ step_name }}</th>
+                    {% if dict_comparison_summary %}
+                        {% set first_item = dict_comparison_summary[dict_comparison_summary.keys()|first] %}
+                        {% for idx in first_item.keys()|sort %}
+                        <th>{{ first_item[idx]['stage_name'] }}</th>
                         {% endfor %}
                     {% endif %}
                 </tr>
             </thead>
             <tbody>
-                {% for item_name, analysis_data in dict_distribution_summary.items() %}
+                {% for item_name, item_data in dict_comparison_summary.items() %}
                 <tr>
                     <td><strong>{{ item_name }}</strong></td>
-                    {% for step in analysis_data['step_names'].keys()|sort %}
-                        <td>
-                            {% if summary_stats and item_name in summary_stats and step in summary_stats[item_name] %}
-                                {{ summary_stats[item_name][step]['formatted'] }}
-                            {% else %}
-                                N/A
-                            {% endif %}
-                        </td>
+                    {% for idx in item_data.keys()|sort %}
+                        <td>{{ "{:,.2f}".format(item_data[idx]['value_total']) }}</td>
                     {% endfor %}
                 </tr>
                 {% endfor %}
@@ -69,12 +64,12 @@
         <h3>Step Progression Waterfall Charts</h3>
         <div class="tab-container">
             <div class="tab-buttons">
-                {% for item_name in dict_distribution_summary.keys() %}
+                {% for item_name in dict_comparison_summary.keys() %}
                 <button class="tab-button {% if loop.first %}active{% endif %}" data-tab="waterfall-{{ item_name|replace(' ', '_')|replace(':', '_')|lower }}">{{ item_name }} Waterfall</button>
                 {% endfor %}
             </div>
             
-            {% for item_name, analysis_data in dict_distribution_summary.items() %}
+            {% for item_name, analysis_data in dict_comparison_summary.items() %}
             <div class="tab-content {% if loop.first %}active{% endif %}" id="waterfall-{{ item_name|replace(' ', '_')|replace(':', '_')|lower }}-tab">
                 <div id="waterfall-{{ item_name|replace(' ', '_')|replace(':', '_')|lower }}-chart" class="chart-container"></div>
             </div>
@@ -158,15 +153,6 @@
                 $(this).addClass('active');
                 $('#' + $(this).data('tab') + '-tab').addClass('active');
             });
-            
-            // Calculate and populate summary table values
-            {% for item_name, analysis_data in dict_distribution_summary.items() %}
-                {% for step, col_name in analysis_data['columns'].items() %}
-                // Calculate sum for {{ item_name }} step {{ step }}
-                // This would need actual data calculation - placeholder for now
-                $('#summary-{{ item_name }}-{{ step }}').text('Calculating...');
-                {% endfor %}
-            {% endfor %}
         });
 
         // Charts generated using Highcharts Python
@@ -175,86 +161,6 @@
             {% for chart_type, chart_js in item_charts.items() %}
                 {{ chart_js|safe }}
             {% endfor %}
-        {% endfor %}
-        
-        // Waterfall charts with actual data
-        {% for item_name, analysis_data in dict_distribution_summary.items() %}
-        {% if summary_stats and item_name in summary_stats %}
-        {
-            const {{ item_name|replace(" ", "_")|replace(":", "_")|lower }}_data = [];
-            const steps = [{% for step in analysis_data['step_names'].keys()|sort %}{{ step }}{% if not loop.last %},{% endif %}{% endfor %}];
-            const stepNames = [{% for step in analysis_data['step_names'].keys()|sort %}'{{ analysis_data['step_names'][step] }}'{% if not loop.last %},{% endif %}{% endfor %}];
-            const values = [{% for step in analysis_data['step_names'].keys()|sort %}{{ summary_stats[item_name][step]['total'] if step in summary_stats[item_name] else 0 }}{% if not loop.last %},{% endif %}{% endfor %}];
-            
-            // Starting point
-            {{ item_name|replace(" ", "_")|replace(":", "_")|lower }}_data.push({
-                name: stepNames[0],
-                y: values[0],
-                isSum: false,
-                color: '#7cb5ec'
-            });
-            
-            // Intermediate changes
-            for (let i = 1; i < values.length; i++) {
-                const change = values[i] - values[i-1];
-                const percentChange = ((change / values[i-1]) * 100).toFixed(2);
-                {{ item_name|replace(" ", "_")|replace(":", "_")|lower }}_data.push({
-                    name: stepNames[i],
-                    y: change,
-                    isIntermediateSum: false,
-                    color: change >= 0 ? '#90ed7d' : '#f7a35c',
-                    dataLabels: {
-                        format: percentChange + '%'
-                    }
-                });
-            }
-            
-            // Final sum
-            {{ item_name|replace(" ", "_")|replace(":", "_")|lower }}_data.push({
-                name: 'Final',
-                isSum: true,
-                color: '#434348'
-            });
-            
-            Highcharts.chart('waterfall-{{ item_name|replace(" ", "_")|replace(":", "_")|lower }}-chart', {
-                chart: { type: 'waterfall' },
-                title: { text: '{{ item_name }} Step Progression Waterfall' },
-                xAxis: { type: 'category' },
-                yAxis: { 
-                    title: { text: 'Total Value' },
-                    labels: {
-                        formatter: function() {
-                            return this.value.toLocaleString();
-                        }
-                    }
-                },
-                tooltip: {
-                    pointFormat: '<b>{point.name}</b><br/>Value: {point.y:,.0f}<br/>Total: {point.stackTotal:,.0f}'
-                },
-                plotOptions: {
-                    waterfall: {
-                        dataLabels: {
-                            enabled: true,
-                            formatter: function() {
-                                if (this.point.isSum || this.point.isIntermediateSum) {
-                                    return this.point.stackTotal.toLocaleString();
-                                } else {
-                                    return ((this.point.y / this.point.stackTotal) * 100).toFixed(1) + '%';
-                                }
-                            },
-                            style: {
-                                fontWeight: 'bold'
-                            }
-                        }
-                    }
-                },
-                series: [{
-                    name: '{{ item_name }}',
-                    data: {{ item_name|replace(" ", "_")|replace(":", "_")|lower }}_data
-                }]
-            });
-        }
-        {% endif %}
         {% endfor %}
     </script>
 </body>
