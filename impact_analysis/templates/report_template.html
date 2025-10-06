@@ -102,7 +102,7 @@
                     {% set step_data = analysis_data['steps'][step] %}
                     <div class="nested-tab-content {% if loop.first %}active{% endif %}" id="{{ item_name|replace(' ', '_')|replace(':', '_')|lower }}-step-{{ step }}-tab">
                         <h3>{{ step_data['step_name'] }}</h3>
-                        <p><strong>Comparison:</strong> Step {{ step_data['from_step'] }} → Step {{ step_data['to_step'] }}</p>
+                        <p><strong>Comparison:</strong> Stage {{ step_data['from_stage'] }} → Stage {{ step_data['to_stage'] }}</p>
                         <p><strong>Total Policies:</strong> {{ step_data['total_policies'] }}</p>
                         
                         <div id="{{ item_name|replace(' ', '_')|replace(':', '_')|lower }}-step-{{ step }}-chart" class="chart-container"></div>
