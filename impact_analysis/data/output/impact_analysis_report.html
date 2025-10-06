@@ -40,13 +40,11 @@
                     <th>Item</th>
                     
                         
-                        <th>Start</th>
+                        <th>All Steps</th>
                         
                         <th>Excess Change</th>
                         
                         <th>Inflation</th>
-                        
-                        <th>All Steps</th>
                         
                     
                 </tr>
@@ -55,12 +53,6 @@
                 
                 <tr>
                     <td><strong>BI</strong></td>
-                    
-                        <td>
-                            
-                                N/A
-                            
-                        </td>
                     
                         <td>
                             
@@ -84,12 +76,6 @@
                 
                 <tr>
                     <td><strong>Property</strong></td>
-                    
-                        <td>
-                            
-                                N/A
-                            
-                        </td>
                     
                         <td>
                             
@@ -158,7 +144,7 @@
                 <div class="nested-tab-container">
                     <div class="nested-tab-buttons">
                         
-                        <button class="nested-tab-button active" data-tab="bi-step-0">All Steps</button>
+                        <button class="nested-tab-button active" data-tab="bi-step-1">All Steps</button>
                         
                         <button class="nested-tab-button " data-tab="bi-step-2">Excess Change</button>
                         
@@ -168,12 +154,12 @@
                     
                     
                     
-                    <div class="nested-tab-content active" id="bi-step-0-tab">
+                    <div class="nested-tab-content active" id="bi-step-1-tab">
                         <h3>All Steps</h3>
                         <p><strong>Comparison:</strong> Step 1 → Step 3</p>
                         <p><strong>Total Policies:</strong> 20</p>
                         
-                        <div id="bi-step-0-chart" class="chart-container"></div>
+                        <div id="bi-step-1-chart" class="chart-container"></div>
                         
                         <!-- Band Distribution Table -->
                         <table>
@@ -323,7 +309,7 @@
                 <div class="nested-tab-container">
                     <div class="nested-tab-buttons">
                         
-                        <button class="nested-tab-button active" data-tab="property-step-0">All Steps</button>
+                        <button class="nested-tab-button active" data-tab="property-step-1">All Steps</button>
                         
                         <button class="nested-tab-button " data-tab="property-step-2">Excess Change</button>
                         
@@ -333,12 +319,12 @@
                     
                     
                     
-                    <div class="nested-tab-content active" id="property-step-0-tab">
+                    <div class="nested-tab-content active" id="property-step-1-tab">
                         <h3>All Steps</h3>
                         <p><strong>Comparison:</strong> Step 1 → Step 3</p>
                         <p><strong>Total Policies:</strong> 20</p>
                         
-                        <div id="property-step-0-chart" class="chart-container"></div>
+                        <div id="property-step-1-chart" class="chart-container"></div>
                         
                         <!-- Band Distribution Table -->
                         <table>
@@ -542,10 +528,10 @@
             // BI charts
             
                 document.addEventListener('DOMContentLoaded', function() {
-Highcharts.chart('bi-step-0-chart',
+Highcharts.chart('bi-step-1-chart',
 {
   chart: {
-  renderTo: 'bi-step-0-chart',
+  renderTo: 'bi-step-1-chart',
   type: 'column'
 },
   plotOptions: {
@@ -832,15 +818,9 @@ Highcharts.chart('waterfall-bi-chart',
   series: [{
   data: [{
   isSum: false,
-  y: 0,
+  y: 213189.2259145,
   color: '#7cb5ec',
   name: 'All Steps'
-},
-{
-  isIntermediateSum: false,
-  y: 213189.2259145,
-  color: '#90ed7d',
-  name: 'Start'
 },
 {
   isIntermediateSum: false,
@@ -891,10 +871,10 @@ Highcharts.chart('waterfall-bi-chart',
             // Property charts
             
                 document.addEventListener('DOMContentLoaded', function() {
-Highcharts.chart('property-step-0-chart',
+Highcharts.chart('property-step-1-chart',
 {
   chart: {
-  renderTo: 'property-step-0-chart',
+  renderTo: 'property-step-1-chart',
   type: 'column'
 },
   plotOptions: {
@@ -1181,15 +1161,9 @@ Highcharts.chart('waterfall-property-chart',
   series: [{
   data: [{
   isSum: false,
-  y: 0,
+  y: 417694.63999999996,
   color: '#7cb5ec',
   name: 'All Steps'
-},
-{
-  isIntermediateSum: false,
-  y: 417694.63999999996,
-  color: '#90ed7d',
-  name: 'Start'
 },
 {
   isIntermediateSum: false,
@@ -1243,9 +1217,9 @@ Highcharts.chart('waterfall-property-chart',
         
         {
             const bi_data = [];
-            const steps = [0,1,2,3];
-            const stepNames = ['All Steps','Start','Excess Change','Inflation'];
-            const values = [0,213189.2259145,417694.63999999996,416797.72];
+            const steps = [1,2,3];
+            const stepNames = ['All Steps','Excess Change','Inflation'];
+            const values = [213189.2259145,417694.63999999996,416797.72];
             
             // Starting point
             bi_data.push({
@@ -1320,9 +1294,9 @@ Highcharts.chart('waterfall-property-chart',
         
         {
             const property_data = [];
-            const steps = [0,1,2,3];
-            const stepNames = ['All Steps','Start','Excess Change','Inflation'];
-            const values = [0,417694.63999999996,416797.72,416797.72];
+            const steps = [1,2,3];
+            const stepNames = ['All Steps','Excess Change','Inflation'];
+            const values = [417694.63999999996,416797.72,416797.72];
             
             // Starting point
             property_data.push({

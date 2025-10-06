@@ -49,8 +49,9 @@ class ModularImpactAnalyzer:
         )
         return logging.getLogger(__name__)
     
-    def save_output_files(self, merged_df, comparison_analysis: Dict) -> None:
+    def save_output_files(self, merged_df, comparison_analysis: Dict, comparison_mapping: Dict) -> None:
         """Save all output files using Pandas"""
+        import pandas as pd
         output_dir = self.config_loader.get_output_dir()
         os.makedirs(output_dir, exist_ok=True)
         
@@ -59,15 +60,21 @@ class ModularImpactAnalyzer:
         merged_df.to_csv(merged_output_path, index=False)
         self.logger.info(f"Saved merged data to: {merged_output_path}")
         
+        # Generate and save summary table using ImpactAnalyzer
+        summary_df, summary_comparison_mapping = self.data_processor.generate_aggregated_summary(merged_df, comparison_mapping)
+        summary_output_path = os.path.join(output_dir, "summary_table.csv")
+        summary_df.to_csv(summary_output_path, index=False)
+        self.logger.info(f"Saved summary table to: {summary_output_path}")
+        
         # Save band distribution for all comparison items and steps
-        all_band_data = []
+        all_band_summary = []
         for item_name, analysis_data in comparison_analysis.items():
             for step, step_data in analysis_data['steps'].items():
                 step_name = step_data['step_name']
                 summary_by_band = step_data['summary_by_band']
                 if summary_by_band:
                     for band_row in summary_by_band:
-                        all_band_data.append({
+                        all_band_summary.append({
                             'Item': item_name,
                             'Step': step,
                             'StepName': step_name,
@@ -76,9 +83,8 @@ class ModularImpactAnalyzer:
                             'Percentage': band_row['Percentage']
                         })
         
-        if all_band_data:
-            import pandas as pd
-            band_df = pd.DataFrame(all_band_data)
+        if all_band_summary:
+            band_df = pd.DataFrame(all_band_summary)
             band_output_path = os.path.join(output_dir, "band_distribution.csv")
             band_df.to_csv(band_output_path, index=False)
             self.logger.info(f"Saved band distribution to: {band_output_path}")
@@ -89,18 +95,18 @@ class ModularImpactAnalyzer:
             self.logger.info("Starting modular impact analysis process")
             
             # Step 1: Process data
-            merged_df, comparison_mapping = self.data_processor.process_data()
+            merged_df_w_diff, comparison_mapping = self.data_processor.process_data()
             
             # Step 2: Analyze data for all comparison items
-            comparison_analysis = self.analyzer.generate_impact_analysis(merged_df, comparison_mapping)
+            comparison_analysis = self.analyzer.generate_distribution_summary(merged_df_w_diff, comparison_mapping)
             
             # Step 3: Save output files
-            self.save_output_files(merged_df, comparison_analysis)
+            self.save_output_files(merged_df_w_diff, comparison_analysis, comparison_mapping)
             
             # Step 4: Generate HTML report
             output_dir = self.config_loader.get_output_dir()
             html_output_path = os.path.join(output_dir, "impact_analysis_report.html")
-            self.visualizer.generate_html_report(comparison_analysis, html_output_path, merged_df)
+            self.visualizer.generate_html_report(comparison_analysis, html_output_path, merged_df_w_diff)
             
             self.logger.info("Modular impact analysis completed successfully")
             return True

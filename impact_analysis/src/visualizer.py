@@ -68,7 +68,7 @@ class ReportVisualizer:
             raise ValueError("Config loader required for component-based report generation")
         
         # Generate analysis data using analyzer
-        analysis_data = self.analyzer.generate_impact_analysis(merged_df, diff_col)
+        analysis_data = self.analyzer.generate_distribution_summary(merged_df, diff_col)
         
         # Generate HTML report
         self.generate_html_report(analysis_data, output_path)

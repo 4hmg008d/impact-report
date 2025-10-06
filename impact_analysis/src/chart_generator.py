@@ -107,8 +107,8 @@ class ImpactChartGenerator:
             return None
         
         # Debug: Print the summary stats to see what's being used
-        print(f"Creating waterfall chart for {title} with summary stats: {summary_stats}")
-        print(f"Item data: {item_data}")
+        # print(f"Creating waterfall chart for {title} with summary stats: {summary_stats}")
+        # print(f"Item data: {item_data}")
 
         # Prepare waterfall data
         steps = sorted(item_data['step_names'].keys())
