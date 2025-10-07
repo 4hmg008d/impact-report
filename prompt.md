@@ -163,6 +163,5 @@ In impact_analysis backend, use the python package of highchart instead of js st
 ## To Do
 
 - Refine the output summary data - needs to be useful for readers, and for charts
-- Finish the Waterfall chart
-- Fix Waterfall chart options
-- Fix relative path for modules and file paths
+- Improve efficiency by merging the band instead of loop
+- Efficient read in data
