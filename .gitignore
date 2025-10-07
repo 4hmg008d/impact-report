@@ -4,3 +4,10 @@
 .python-version
 **/*.log
 **/*.DS_Store
+
+**/*.xlsx
+
+!converter/mapping_column_sample.xlsx
+!impact_analysis/data/impact_analysis_config_sample.xlsx
+!impact_analysis/config_impact_analysis_sample.yaml
+!converter/config_data_conversion_sample.yaml
