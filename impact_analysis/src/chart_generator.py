@@ -129,28 +129,40 @@ class ImpactChartGenerator:
         # Starting point
         waterfall_data.append({
             'name': dict_waterfall[sorted_indices[0]]['stage_name'],
-            'y': dict_waterfall[sorted_indices[0]]['value_total'],
-            'isSum': True,
-            'color': '#7cb5ec'
+            'y': dict_waterfall[sorted_indices[0]]['value_total_percent'],
+            'isSum': False,
+            'color': '#550062',
+            'custom': {
+                'value_total': dict_waterfall[sorted_indices[0]]['value_total'],
+                'value_diff': dict_waterfall[sorted_indices[0]]['value_diff']
+            }
         })
         
         # Intermediate changes
         for i in range(1, len(sorted_indices)):
             idx = sorted_indices[i]
-            change = dict_waterfall[idx]['value_diff']
+            change = dict_waterfall[idx]['value_diff_percent']
             waterfall_data.append({
                 'name': dict_waterfall[idx]['stage_name'],
                 'y': change,
                 'isSum': False,
-                'color': '#90ed7d' if change >= 0 else '#f7a35c'
+                'color': '#90ed7d' if change >= 0 else '#f7a35c',
+                'custom': {
+                    'value_total': dict_waterfall[idx]['value_total'],
+                    'value_diff': dict_waterfall[idx]['value_diff']
+                }
             })
         
         # Final sum
         waterfall_data.append({
             'name': 'Final',
-            'y': dict_waterfall[sorted_indices[-1]]['value_total'],
+            'y': dict_waterfall[sorted_indices[-1]]['value_total_percent'],
             'isSum': True,
-            'color': '#434348'
+            'color': '#550062',
+            'custom': {
+                'value_total': dict_waterfall[sorted_indices[-1]]['value_total'],
+                'value_diff': dict_waterfall[sorted_indices[-1]]['value_total'] - dict_waterfall[sorted_indices[0]]['value_total']
+            }
         })
         
         # Create chart options
@@ -163,12 +175,9 @@ class ImpactChartGenerator:
             ),
             y_axis=YAxis(
                 title={'text': 'Total Value'},
-                labels={
-                    'formatter': 'function() { return this.value.toLocaleString(); }'
-                }
             ),
             tooltip={
-                'pointFormat': '<br/>Value: {point.y:,.0f}<br/>Total: {point.stackTotal:,.0f}'
+                'pointFormat': '<br/>Value: {point.custom.value_total:,.0f}<br/>Step Impact: {point.custom.value_diff:,.0f}'
             },
             # plot_options={
             #     'waterfall': {

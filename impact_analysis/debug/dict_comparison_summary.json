@@ -3,34 +3,46 @@
     "0": {
       "stage_name": "Start",
       "value_total": 213189.2259145,
-      "value_diff": 0
+      "value_diff": 0,
+      "value_total_percent": 100.0,
+      "value_diff_percent": 0
     },
     "1": {
       "stage_name": "Excess Change",
       "value_total": 417694.63999999996,
-      "value_diff": 204505.41408549994
+      "value_diff": 204505.41408549994,
+      "value_total_percent": 195.9267116845376,
+      "value_diff_percent": 95.92671168453761
     },
     "2": {
       "stage_name": "Inflation",
       "value_total": 416797.72,
-      "value_diff": -896.9199999999837
+      "value_diff": -896.9199999999837,
+      "value_total_percent": 195.50599623977132,
+      "value_diff_percent": -0.42071544476628253
     }
   },
   "Property": {
     "0": {
       "stage_name": "Start",
       "value_total": 417694.63999999996,
-      "value_diff": 0
+      "value_diff": 0,
+      "value_total_percent": 100.0,
+      "value_diff_percent": 0
     },
     "1": {
       "stage_name": "Excess Change",
       "value_total": 416797.72,
-      "value_diff": -896.9199999999837
+      "value_diff": -896.9199999999837,
+      "value_total_percent": 99.78526897065282,
+      "value_diff_percent": -0.21473102934717664
     },
     "2": {
       "stage_name": "Inflation",
       "value_total": 416797.72,
-      "value_diff": 0.0
+      "value_diff": 0.0,
+      "value_total_percent": 99.78526897065282,
+      "value_diff_percent": 0.0
     }
   }
 }

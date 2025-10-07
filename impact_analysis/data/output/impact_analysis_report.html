@@ -747,27 +747,43 @@ Highcharts.chart('waterfall-bi-chart',
 },
   series: [{
   data: [{
-  isSum: true,
-  y: 213189.2259145,
-  color: '#7cb5ec',
+  isSum: false,
+  y: 100.0,
+  color: '#550062',
+  custom: {
+  'value_total': 213189.2259145,
+  'value_diff': 0
+},
   name: 'Start'
 },
 {
   isSum: false,
-  y: 204505.41408549994,
+  y: 95.92671168453761,
   color: '#90ed7d',
+  custom: {
+  'value_total': 417694.63999999996,
+  'value_diff': 204505.41408549994
+},
   name: 'Excess Change'
 },
 {
   isSum: false,
-  y: -896.9199999999837,
+  y: -0.42071544476628253,
   color: '#f7a35c',
+  custom: {
+  'value_total': 416797.72,
+  'value_diff': -896.9199999999837
+},
   name: 'Inflation'
 },
 {
   isSum: true,
-  y: 416797.72,
-  color: '#434348',
+  y: 195.50599623977132,
+  color: '#550062',
+  custom: {
+  'value_total': 416797.72,
+  'value_diff': 203608.49408549996
+},
   name: 'Final'
 }],
   name: 'BI',
@@ -777,7 +793,7 @@ Highcharts.chart('waterfall-bi-chart',
   text: 'BI - Waterfall Chart'
 },
   tooltip: {
-  pointFormat: '<b>{point.name}</b><br/>Value: {point.y:,.0f}<br/>Total: {point.stackTotal:,.0f}'
+  pointFormat: '<br/>Value: {point.custom.value_total:,.0f}<br/>Step Impact: {point.custom.value_diff:,.0f}'
 },
   xAxis: {
   title: {
@@ -786,10 +802,6 @@ Highcharts.chart('waterfall-bi-chart',
   type: 'category'
 },
   yAxis: {
-  labels: {
-  formatter: function() {
- return this.value.toLocaleString(); }
-},
   title: {
   text: 'Total Value'
 }
@@ -1073,27 +1085,43 @@ Highcharts.chart('waterfall-property-chart',
 },
   series: [{
   data: [{
-  isSum: true,
-  y: 417694.63999999996,
-  color: '#7cb5ec',
+  isSum: false,
+  y: 100.0,
+  color: '#550062',
+  custom: {
+  'value_total': 417694.63999999996,
+  'value_diff': 0
+},
   name: 'Start'
 },
 {
   isSum: false,
-  y: -896.9199999999837,
+  y: -0.21473102934717664,
   color: '#f7a35c',
+  custom: {
+  'value_total': 416797.72,
+  'value_diff': -896.9199999999837
+},
   name: 'Excess Change'
 },
 {
   isSum: false,
   y: 0.0,
   color: '#90ed7d',
+  custom: {
+  'value_total': 416797.72,
+  'value_diff': 0.0
+},
   name: 'Inflation'
 },
 {
   isSum: true,
-  y: 416797.72,
-  color: '#434348',
+  y: 99.78526897065282,
+  color: '#550062',
+  custom: {
+  'value_total': 416797.72,
+  'value_diff': -896.9199999999837
+},
   name: 'Final'
 }],
   name: 'Property',
@@ -1103,7 +1131,7 @@ Highcharts.chart('waterfall-property-chart',
   text: 'Property - Waterfall Chart'
 },
   tooltip: {
-  pointFormat: '<b>{point.name}</b><br/>Value: {point.y:,.0f}<br/>Total: {point.stackTotal:,.0f}'
+  pointFormat: '<br/>Value: {point.custom.value_total:,.0f}<br/>Step Impact: {point.custom.value_diff:,.0f}'
 },
   xAxis: {
   title: {
@@ -1112,10 +1140,6 @@ Highcharts.chart('waterfall-property-chart',
   type: 'category'
 },
   yAxis: {
-  labels: {
-  formatter: function() {
- return this.value.toLocaleString(); }
-},
   title: {
   text: 'Total Value'
 }

@@ -318,26 +318,30 @@ class DataProcessor:
             
             dict_comparison_summary[item_name] = {}
             sorted_stages = sorted(item_dict['stages'].keys())
+            value_total_first_stage = summary_data[item_dict['columns'][sorted_stages[0]]].sum()
             
             for idx, stage in enumerate(sorted_stages):
                 stage_name = item_dict['stage_names'][stage]
                 col_name = item_dict['columns'][stage]
                 value_total = summary_data[col_name].sum()
+                value_total_percent = value_total / value_total_first_stage * 100
                 
                 # Calculate the difference for this stage
                 if idx == 0:
                     value_diff = 0  # First stage has no difference
+                    value_diff_percent = 0
                 else:
                     prev_stage = sorted_stages[idx - 1]
                     prev_col_name = item_dict['columns'][prev_stage]
                     value_diff = value_total - summary_data[prev_col_name].sum()
+                    value_diff_percent = value_diff / value_total_first_stage * 100
 
                 dict_comparison_summary[item_name][idx] = {
                     'stage_name': stage_name,
                     'value_total': value_total,
-                    # 'value_total_formatted': f"{value_total:,.2f}",
-                    'value_diff': value_diff
-                    # 'value_diff_formatted': f"{value_diff:,.2f}"
+                    'value_diff': value_diff,
+                    'value_total_percent': value_total_percent,
+                    'value_diff_percent': value_diff_percent
                 }
 
         # merged_df_w_diff, dict_comparison_summary = self.generate_differences(summary_data, comparison_mapping)

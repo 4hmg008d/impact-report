@@ -65,7 +65,7 @@ class ModularImpactAnalyzer:
         dict_comparison_summary = self.data_processor.aggregate_merged_data(merged_df, comparison_mapping)
 
         # Debug
-        # print("Summary Comparison Mapping:")
+        # print("dict_comparison_summary:")
         # print(json.dumps(dict_comparison_summary, indent=2))
 
         summary_output_path = os.path.join(output_dir, "summary_table.csv")
