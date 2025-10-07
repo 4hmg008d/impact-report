@@ -120,18 +120,6 @@ class ImpactChartGenerator:
     def create_waterfall_chart(self, dict_waterfall: Dict, title: str, chart_id: str = None) -> Chart:
         """Create a waterfall chart from summary statistics data"""
         
-        # Debug: Print the summary stats to see what's being used
-        # print(f"Creating waterfall chart for {title} with summary stats: {dict_waterfall}")
-        # print(f"Item data: {item_data}")
-
-        # dict_waterfall[index] = {
-        #     'name': stage_name,
-        #     'value_total': value_total,
-        #     'value_total_formatted': f"{value_total:,.2f}",
-        #     'value_diff': value_diff,
-        #     'value_diff_formatted': f"{value_diff:,.2f}"
-        # }
-
         # Create waterfall series data
         waterfall_data = []
         
@@ -158,10 +146,9 @@ class ImpactChartGenerator:
             })
         
         # Final sum
-        last_idx = sorted_indices[-1]
         waterfall_data.append({
             'name': 'Final',
-            'y': dict_waterfall[last_idx]['value_total'],
+            'y': dict_waterfall[sorted_indices[-1]]['value_total'],
             'isSum': True,
             'color': '#434348'
         })
@@ -181,26 +168,26 @@ class ImpactChartGenerator:
                 }
             ),
             tooltip={
-                'pointFormat': '<b>{point.name}</b><br/>Value: {point.y:,.0f}<br/>Total: {point.stackTotal:,.0f}'
+                'pointFormat': '<br/>Value: {point.y:,.0f}<br/>Total: {point.stackTotal:,.0f}'
             },
-            plot_options={
-                'waterfall': {
-                    'dataLabels': {
-                        'enabled': True,
-                        'formatter': '''function() {
-                            if (this.point.isSum || this.point.isIntermediateSum) {
-                                return this.point.stackTotal.toLocaleString();
-                            } else {
-                                const percentage = ((this.point.y / this.point.stackTotal) * 100).toFixed(1);
-                                return percentage + '%';
-                            }
-                        }''',
-                        'style': {
-                            'fontWeight': 'bold'
-                        }
-                    }
-                }
-            },
+            # plot_options={
+            #     'waterfall': {
+            #         'dataLabels': {
+            #             'enabled': True,
+            #             'formatter': '''function() {
+            #                 if (this.point.isSum) {
+            #                     return this.point.stackTotal.toLocaleString();
+            #                 } else {
+            #                     const percentage = ((this.point.y / this.point.stackTotal) * 100).toFixed(1);
+            #                     return percentage + '%';
+            #                 }
+            #             }''',
+            #             'style': {
+            #                 'fontWeight': 'bold'
+            #             }
+            #         }
+            #     }
+            # },
             series=[
                 WaterfallSeries(
                     name=title.split(' - ')[0] if ' - ' in title else title,
@@ -224,7 +211,7 @@ class ImpactChartGenerator:
             for step_num in sorted_steps:
                 chart_data = item_analysis['steps'][step_num]
                 chart_title = f"{item_name} - {chart_data['step_name']}"
-                chart_id = f"{item_name.replace(' ', '_').replace(':', '_').lower()}-step-{step_num}-chart"
+                chart_id = f"{item_name.replace(' ', '_').lower()}-step-{step_num}-chart"
                 band_order = self._get_band_order()
                 chart_html = self.create_bar_chart(chart_data['chart_data'], chart_title, chart_id, band_order).to_js_literal()
                 charts_html[item_name][f'step_{step_num}'] = chart_html
@@ -232,7 +219,7 @@ class ImpactChartGenerator:
             # Generate waterfall chart for this item if summary stats available
         for item_name, item_dict in dict_comparison_summary.items():
             waterfall_title = f"{item_name} - Waterfall Chart"
-            waterfall_chart_id = f"waterfall-{item_name.replace(' ', '_').replace(':', '_').lower()}-chart"
+            waterfall_chart_id = f"waterfall-{item_name.replace(' ', '_').lower()}-chart"
             waterfall_html = self.create_waterfall_chart(item_dict, waterfall_title, waterfall_chart_id).to_js_literal()
             charts_html[item_name]['waterfall'] = waterfall_html
     

@@ -3,6 +3,8 @@
 <head>
     <title>Impact Analysis Report</title>
     <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         body { font-family: Arial, sans-serif; margin: 20px; }
@@ -743,24 +745,6 @@ Highcharts.chart('waterfall-bi-chart',
   renderTo: 'waterfall-bi-chart',
   type: 'waterfall'
 },
-  plotOptions: {
-  waterfall: {
-  dataLabels: {
-  enabled: true,
-  formatter: function() {
-
-                            if (this.point.isSum || this.point.isIntermediateSum) {
-                                return this.point.stackTotal.toLocaleString();
-                            } else {
-                                const percentage = ((this.point.y / this.point.stackTotal) * 100).toFixed(1);
-                                return percentage + '%';
-                            }
-                        },
-  style: {'fontWeight': 'bold'}
-},
-  type: 'waterfall'
-}
-},
   series: [{
   data: [{
   isSum: true,
@@ -1086,24 +1070,6 @@ Highcharts.chart('waterfall-property-chart',
   chart: {
   renderTo: 'waterfall-property-chart',
   type: 'waterfall'
-},
-  plotOptions: {
-  waterfall: {
-  dataLabels: {
-  enabled: true,
-  formatter: function() {
-
-                            if (this.point.isSum || this.point.isIntermediateSum) {
-                                return this.point.stackTotal.toLocaleString();
-                            } else {
-                                const percentage = ((this.point.y / this.point.stackTotal) * 100).toFixed(1);
-                                return percentage + '%';
-                            }
-                        },
-  style: {'fontWeight': 'bold'}
-},
-  type: 'waterfall'
-}
 },
   series: [{
   data: [{
