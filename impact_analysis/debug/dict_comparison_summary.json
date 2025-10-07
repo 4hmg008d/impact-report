@@ -1,0 +1,36 @@
+{
+  "BI": {
+    "0": {
+      "stage_name": "Start",
+      "value_total": 213189.2259145,
+      "value_diff": 0
+    },
+    "1": {
+      "stage_name": "Excess Change",
+      "value_total": 417694.63999999996,
+      "value_diff": 204505.41408549994
+    },
+    "2": {
+      "stage_name": "Inflation",
+      "value_total": 416797.72,
+      "value_diff": -896.9199999999837
+    }
+  },
+  "Property": {
+    "0": {
+      "stage_name": "Start",
+      "value_total": 417694.63999999996,
+      "value_diff": 0
+    },
+    "1": {
+      "stage_name": "Excess Change",
+      "value_total": 416797.72,
+      "value_diff": -896.9199999999837
+    },
+    "2": {
+      "stage_name": "Inflation",
+      "value_total": 416797.72,
+      "value_diff": 0.0
+    }
+  }
+}

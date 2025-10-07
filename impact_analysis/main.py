@@ -5,6 +5,7 @@ Main module for modular impact analysis tool using Pandas
 import sys
 import os
 import logging
+import json, pprint   # Added for pretty-printing debug info
 from typing import Dict
 
 from .src.config_loader import ConfigLoader
@@ -64,8 +65,8 @@ class ModularImpactAnalyzer:
         dict_comparison_summary = self.data_processor.aggregate_merged_data(merged_df, comparison_mapping)
 
         # Debug
-        print("Summary Comparison Mapping:")
-        print(dict_comparison_summary)
+        # print("Summary Comparison Mapping:")
+        # print(json.dumps(dict_comparison_summary, indent=2))
 
         summary_output_path = os.path.join(output_dir, "summary_table.csv")
         pd.DataFrame(dict_comparison_summary).to_csv(summary_output_path, index=False)
@@ -106,8 +107,8 @@ class ModularImpactAnalyzer:
             dict_distribution_summary = self.analyzer.generate_distribution_summary(merged_df_w_diff, comparison_mapping)
             
             # Debug
-            print("Distribution Summary:")
-            print(dict_distribution_summary)
+            # print("Distribution Summary:")
+            # print(json.dumps(dict_distribution_summary, indent=2))
 
             # Step 3: Save output files
             self.save_output_files(merged_df_w_diff, dict_distribution_summary, comparison_mapping)

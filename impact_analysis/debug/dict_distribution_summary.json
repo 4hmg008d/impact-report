@@ -1,0 +1,364 @@
+{
+  "BI": {
+    "steps": {
+      "0": {
+        "step_name": "Overall",
+        "percent_diff_column": "percent_diff_BI_step_0",
+        "chart_data": [
+          {
+            "name": "18.[200%, 500%]",
+            "y": 1,
+            "percentage": 5.0
+          },
+          {
+            "name": "20.[1000%, 99900%]",
+            "y": 15,
+            "percentage": 75.0
+          },
+          {
+            "name": "21.[99900%, Inf]",
+            "y": 1,
+            "percentage": 5.0
+          },
+          {
+            "name": "Out of Range",
+            "y": 3,
+            "percentage": 15.0
+          }
+        ],
+        "total_policies": 20,
+        "summary_by_band": [
+          {
+            "band": "18.[200%, 500%]",
+            "Count": 1,
+            "Percentage": 5.0
+          },
+          {
+            "band": "20.[1000%, 99900%]",
+            "Count": 15,
+            "Percentage": 75.0
+          },
+          {
+            "band": "21.[99900%, Inf]",
+            "Count": 1,
+            "Percentage": 5.0
+          },
+          {
+            "band": "Out of Range",
+            "Count": 3,
+            "Percentage": 15.0
+          }
+        ],
+        "summary_by_band_segment": {},
+        "from_stage": 1,
+        "to_stage": 3
+      },
+      "1": {
+        "step_name": "Excess Change",
+        "percent_diff_column": "percent_diff_BI_step_1",
+        "chart_data": [
+          {
+            "name": "18.[200%, 500%]",
+            "y": 2,
+            "percentage": 10.0
+          },
+          {
+            "name": "20.[1000%, 99900%]",
+            "y": 17,
+            "percentage": 85.0
+          },
+          {
+            "name": "21.[99900%, Inf]",
+            "y": 1,
+            "percentage": 5.0
+          }
+        ],
+        "total_policies": 20,
+        "summary_by_band": [
+          {
+            "band": "18.[200%, 500%]",
+            "Count": 2,
+            "Percentage": 10.0
+          },
+          {
+            "band": "20.[1000%, 99900%]",
+            "Count": 17,
+            "Percentage": 85.0
+          },
+          {
+            "band": "21.[99900%, Inf]",
+            "Count": 1,
+            "Percentage": 5.0
+          }
+        ],
+        "summary_by_band_segment": {},
+        "from_stage": 1,
+        "to_stage": 2
+      },
+      "2": {
+        "step_name": "Inflation",
+        "percent_diff_column": "percent_diff_BI_step_2",
+        "chart_data": [
+          {
+            "name": "11.[0%, 10%]",
+            "y": 2,
+            "percentage": 10.0
+          },
+          {
+            "name": "13.[20%, 30%]",
+            "y": 1,
+            "percentage": 5.0
+          },
+          {
+            "name": "15.[40%, 50%]",
+            "y": 2,
+            "percentage": 10.0
+          },
+          {
+            "name": "18.[200%, 500%]",
+            "y": 2,
+            "percentage": 10.0
+          },
+          {
+            "name": "20.[1000%, 99900%]",
+            "y": 4,
+            "percentage": 20.0
+          },
+          {
+            "name": "Out of Range",
+            "y": 9,
+            "percentage": 45.0
+          }
+        ],
+        "total_policies": 20,
+        "summary_by_band": [
+          {
+            "band": "11.[0%, 10%]",
+            "Count": 2,
+            "Percentage": 10.0
+          },
+          {
+            "band": "13.[20%, 30%]",
+            "Count": 1,
+            "Percentage": 5.0
+          },
+          {
+            "band": "15.[40%, 50%]",
+            "Count": 2,
+            "Percentage": 10.0
+          },
+          {
+            "band": "18.[200%, 500%]",
+            "Count": 2,
+            "Percentage": 10.0
+          },
+          {
+            "band": "20.[1000%, 99900%]",
+            "Count": 4,
+            "Percentage": 20.0
+          },
+          {
+            "band": "Out of Range",
+            "Count": 9,
+            "Percentage": 45.0
+          }
+        ],
+        "summary_by_band_segment": {},
+        "from_stage": 2,
+        "to_stage": 3
+      }
+    },
+    "step_names": {
+      "0": "Overall",
+      "1": "Excess Change",
+      "2": "Inflation"
+    },
+    "segments_available": false,
+    "columns": {
+      "1": "BI_1",
+      "2": "BI_2",
+      "3": "BI_3"
+    }
+  },
+  "Property": {
+    "steps": {
+      "0": {
+        "step_name": "Overall",
+        "percent_diff_column": "percent_diff_Property_step_0",
+        "chart_data": [
+          {
+            "name": "11.[0%, 10%]",
+            "y": 2,
+            "percentage": 10.0
+          },
+          {
+            "name": "13.[20%, 30%]",
+            "y": 1,
+            "percentage": 5.0
+          },
+          {
+            "name": "15.[40%, 50%]",
+            "y": 2,
+            "percentage": 10.0
+          },
+          {
+            "name": "18.[200%, 500%]",
+            "y": 2,
+            "percentage": 10.0
+          },
+          {
+            "name": "20.[1000%, 99900%]",
+            "y": 4,
+            "percentage": 20.0
+          },
+          {
+            "name": "Out of Range",
+            "y": 9,
+            "percentage": 45.0
+          }
+        ],
+        "total_policies": 20,
+        "summary_by_band": [
+          {
+            "band": "11.[0%, 10%]",
+            "Count": 2,
+            "Percentage": 10.0
+          },
+          {
+            "band": "13.[20%, 30%]",
+            "Count": 1,
+            "Percentage": 5.0
+          },
+          {
+            "band": "15.[40%, 50%]",
+            "Count": 2,
+            "Percentage": 10.0
+          },
+          {
+            "band": "18.[200%, 500%]",
+            "Count": 2,
+            "Percentage": 10.0
+          },
+          {
+            "band": "20.[1000%, 99900%]",
+            "Count": 4,
+            "Percentage": 20.0
+          },
+          {
+            "band": "Out of Range",
+            "Count": 9,
+            "Percentage": 45.0
+          }
+        ],
+        "summary_by_band_segment": {},
+        "from_stage": 1,
+        "to_stage": 3
+      },
+      "1": {
+        "step_name": "Excess Change",
+        "percent_diff_column": "percent_diff_Property_step_1",
+        "chart_data": [
+          {
+            "name": "11.[0%, 10%]",
+            "y": 2,
+            "percentage": 10.0
+          },
+          {
+            "name": "13.[20%, 30%]",
+            "y": 1,
+            "percentage": 5.0
+          },
+          {
+            "name": "15.[40%, 50%]",
+            "y": 2,
+            "percentage": 10.0
+          },
+          {
+            "name": "18.[200%, 500%]",
+            "y": 2,
+            "percentage": 10.0
+          },
+          {
+            "name": "20.[1000%, 99900%]",
+            "y": 4,
+            "percentage": 20.0
+          },
+          {
+            "name": "Out of Range",
+            "y": 9,
+            "percentage": 45.0
+          }
+        ],
+        "total_policies": 20,
+        "summary_by_band": [
+          {
+            "band": "11.[0%, 10%]",
+            "Count": 2,
+            "Percentage": 10.0
+          },
+          {
+            "band": "13.[20%, 30%]",
+            "Count": 1,
+            "Percentage": 5.0
+          },
+          {
+            "band": "15.[40%, 50%]",
+            "Count": 2,
+            "Percentage": 10.0
+          },
+          {
+            "band": "18.[200%, 500%]",
+            "Count": 2,
+            "Percentage": 10.0
+          },
+          {
+            "band": "20.[1000%, 99900%]",
+            "Count": 4,
+            "Percentage": 20.0
+          },
+          {
+            "band": "Out of Range",
+            "Count": 9,
+            "Percentage": 45.0
+          }
+        ],
+        "summary_by_band_segment": {},
+        "from_stage": 1,
+        "to_stage": 2
+      },
+      "2": {
+        "step_name": "Inflation",
+        "percent_diff_column": "percent_diff_Property_step_2",
+        "chart_data": [
+          {
+            "name": "11.[0%, 10%]",
+            "y": 20,
+            "percentage": 100.0
+          }
+        ],
+        "total_policies": 20,
+        "summary_by_band": [
+          {
+            "band": "11.[0%, 10%]",
+            "Count": 20,
+            "Percentage": 100.0
+          }
+        ],
+        "summary_by_band_segment": {},
+        "from_stage": 2,
+        "to_stage": 3
+      }
+    },
+    "step_names": {
+      "0": "Overall",
+      "1": "Excess Change",
+      "2": "Inflation"
+    },
+    "segments_available": false,
+    "columns": {
+      "1": "Property_1",
+      "2": "Property_2",
+      "3": "Property_3"
+    }
+  }
+}
