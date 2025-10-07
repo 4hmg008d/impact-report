@@ -13,6 +13,14 @@
         .nested-tab-container { margin-bottom: 15px; }
         .tab-buttons { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 10px; }
         .nested-tab-buttons { display: flex; flex-wrap: wrap; gap: 3px; margin-bottom: 8px; }
+        
+        /* Waterfall tab styles */
+        .waterfall-tab-button { padding: 10px 15px; border: 1px solid #ddd; background: #f5f5f5; cursor: pointer; border-radius: 4px; font-weight: bold; }
+        .waterfall-tab-button.active { background: #007bff; color: white; border-color: #007bff; }
+        .waterfall-tab-content { display: none; padding: 15px; border: 1px solid #ddd; border-radius: 4px; }
+        .waterfall-tab-content.active { display: block; }
+        
+        /* Distribution tab styles */
         .tab-button { padding: 10px 15px; border: 1px solid #ddd; background: #f5f5f5; cursor: pointer; border-radius: 4px; font-weight: bold; }
         .nested-tab-button { padding: 8px 12px; border: 1px solid #ddd; background: #f9f9f9; cursor: pointer; border-radius: 3px; font-size: 0.9em; }
         .tab-button.active { background: #007bff; color: white; border-color: #007bff; }
@@ -67,12 +75,12 @@
         <div class="tab-container">
             <div class="tab-buttons">
                 {% for item_name in dict_comparison_summary.keys() %}
-                <button class="tab-button {% if loop.first %}active{% endif %}" data-tab="waterfall-{{ item_name|replace(' ', '_')|replace(':', '_')|lower }}">{{ item_name }} Waterfall</button>
+                <button class="waterfall-tab-button {% if loop.first %}active{% endif %}" data-tab="waterfall-{{ item_name|replace(' ', '_')|replace(':', '_')|lower }}">{{ item_name }} Waterfall</button>
                 {% endfor %}
             </div>
             
             {% for item_name, analysis_data in dict_comparison_summary.items() %}
-            <div class="tab-content {% if loop.first %}active{% endif %}" id="waterfall-{{ item_name|replace(' ', '_')|replace(':', '_')|lower }}-tab">
+            <div class="waterfall-tab-content {% if loop.first %}active{% endif %}" id="waterfall-{{ item_name|replace(' ', '_')|replace(':', '_')|lower }}-tab">
                 <div id="waterfall-{{ item_name|replace(' ', '_')|replace(':', '_')|lower }}-chart" class="chart-container"></div>
             </div>
             {% endfor %}
@@ -139,7 +147,15 @@
     <script>
         // Tab switching functionality
         $(document).ready(function() {
-            // Main tab switching
+            // Waterfall tab switching (independent)
+            $('.waterfall-tab-button').click(function() {
+                $('.waterfall-tab-button').removeClass('active');
+                $('.waterfall-tab-content').removeClass('active');
+                $(this).addClass('active');
+                $('#' + $(this).data('tab') + '-tab').addClass('active');
+            });
+            
+            // Distribution main tab switching (independent)
             $('.tab-button').click(function() {
                 $('.tab-button').removeClass('active');
                 $('.tab-content').removeClass('active');
