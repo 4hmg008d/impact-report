@@ -33,8 +33,8 @@ class DataProcessor:
         Returns:
             Dictionary mapping items to their stage information (without 'differences' component)
         """
-        # Load mapping data
-        mapping_df = self.config_loader.load_mapping_data().sort_values(by=['Item', 'Stage'])
+        # Load mapping data - preserve original order from config file
+        mapping_df = self.config_loader.load_mapping_data()
         if len(mapping_df) == 0:
             raise ValueError("No mapping data found")
         
@@ -44,10 +44,10 @@ class DataProcessor:
         # Get full file paths
         mapping_df['File'] = mapping_df['File'].apply(self.config_loader._abs_path)
         
-        # Group by Item and Stage to understand the structure
-        impact_items = mapping_df['Item'].unique()
+        # Get unique items in the order they first appear (preserves config file order)
+        impact_items = mapping_df['Item'].unique().tolist()
         
-        # Build comparison mapping
+        # Build comparison mapping, maintaining the original order
         comparison_mapping = {}
         
         for item in impact_items:
