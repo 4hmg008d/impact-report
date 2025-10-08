@@ -16,26 +16,28 @@ class ImpactAnalyzer:
     def map_to_bands(self, merged_df: pd.DataFrame, value_col: str, band_df: pd.DataFrame) -> pd.DataFrame:
         """Map differences to bands and count frequencies using Pandas"""
         # Create band mapping function
-        def map_to_band(value):
-            if pd.isna(value):
-                return "Missing"
-            
-            for _, band_row in band_df.iterrows():
-                from_val = band_row['From']
-                to_val = band_row['To']
-                band_name = band_row['Name']
-                
-                # Handle infinity values
-                if pd.isna(to_val) and value >= from_val:
-                    return band_name
-                elif from_val <= value < to_val:
-                    return band_name
-            
-            return "Out of Range"
-        
-        # Apply band mapping using Pandas with .loc to avoid SettingWithCopyWarning
+        # Use merge approach for better performance
         merged_df = merged_df.copy()  # Create a copy to avoid modifying a slice
-        merged_df.loc[:, 'band'] = merged_df[value_col].apply(map_to_band)
+        
+        # Create bins from band_df
+        bins = [-float('inf')] + band_df['To'].dropna().tolist()
+        labels = band_df['Name'].iloc[:len(bins)-1].tolist()
+        
+        # Map values to bands using pd.cut, handling missing values
+        merged_df['band'] = pd.cut(
+            merged_df[value_col],
+            bins=bins,
+            labels=labels,
+            right=False,
+            include_lowest=True
+        ).astype(str)
+        
+        # Replace 'nan' string with appropriate labels
+        # Use a mask to identify 'nan' entries and replace them appropriately
+        nan_mask = merged_df['band'] == 'nan'
+        merged_df.loc[nan_mask, 'band'] = merged_df.loc[nan_mask, value_col].apply(
+            lambda x: "Missing" if pd.isna(x) else "Out of Range"
+        )
         
         # Count frequencies by band using Pandas
         total_count = len(merged_df)
@@ -172,65 +174,3 @@ class ImpactAnalyzer:
             dict_distribution_summary[item_name]['columns'] = item_data['columns']
         
         return dict_distribution_summary
-
-    # def generate_waterfall_chart_data(self, df_summary: pd.DataFrame, comparison_mapping: Dict[str, Dict]) -> pd.DataFrame:
-    #     """Generate waterfall chart data for each comparison item using Pandas"""
-    #     waterfall_data = []
-        
-    #     for item_name, item_data in comparison_mapping.items():
-    #         if 'columns' not in item_data:
-    #             continue
-            
-    #         stage_names = item_data['stage_names']
-    #         columns = item_data['columns']
-            
-    #         # Extract values for each stage
-    #         values = []
-    #         for stage in sorted(columns.keys()):
-    #             col_name = columns[stage]
-    #             if col_name in df_summary.columns:
-    #                 total_value = df_summary[col_name].sum()
-    #                 values.append(total_value)
-    #             else:
-    #                 values.append(0)
-            
-    #         if len(values) != len(stage_names):
-    #             print(f"Warning: Mismatch in number of stages and columns for {item_name}")
-    #             continue
-            
-    #         # Prepare waterfall data
-    #         waterfall_data_item = []
-    #         # Initial value
-    #         waterfall_data_item.append({
-    #             'name': stage_names[sorted(stage_names.keys())[0]],
-    #             'y': values[0],
-    #             'isSum': True,
-    #             'color': '#7cb5ec'
-    #         })
-            
-    #         # Intermediate steps (showing changes between stages)
-    #         for i in range(1, len(values) - 1):
-    #             change = values[i] - values[i - 1]
-    #             color = '#90ed7d' if change >= 0 else '#f15c80'
-                
-    #             waterfall_data_item.append({
-    #                 'name': stage_names[sorted(stage_names.keys())[i]],
-    #                 'y': change,
-    #                 'isSum': False,
-    #                 'color': color
-    #             })
-            
-    #         # Final sum
-    #         waterfall_data_item.append({
-    #             'name': 'Final',
-    #             'y': values[-1],
-    #             'isSum': True,
-    #             'color': '#434348'
-    #         })
-            
-    #         waterfall_data.append({
-    #             'item_name': item_name,
-    #             'data': waterfall_data_item
-    #         })
-        
-    #     return pd.DataFrame(waterfall_data)
