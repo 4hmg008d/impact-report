@@ -6,7 +6,10 @@
 **/*.DS_Store
 
 **/*.xlsx
+**/*.csv
+**/*.yaml
 
+# Sample configuration and data files
 !converter/mapping_column_sample.xlsx
 !impact_analysis/data/impact_analysis_config_sample.xlsx
 !impact_analysis/config_impact_analysis_sample.yaml

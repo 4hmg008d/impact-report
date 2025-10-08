@@ -16,7 +16,7 @@
         
         /* Waterfall tab styles */
         .waterfall-tab-button { padding: 10px 15px; border: 1px solid #ddd; background: #f5f5f5; cursor: pointer; border-radius: 4px; font-weight: bold; }
-        .waterfall-tab-button.active { background: #ff6b6b; color: white; border-color: #ff6b6b; }
+        .waterfall-tab-button.active { background: #007bff; color: white; border-color: #007bff; }
         .waterfall-tab-content { display: none; padding: 15px; border: 1px solid #ddd; border-radius: 4px; }
         .waterfall-tab-content.active { display: block; }
         
@@ -63,24 +63,24 @@
             <tbody>
                 
                 <tr>
-                    <td><strong>BI</strong></td>
+                    <td><strong>Property</strong></td>
                     
-                        <td>213,189.23</td>
+                        <td>719,855,348.02</td>
                     
-                        <td>417,694.64</td>
+                        <td>720,262,118.94</td>
                     
-                        <td>416,797.72</td>
+                        <td>720,350,697.31</td>
                     
                 </tr>
                 
                 <tr>
-                    <td><strong>Property</strong></td>
+                    <td><strong>BI</strong></td>
                     
-                        <td>417,694.64</td>
+                        <td>367,172,914.04</td>
                     
-                        <td>416,797.72</td>
+                        <td>367,378,054.35</td>
                     
-                        <td>416,797.72</td>
+                        <td>367,454,924.13</td>
                     
                 </tr>
                 
@@ -94,19 +94,19 @@
         <div class="tab-container">
             <div class="tab-buttons">
                 
-                <button class="waterfall-tab-button active" data-tab="waterfall-bi">BI Waterfall</button>
+                <button class="waterfall-tab-button active" data-tab="waterfall-property">Property Waterfall</button>
                 
-                <button class="waterfall-tab-button " data-tab="waterfall-property">Property Waterfall</button>
+                <button class="waterfall-tab-button " data-tab="waterfall-bi">BI Waterfall</button>
                 
             </div>
             
             
-            <div class="waterfall-tab-content active" id="waterfall-bi-tab">
-                <div id="waterfall-bi-chart" class="chart-container"></div>
-            </div>
-            
-            <div class="waterfall-tab-content " id="waterfall-property-tab">
+            <div class="waterfall-tab-content active" id="waterfall-property-tab">
                 <div id="waterfall-property-chart" class="chart-container"></div>
+            </div>
+            
+            <div class="waterfall-tab-content " id="waterfall-bi-tab">
+                <div id="waterfall-bi-chart" class="chart-container"></div>
             </div>
             
         </div>
@@ -118,179 +118,14 @@
         <div class="tab-container">
             <div class="tab-buttons">
                 
-                <button class="tab-button active" data-tab="bi">BI</button>
+                <button class="tab-button active" data-tab="property">Property</button>
                 
-                <button class="tab-button " data-tab="property">Property</button>
+                <button class="tab-button " data-tab="bi">BI</button>
                 
             </div>
             
             
-            <div class="tab-content active" id="bi-tab">
-                <h2>BI - Step-by-Step Analysis</h2>
-                
-                <div class="nested-tab-container">
-                    <div class="nested-tab-buttons">
-                        
-                        <button class="nested-tab-button active" data-tab="bi-step-0">Overall</button>
-                        
-                        <button class="nested-tab-button " data-tab="bi-step-1">Excess Change</button>
-                        
-                        <button class="nested-tab-button " data-tab="bi-step-2">Inflation</button>
-                        
-                    </div>
-                    
-                    
-                    
-                    <div class="nested-tab-content active" id="bi-step-0-tab">
-                        <h3>Overall</h3>
-                        <p><strong>Comparison:</strong> Stage 1 → Stage 3</p>
-                        <p><strong>Total Policies:</strong> 20</p>
-                        
-                        <div id="bi-step-0-chart" class="chart-container"></div>
-                        
-                        <!-- Band Distribution Table -->
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Band</th>
-                                    <th>Count</th>
-                                    <th>Percentage</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                
-                                <tr>
-                                    <td>18.[200%, 500%]</td>
-                                    <td>1</td>
-                                    <td>5.00%</td>
-                                </tr>
-                                
-                                <tr>
-                                    <td>20.[1000%, 99900%]</td>
-                                    <td>15</td>
-                                    <td>75.00%</td>
-                                </tr>
-                                
-                                <tr>
-                                    <td>21.[99900%, Inf]</td>
-                                    <td>1</td>
-                                    <td>5.00%</td>
-                                </tr>
-                                
-                                <tr>
-                                    <td>Out of Range</td>
-                                    <td>3</td>
-                                    <td>15.00%</td>
-                                </tr>
-                                
-                            </tbody>
-                        </table>
-                    </div>
-                    
-                    
-                    <div class="nested-tab-content " id="bi-step-1-tab">
-                        <h3>Excess Change</h3>
-                        <p><strong>Comparison:</strong> Stage 1 → Stage 2</p>
-                        <p><strong>Total Policies:</strong> 20</p>
-                        
-                        <div id="bi-step-1-chart" class="chart-container"></div>
-                        
-                        <!-- Band Distribution Table -->
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Band</th>
-                                    <th>Count</th>
-                                    <th>Percentage</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                
-                                <tr>
-                                    <td>18.[200%, 500%]</td>
-                                    <td>2</td>
-                                    <td>10.00%</td>
-                                </tr>
-                                
-                                <tr>
-                                    <td>20.[1000%, 99900%]</td>
-                                    <td>17</td>
-                                    <td>85.00%</td>
-                                </tr>
-                                
-                                <tr>
-                                    <td>21.[99900%, Inf]</td>
-                                    <td>1</td>
-                                    <td>5.00%</td>
-                                </tr>
-                                
-                            </tbody>
-                        </table>
-                    </div>
-                    
-                    
-                    <div class="nested-tab-content " id="bi-step-2-tab">
-                        <h3>Inflation</h3>
-                        <p><strong>Comparison:</strong> Stage 2 → Stage 3</p>
-                        <p><strong>Total Policies:</strong> 20</p>
-                        
-                        <div id="bi-step-2-chart" class="chart-container"></div>
-                        
-                        <!-- Band Distribution Table -->
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Band</th>
-                                    <th>Count</th>
-                                    <th>Percentage</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                
-                                <tr>
-                                    <td>11.[0%, 10%]</td>
-                                    <td>2</td>
-                                    <td>10.00%</td>
-                                </tr>
-                                
-                                <tr>
-                                    <td>13.[20%, 30%]</td>
-                                    <td>1</td>
-                                    <td>5.00%</td>
-                                </tr>
-                                
-                                <tr>
-                                    <td>15.[40%, 50%]</td>
-                                    <td>2</td>
-                                    <td>10.00%</td>
-                                </tr>
-                                
-                                <tr>
-                                    <td>18.[200%, 500%]</td>
-                                    <td>2</td>
-                                    <td>10.00%</td>
-                                </tr>
-                                
-                                <tr>
-                                    <td>20.[1000%, 99900%]</td>
-                                    <td>4</td>
-                                    <td>20.00%</td>
-                                </tr>
-                                
-                                <tr>
-                                    <td>Out of Range</td>
-                                    <td>9</td>
-                                    <td>45.00%</td>
-                                </tr>
-                                
-                            </tbody>
-                        </table>
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="tab-content " id="property-tab">
+            <div class="tab-content active" id="property-tab">
                 <h2>Property - Step-by-Step Analysis</h2>
                 
                 <div class="nested-tab-container">
@@ -309,7 +144,7 @@
                     <div class="nested-tab-content active" id="property-step-0-tab">
                         <h3>Overall</h3>
                         <p><strong>Comparison:</strong> Stage 1 → Stage 3</p>
-                        <p><strong>Total Policies:</strong> 20</p>
+                        <p><strong>Total Policies:</strong> 34445</p>
                         
                         <div id="property-step-0-chart" class="chart-container"></div>
                         
@@ -325,39 +160,123 @@
                             <tbody>
                                 
                                 <tr>
+                                    <td>1.[-100%, -90%]</td>
+                                    <td>16200</td>
+                                    <td>47.03%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>2.[-90%, -80%]</td>
+                                    <td>153</td>
+                                    <td>0.44%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>3.[-80%, -70%]</td>
+                                    <td>160</td>
+                                    <td>0.46%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>4.[-70%, -60%]</td>
+                                    <td>156</td>
+                                    <td>0.45%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>5.[-60%, -50%]</td>
+                                    <td>173</td>
+                                    <td>0.50%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>6.[-50%, -40%]</td>
+                                    <td>161</td>
+                                    <td>0.47%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>7.[-40%, -30%]</td>
+                                    <td>178</td>
+                                    <td>0.52%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>8.[-30%, -20%]</td>
+                                    <td>160</td>
+                                    <td>0.46%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>9.[-20%, -10%]</td>
+                                    <td>155</td>
+                                    <td>0.45%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>10.[-10%, 0%]</td>
+                                    <td>175</td>
+                                    <td>0.51%</td>
+                                </tr>
+                                
+                                <tr>
                                     <td>11.[0%, 10%]</td>
-                                    <td>2</td>
-                                    <td>10.00%</td>
+                                    <td>160</td>
+                                    <td>0.46%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>12.[10%, 20%]</td>
+                                    <td>144</td>
+                                    <td>0.42%</td>
                                 </tr>
                                 
                                 <tr>
                                     <td>13.[20%, 30%]</td>
-                                    <td>1</td>
-                                    <td>5.00%</td>
+                                    <td>147</td>
+                                    <td>0.43%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>14.[30%, 40%]</td>
+                                    <td>168</td>
+                                    <td>0.49%</td>
                                 </tr>
                                 
                                 <tr>
                                     <td>15.[40%, 50%]</td>
-                                    <td>2</td>
-                                    <td>10.00%</td>
+                                    <td>153</td>
+                                    <td>0.44%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>16.[50%, 100%]</td>
+                                    <td>838</td>
+                                    <td>2.43%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>17.[100%, 200%]</td>
+                                    <td>1459</td>
+                                    <td>4.24%</td>
                                 </tr>
                                 
                                 <tr>
                                     <td>18.[200%, 500%]</td>
-                                    <td>2</td>
-                                    <td>10.00%</td>
+                                    <td>4026</td>
+                                    <td>11.69%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>19.[500%, 1000%]</td>
+                                    <td>5113</td>
+                                    <td>14.84%</td>
                                 </tr>
                                 
                                 <tr>
                                     <td>20.[1000%, 99900%]</td>
-                                    <td>4</td>
-                                    <td>20.00%</td>
-                                </tr>
-                                
-                                <tr>
-                                    <td>Out of Range</td>
-                                    <td>9</td>
-                                    <td>45.00%</td>
+                                    <td>4566</td>
+                                    <td>13.26%</td>
                                 </tr>
                                 
                             </tbody>
@@ -368,7 +287,7 @@
                     <div class="nested-tab-content " id="property-step-1-tab">
                         <h3>Excess Change</h3>
                         <p><strong>Comparison:</strong> Stage 1 → Stage 2</p>
-                        <p><strong>Total Policies:</strong> 20</p>
+                        <p><strong>Total Policies:</strong> 34445</p>
                         
                         <div id="property-step-1-chart" class="chart-container"></div>
                         
@@ -384,39 +303,123 @@
                             <tbody>
                                 
                                 <tr>
+                                    <td>1.[-100%, -90%]</td>
+                                    <td>15532</td>
+                                    <td>45.09%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>2.[-90%, -80%]</td>
+                                    <td>177</td>
+                                    <td>0.51%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>3.[-80%, -70%]</td>
+                                    <td>159</td>
+                                    <td>0.46%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>4.[-70%, -60%]</td>
+                                    <td>166</td>
+                                    <td>0.48%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>5.[-60%, -50%]</td>
+                                    <td>226</td>
+                                    <td>0.66%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>6.[-50%, -40%]</td>
+                                    <td>201</td>
+                                    <td>0.58%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>7.[-40%, -30%]</td>
+                                    <td>137</td>
+                                    <td>0.40%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>8.[-30%, -20%]</td>
+                                    <td>193</td>
+                                    <td>0.56%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>9.[-20%, -10%]</td>
+                                    <td>197</td>
+                                    <td>0.57%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>10.[-10%, 0%]</td>
+                                    <td>79</td>
+                                    <td>0.23%</td>
+                                </tr>
+                                
+                                <tr>
                                     <td>11.[0%, 10%]</td>
-                                    <td>2</td>
-                                    <td>10.00%</td>
+                                    <td>246</td>
+                                    <td>0.71%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>12.[10%, 20%]</td>
+                                    <td>189</td>
+                                    <td>0.55%</td>
                                 </tr>
                                 
                                 <tr>
                                     <td>13.[20%, 30%]</td>
-                                    <td>1</td>
-                                    <td>5.00%</td>
+                                    <td>194</td>
+                                    <td>0.56%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>14.[30%, 40%]</td>
+                                    <td>128</td>
+                                    <td>0.37%</td>
                                 </tr>
                                 
                                 <tr>
                                     <td>15.[40%, 50%]</td>
-                                    <td>2</td>
-                                    <td>10.00%</td>
+                                    <td>195</td>
+                                    <td>0.57%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>16.[50%, 100%]</td>
+                                    <td>813</td>
+                                    <td>2.36%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>17.[100%, 200%]</td>
+                                    <td>1767</td>
+                                    <td>5.13%</td>
                                 </tr>
                                 
                                 <tr>
                                     <td>18.[200%, 500%]</td>
-                                    <td>2</td>
-                                    <td>10.00%</td>
+                                    <td>5122</td>
+                                    <td>14.87%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>19.[500%, 1000%]</td>
+                                    <td>8624</td>
+                                    <td>25.04%</td>
                                 </tr>
                                 
                                 <tr>
                                     <td>20.[1000%, 99900%]</td>
-                                    <td>4</td>
-                                    <td>20.00%</td>
-                                </tr>
-                                
-                                <tr>
-                                    <td>Out of Range</td>
-                                    <td>9</td>
-                                    <td>45.00%</td>
+                                    <td>100</td>
+                                    <td>0.29%</td>
                                 </tr>
                                 
                             </tbody>
@@ -427,7 +430,7 @@
                     <div class="nested-tab-content " id="property-step-2-tab">
                         <h3>Inflation</h3>
                         <p><strong>Comparison:</strong> Stage 2 → Stage 3</p>
-                        <p><strong>Total Policies:</strong> 20</p>
+                        <p><strong>Total Policies:</strong> 34445</p>
                         
                         <div id="property-step-2-chart" class="chart-container"></div>
                         
@@ -443,9 +446,570 @@
                             <tbody>
                                 
                                 <tr>
+                                    <td>1.[-100%, -90%]</td>
+                                    <td>15666</td>
+                                    <td>45.48%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>2.[-90%, -80%]</td>
+                                    <td>167</td>
+                                    <td>0.48%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>3.[-80%, -70%]</td>
+                                    <td>166</td>
+                                    <td>0.48%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>4.[-70%, -60%]</td>
+                                    <td>184</td>
+                                    <td>0.53%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>5.[-60%, -50%]</td>
+                                    <td>162</td>
+                                    <td>0.47%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>6.[-50%, -40%]</td>
+                                    <td>159</td>
+                                    <td>0.46%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>7.[-40%, -30%]</td>
+                                    <td>153</td>
+                                    <td>0.44%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>8.[-30%, -20%]</td>
+                                    <td>161</td>
+                                    <td>0.47%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>9.[-20%, -10%]</td>
+                                    <td>178</td>
+                                    <td>0.52%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>10.[-10%, 0%]</td>
+                                    <td>75</td>
+                                    <td>0.22%</td>
+                                </tr>
+                                
+                                <tr>
                                     <td>11.[0%, 10%]</td>
-                                    <td>20</td>
-                                    <td>100.00%</td>
+                                    <td>248</td>
+                                    <td>0.72%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>12.[10%, 20%]</td>
+                                    <td>168</td>
+                                    <td>0.49%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>13.[20%, 30%]</td>
+                                    <td>165</td>
+                                    <td>0.48%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>14.[30%, 40%]</td>
+                                    <td>176</td>
+                                    <td>0.51%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>15.[40%, 50%]</td>
+                                    <td>174</td>
+                                    <td>0.51%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>16.[50%, 100%]</td>
+                                    <td>859</td>
+                                    <td>2.49%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>17.[100%, 200%]</td>
+                                    <td>1648</td>
+                                    <td>4.78%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>18.[200%, 500%]</td>
+                                    <td>5147</td>
+                                    <td>14.94%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>19.[500%, 1000%]</td>
+                                    <td>8696</td>
+                                    <td>25.25%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>20.[1000%, 99900%]</td>
+                                    <td>93</td>
+                                    <td>0.27%</td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="tab-content " id="bi-tab">
+                <h2>BI - Step-by-Step Analysis</h2>
+                
+                <div class="nested-tab-container">
+                    <div class="nested-tab-buttons">
+                        
+                        <button class="nested-tab-button active" data-tab="bi-step-0">Overall</button>
+                        
+                        <button class="nested-tab-button " data-tab="bi-step-1">Excess Change</button>
+                        
+                        <button class="nested-tab-button " data-tab="bi-step-2">Inflation</button>
+                        
+                    </div>
+                    
+                    
+                    
+                    <div class="nested-tab-content active" id="bi-step-0-tab">
+                        <h3>Overall</h3>
+                        <p><strong>Comparison:</strong> Stage 1 → Stage 3</p>
+                        <p><strong>Total Policies:</strong> 34445</p>
+                        
+                        <div id="bi-step-0-chart" class="chart-container"></div>
+                        
+                        <!-- Band Distribution Table -->
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Band</th>
+                                    <th>Count</th>
+                                    <th>Percentage</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                <tr>
+                                    <td>1.[-100%, -90%]</td>
+                                    <td>16200</td>
+                                    <td>47.03%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>2.[-90%, -80%]</td>
+                                    <td>155</td>
+                                    <td>0.45%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>3.[-80%, -70%]</td>
+                                    <td>159</td>
+                                    <td>0.46%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>4.[-70%, -60%]</td>
+                                    <td>155</td>
+                                    <td>0.45%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>5.[-60%, -50%]</td>
+                                    <td>173</td>
+                                    <td>0.50%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>6.[-50%, -40%]</td>
+                                    <td>163</td>
+                                    <td>0.47%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>7.[-40%, -30%]</td>
+                                    <td>176</td>
+                                    <td>0.51%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>8.[-30%, -20%]</td>
+                                    <td>161</td>
+                                    <td>0.47%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>9.[-20%, -10%]</td>
+                                    <td>154</td>
+                                    <td>0.45%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>10.[-10%, 0%]</td>
+                                    <td>175</td>
+                                    <td>0.51%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>11.[0%, 10%]</td>
+                                    <td>161</td>
+                                    <td>0.47%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>12.[10%, 20%]</td>
+                                    <td>142</td>
+                                    <td>0.41%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>13.[20%, 30%]</td>
+                                    <td>148</td>
+                                    <td>0.43%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>14.[30%, 40%]</td>
+                                    <td>168</td>
+                                    <td>0.49%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>15.[40%, 50%]</td>
+                                    <td>153</td>
+                                    <td>0.44%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>16.[50%, 100%]</td>
+                                    <td>836</td>
+                                    <td>2.43%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>17.[100%, 200%]</td>
+                                    <td>1461</td>
+                                    <td>4.24%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>18.[200%, 500%]</td>
+                                    <td>4027</td>
+                                    <td>11.69%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>19.[500%, 1000%]</td>
+                                    <td>5113</td>
+                                    <td>14.84%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>20.[1000%, 99900%]</td>
+                                    <td>4565</td>
+                                    <td>13.25%</td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    
+                    <div class="nested-tab-content " id="bi-step-1-tab">
+                        <h3>Excess Change</h3>
+                        <p><strong>Comparison:</strong> Stage 1 → Stage 2</p>
+                        <p><strong>Total Policies:</strong> 34445</p>
+                        
+                        <div id="bi-step-1-chart" class="chart-container"></div>
+                        
+                        <!-- Band Distribution Table -->
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Band</th>
+                                    <th>Count</th>
+                                    <th>Percentage</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                <tr>
+                                    <td>1.[-100%, -90%]</td>
+                                    <td>15549</td>
+                                    <td>45.14%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>2.[-90%, -80%]</td>
+                                    <td>194</td>
+                                    <td>0.56%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>3.[-80%, -70%]</td>
+                                    <td>136</td>
+                                    <td>0.39%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>4.[-70%, -60%]</td>
+                                    <td>186</td>
+                                    <td>0.54%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>5.[-60%, -50%]</td>
+                                    <td>217</td>
+                                    <td>0.63%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>6.[-50%, -40%]</td>
+                                    <td>167</td>
+                                    <td>0.48%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>7.[-40%, -30%]</td>
+                                    <td>176</td>
+                                    <td>0.51%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>8.[-30%, -20%]</td>
+                                    <td>184</td>
+                                    <td>0.53%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>9.[-20%, -10%]</td>
+                                    <td>157</td>
+                                    <td>0.46%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>10.[-10%, 0%]</td>
+                                    <td>101</td>
+                                    <td>0.29%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>11.[0%, 10%]</td>
+                                    <td>275</td>
+                                    <td>0.80%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>12.[10%, 20%]</td>
+                                    <td>152</td>
+                                    <td>0.44%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>13.[20%, 30%]</td>
+                                    <td>162</td>
+                                    <td>0.47%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>14.[30%, 40%]</td>
+                                    <td>176</td>
+                                    <td>0.51%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>15.[40%, 50%]</td>
+                                    <td>161</td>
+                                    <td>0.47%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>16.[50%, 100%]</td>
+                                    <td>839</td>
+                                    <td>2.44%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>17.[100%, 200%]</td>
+                                    <td>1724</td>
+                                    <td>5.01%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>18.[200%, 500%]</td>
+                                    <td>5189</td>
+                                    <td>15.06%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>19.[500%, 1000%]</td>
+                                    <td>8595</td>
+                                    <td>24.95%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>20.[1000%, 99900%]</td>
+                                    <td>105</td>
+                                    <td>0.30%</td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    
+                    <div class="nested-tab-content " id="bi-step-2-tab">
+                        <h3>Inflation</h3>
+                        <p><strong>Comparison:</strong> Stage 2 → Stage 3</p>
+                        <p><strong>Total Policies:</strong> 34445</p>
+                        
+                        <div id="bi-step-2-chart" class="chart-container"></div>
+                        
+                        <!-- Band Distribution Table -->
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Band</th>
+                                    <th>Count</th>
+                                    <th>Percentage</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                <tr>
+                                    <td>1.[-100%, -90%]</td>
+                                    <td>15662</td>
+                                    <td>45.47%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>2.[-90%, -80%]</td>
+                                    <td>156</td>
+                                    <td>0.45%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>3.[-80%, -70%]</td>
+                                    <td>193</td>
+                                    <td>0.56%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>4.[-70%, -60%]</td>
+                                    <td>165</td>
+                                    <td>0.48%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>5.[-60%, -50%]</td>
+                                    <td>165</td>
+                                    <td>0.48%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>6.[-50%, -40%]</td>
+                                    <td>158</td>
+                                    <td>0.46%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>7.[-40%, -30%]</td>
+                                    <td>157</td>
+                                    <td>0.46%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>8.[-30%, -20%]</td>
+                                    <td>169</td>
+                                    <td>0.49%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>9.[-20%, -10%]</td>
+                                    <td>150</td>
+                                    <td>0.44%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>10.[-10%, 0%]</td>
+                                    <td>96</td>
+                                    <td>0.28%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>11.[0%, 10%]</td>
+                                    <td>246</td>
+                                    <td>0.71%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>12.[10%, 20%]</td>
+                                    <td>166</td>
+                                    <td>0.48%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>13.[20%, 30%]</td>
+                                    <td>166</td>
+                                    <td>0.48%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>14.[30%, 40%]</td>
+                                    <td>162</td>
+                                    <td>0.47%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>15.[40%, 50%]</td>
+                                    <td>185</td>
+                                    <td>0.54%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>16.[50%, 100%]</td>
+                                    <td>860</td>
+                                    <td>2.50%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>17.[100%, 200%]</td>
+                                    <td>1668</td>
+                                    <td>4.84%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>18.[200%, 500%]</td>
+                                    <td>5140</td>
+                                    <td>14.92%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>19.[500%, 1000%]</td>
+                                    <td>8686</td>
+                                    <td>25.22%</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>20.[1000%, 99900%]</td>
+                                    <td>95</td>
+                                    <td>0.28%</td>
                                 </tr>
                                 
                             </tbody>
@@ -489,344 +1053,6 @@
 
         // Charts generated using Highcharts Python
         
-            // BI charts
-            
-                document.addEventListener('DOMContentLoaded', function() {
-Highcharts.chart('bi-step-0-chart',
-{
-  chart: {
-  renderTo: 'bi-step-0-chart',
-  type: 'column'
-},
-  plotOptions: {
-  column: {
-  borderWidth: 0,
-  pointPadding: 0.2,
-  dataLabels: {
-  enabled: true,
-  format: '{y:.1f}%'
-},
-  type: 'column'
-}
-},
-  series: [{
-  data: [{
-  y: 5.0,
-  custom: {
-  'count': 1
-},
-  name: '18.[200%, 500%]'
-},
-{
-  y: 75.0,
-  custom: {
-  'count': 15
-},
-  name: '20.[1000%, 99900%]'
-},
-{
-  y: 5.0,
-  custom: {
-  'count': 1
-},
-  name: '21.[99900%, Inf]'
-},
-{
-  y: 15.0,
-  custom: {
-  'count': 3
-},
-  name: 'Out of Range'
-}],
-  name: 'Policy Proportion',
-  colorByPoint: true,
-  type: 'column'
-}],
-  title: {
-  text: 'BI - Overall'
-},
-  tooltip: {
-  headerFormat: '<span style="font-size:10px">{point.key}</span><br/>',
-  pointFormat: 'Count: <b>{point.custom.count}</b>',
-  shared: false,
-  useHTML: true
-},
-  xAxis: {
-  categories: ['18.[200%, 500%]',
-'20.[1000%, 99900%]',
-'21.[99900%, Inf]',
-'Out of Range'],
-  labels: {
-  rotation: 315,
-  style: {'fontSize': '11px', 'fontFamily': 'Verdana, sans-serif'}
-},
-  title: {
-  text: 'Difference Bands'
-},
-  type: 'category'
-},
-  yAxis: {
-  max: 100,
-  min: 0,
-  title: {
-  text: 'Proportion of Policies (%)'
-}
-}
-},
-);
-});
-            
-                document.addEventListener('DOMContentLoaded', function() {
-Highcharts.chart('bi-step-1-chart',
-{
-  chart: {
-  renderTo: 'bi-step-1-chart',
-  type: 'column'
-},
-  plotOptions: {
-  column: {
-  borderWidth: 0,
-  pointPadding: 0.2,
-  dataLabels: {
-  enabled: true,
-  format: '{y:.1f}%'
-},
-  type: 'column'
-}
-},
-  series: [{
-  data: [{
-  y: 10.0,
-  custom: {
-  'count': 2
-},
-  name: '18.[200%, 500%]'
-},
-{
-  y: 85.0,
-  custom: {
-  'count': 17
-},
-  name: '20.[1000%, 99900%]'
-},
-{
-  y: 5.0,
-  custom: {
-  'count': 1
-},
-  name: '21.[99900%, Inf]'
-}],
-  name: 'Policy Proportion',
-  colorByPoint: true,
-  type: 'column'
-}],
-  title: {
-  text: 'BI - Excess Change'
-},
-  tooltip: {
-  headerFormat: '<span style="font-size:10px">{point.key}</span><br/>',
-  pointFormat: 'Count: <b>{point.custom.count}</b>',
-  shared: false,
-  useHTML: true
-},
-  xAxis: {
-  categories: ['18.[200%, 500%]',
-'20.[1000%, 99900%]',
-'21.[99900%, Inf]'],
-  labels: {
-  rotation: 315,
-  style: {'fontSize': '11px', 'fontFamily': 'Verdana, sans-serif'}
-},
-  title: {
-  text: 'Difference Bands'
-},
-  type: 'category'
-},
-  yAxis: {
-  max: 100,
-  min: 0,
-  title: {
-  text: 'Proportion of Policies (%)'
-}
-}
-},
-);
-});
-            
-                document.addEventListener('DOMContentLoaded', function() {
-Highcharts.chart('bi-step-2-chart',
-{
-  chart: {
-  renderTo: 'bi-step-2-chart',
-  type: 'column'
-},
-  plotOptions: {
-  column: {
-  borderWidth: 0,
-  pointPadding: 0.2,
-  dataLabels: {
-  enabled: true,
-  format: '{y:.1f}%'
-},
-  type: 'column'
-}
-},
-  series: [{
-  data: [{
-  y: 10.0,
-  custom: {
-  'count': 2
-},
-  name: '11.[0%, 10%]'
-},
-{
-  y: 5.0,
-  custom: {
-  'count': 1
-},
-  name: '13.[20%, 30%]'
-},
-{
-  y: 10.0,
-  custom: {
-  'count': 2
-},
-  name: '15.[40%, 50%]'
-},
-{
-  y: 10.0,
-  custom: {
-  'count': 2
-},
-  name: '18.[200%, 500%]'
-},
-{
-  y: 20.0,
-  custom: {
-  'count': 4
-},
-  name: '20.[1000%, 99900%]'
-},
-{
-  y: 45.0,
-  custom: {
-  'count': 9
-},
-  name: 'Out of Range'
-}],
-  name: 'Policy Proportion',
-  colorByPoint: true,
-  type: 'column'
-}],
-  title: {
-  text: 'BI - Inflation'
-},
-  tooltip: {
-  headerFormat: '<span style="font-size:10px">{point.key}</span><br/>',
-  pointFormat: 'Count: <b>{point.custom.count}</b>',
-  shared: false,
-  useHTML: true
-},
-  xAxis: {
-  categories: ['11.[0%, 10%]',
-'13.[20%, 30%]',
-'15.[40%, 50%]',
-'18.[200%, 500%]',
-'20.[1000%, 99900%]',
-'Out of Range'],
-  labels: {
-  rotation: 315,
-  style: {'fontSize': '11px', 'fontFamily': 'Verdana, sans-serif'}
-},
-  title: {
-  text: 'Difference Bands'
-},
-  type: 'category'
-},
-  yAxis: {
-  max: 100,
-  min: 0,
-  title: {
-  text: 'Proportion of Policies (%)'
-}
-}
-},
-);
-});
-            
-                document.addEventListener('DOMContentLoaded', function() {
-Highcharts.chart('waterfall-bi-chart',
-{
-  chart: {
-  renderTo: 'waterfall-bi-chart',
-  type: 'waterfall'
-},
-  series: [{
-  data: [{
-  isSum: false,
-  y: 100.0,
-  color: '#550062',
-  custom: {
-  'value_total': 213189.2259145,
-  'value_diff': 0
-},
-  name: 'Start'
-},
-{
-  isSum: false,
-  y: 95.92671168453761,
-  color: '#90ed7d',
-  custom: {
-  'value_total': 417694.63999999996,
-  'value_diff': 204505.41408549994
-},
-  name: 'Excess Change'
-},
-{
-  isSum: false,
-  y: -0.42071544476628253,
-  color: '#f7a35c',
-  custom: {
-  'value_total': 416797.72,
-  'value_diff': -896.9199999999837
-},
-  name: 'Inflation'
-},
-{
-  isSum: true,
-  y: 195.50599623977132,
-  color: '#550062',
-  custom: {
-  'value_total': 416797.72,
-  'value_diff': 203608.49408549996
-},
-  name: 'Final'
-}],
-  name: 'BI',
-  type: 'waterfall'
-}],
-  title: {
-  text: 'BI - Waterfall Chart'
-},
-  tooltip: {
-  pointFormat: '<br/>Value: {point.custom.value_total:,.0f}<br/>Step Impact: {point.custom.value_diff:,.0f}'
-},
-  xAxis: {
-  title: {
-  text: 'Stages'
-},
-  type: 'category'
-},
-  yAxis: {
-  title: {
-  text: 'Total Value'
-}
-}
-},
-);
-});
-            
-        
             // Property charts
             
                 document.addEventListener('DOMContentLoaded', function() {
@@ -849,46 +1075,144 @@ Highcharts.chart('property-step-0-chart',
 },
   series: [{
   data: [{
-  y: 10.0,
+  y: 47.03,
   custom: {
-  'count': 2
+  'count': 16200
+},
+  name: '1.[-100%, -90%]'
+},
+{
+  y: 0.44,
+  custom: {
+  'count': 153
+},
+  name: '2.[-90%, -80%]'
+},
+{
+  y: 0.46,
+  custom: {
+  'count': 160
+},
+  name: '3.[-80%, -70%]'
+},
+{
+  y: 0.45,
+  custom: {
+  'count': 156
+},
+  name: '4.[-70%, -60%]'
+},
+{
+  y: 0.5,
+  custom: {
+  'count': 173
+},
+  name: '5.[-60%, -50%]'
+},
+{
+  y: 0.47,
+  custom: {
+  'count': 161
+},
+  name: '6.[-50%, -40%]'
+},
+{
+  y: 0.52,
+  custom: {
+  'count': 178
+},
+  name: '7.[-40%, -30%]'
+},
+{
+  y: 0.46,
+  custom: {
+  'count': 160
+},
+  name: '8.[-30%, -20%]'
+},
+{
+  y: 0.45,
+  custom: {
+  'count': 155
+},
+  name: '9.[-20%, -10%]'
+},
+{
+  y: 0.51,
+  custom: {
+  'count': 175
+},
+  name: '10.[-10%, 0%]'
+},
+{
+  y: 0.46,
+  custom: {
+  'count': 160
 },
   name: '11.[0%, 10%]'
 },
 {
-  y: 5.0,
+  y: 0.42,
   custom: {
-  'count': 1
+  'count': 144
+},
+  name: '12.[10%, 20%]'
+},
+{
+  y: 0.43,
+  custom: {
+  'count': 147
 },
   name: '13.[20%, 30%]'
 },
 {
-  y: 10.0,
+  y: 0.49,
   custom: {
-  'count': 2
+  'count': 168
+},
+  name: '14.[30%, 40%]'
+},
+{
+  y: 0.44,
+  custom: {
+  'count': 153
 },
   name: '15.[40%, 50%]'
 },
 {
-  y: 10.0,
+  y: 2.43,
   custom: {
-  'count': 2
+  'count': 838
+},
+  name: '16.[50%, 100%]'
+},
+{
+  y: 4.24,
+  custom: {
+  'count': 1459
+},
+  name: '17.[100%, 200%]'
+},
+{
+  y: 11.69,
+  custom: {
+  'count': 4026
 },
   name: '18.[200%, 500%]'
 },
 {
-  y: 20.0,
+  y: 14.84,
   custom: {
-  'count': 4
+  'count': 5113
 },
-  name: '20.[1000%, 99900%]'
+  name: '19.[500%, 1000%]'
 },
 {
-  y: 45.0,
+  y: 13.26,
   custom: {
-  'count': 9
+  'count': 4566
 },
-  name: 'Out of Range'
+  name: '20.[1000%, 99900%]'
 }],
   name: 'Policy Proportion',
   colorByPoint: true,
@@ -904,12 +1228,26 @@ Highcharts.chart('property-step-0-chart',
   useHTML: true
 },
   xAxis: {
-  categories: ['11.[0%, 10%]',
+  categories: ['1.[-100%, -90%]',
+'2.[-90%, -80%]',
+'3.[-80%, -70%]',
+'4.[-70%, -60%]',
+'5.[-60%, -50%]',
+'6.[-50%, -40%]',
+'7.[-40%, -30%]',
+'8.[-30%, -20%]',
+'9.[-20%, -10%]',
+'10.[-10%, 0%]',
+'11.[0%, 10%]',
+'12.[10%, 20%]',
 '13.[20%, 30%]',
+'14.[30%, 40%]',
 '15.[40%, 50%]',
+'16.[50%, 100%]',
+'17.[100%, 200%]',
 '18.[200%, 500%]',
-'20.[1000%, 99900%]',
-'Out of Range'],
+'19.[500%, 1000%]',
+'20.[1000%, 99900%]'],
   labels: {
   rotation: 315,
   style: {'fontSize': '11px', 'fontFamily': 'Verdana, sans-serif'}
@@ -950,46 +1288,144 @@ Highcharts.chart('property-step-1-chart',
 },
   series: [{
   data: [{
-  y: 10.0,
+  y: 45.09,
   custom: {
-  'count': 2
+  'count': 15532
+},
+  name: '1.[-100%, -90%]'
+},
+{
+  y: 0.51,
+  custom: {
+  'count': 177
+},
+  name: '2.[-90%, -80%]'
+},
+{
+  y: 0.46,
+  custom: {
+  'count': 159
+},
+  name: '3.[-80%, -70%]'
+},
+{
+  y: 0.48,
+  custom: {
+  'count': 166
+},
+  name: '4.[-70%, -60%]'
+},
+{
+  y: 0.66,
+  custom: {
+  'count': 226
+},
+  name: '5.[-60%, -50%]'
+},
+{
+  y: 0.58,
+  custom: {
+  'count': 201
+},
+  name: '6.[-50%, -40%]'
+},
+{
+  y: 0.4,
+  custom: {
+  'count': 137
+},
+  name: '7.[-40%, -30%]'
+},
+{
+  y: 0.56,
+  custom: {
+  'count': 193
+},
+  name: '8.[-30%, -20%]'
+},
+{
+  y: 0.57,
+  custom: {
+  'count': 197
+},
+  name: '9.[-20%, -10%]'
+},
+{
+  y: 0.23,
+  custom: {
+  'count': 79
+},
+  name: '10.[-10%, 0%]'
+},
+{
+  y: 0.71,
+  custom: {
+  'count': 246
 },
   name: '11.[0%, 10%]'
 },
 {
-  y: 5.0,
+  y: 0.55,
   custom: {
-  'count': 1
+  'count': 189
+},
+  name: '12.[10%, 20%]'
+},
+{
+  y: 0.56,
+  custom: {
+  'count': 194
 },
   name: '13.[20%, 30%]'
 },
 {
-  y: 10.0,
+  y: 0.37,
   custom: {
-  'count': 2
+  'count': 128
+},
+  name: '14.[30%, 40%]'
+},
+{
+  y: 0.57,
+  custom: {
+  'count': 195
 },
   name: '15.[40%, 50%]'
 },
 {
-  y: 10.0,
+  y: 2.36,
   custom: {
-  'count': 2
+  'count': 813
+},
+  name: '16.[50%, 100%]'
+},
+{
+  y: 5.13,
+  custom: {
+  'count': 1767
+},
+  name: '17.[100%, 200%]'
+},
+{
+  y: 14.87,
+  custom: {
+  'count': 5122
 },
   name: '18.[200%, 500%]'
 },
 {
-  y: 20.0,
+  y: 25.04,
   custom: {
-  'count': 4
+  'count': 8624
 },
-  name: '20.[1000%, 99900%]'
+  name: '19.[500%, 1000%]'
 },
 {
-  y: 45.0,
+  y: 0.29,
   custom: {
-  'count': 9
+  'count': 100
 },
-  name: 'Out of Range'
+  name: '20.[1000%, 99900%]'
 }],
   name: 'Policy Proportion',
   colorByPoint: true,
@@ -1005,12 +1441,26 @@ Highcharts.chart('property-step-1-chart',
   useHTML: true
 },
   xAxis: {
-  categories: ['11.[0%, 10%]',
+  categories: ['1.[-100%, -90%]',
+'2.[-90%, -80%]',
+'3.[-80%, -70%]',
+'4.[-70%, -60%]',
+'5.[-60%, -50%]',
+'6.[-50%, -40%]',
+'7.[-40%, -30%]',
+'8.[-30%, -20%]',
+'9.[-20%, -10%]',
+'10.[-10%, 0%]',
+'11.[0%, 10%]',
+'12.[10%, 20%]',
 '13.[20%, 30%]',
+'14.[30%, 40%]',
 '15.[40%, 50%]',
+'16.[50%, 100%]',
+'17.[100%, 200%]',
 '18.[200%, 500%]',
-'20.[1000%, 99900%]',
-'Out of Range'],
+'19.[500%, 1000%]',
+'20.[1000%, 99900%]'],
   labels: {
   rotation: 315,
   style: {'fontSize': '11px', 'fontFamily': 'Verdana, sans-serif'}
@@ -1051,11 +1501,144 @@ Highcharts.chart('property-step-2-chart',
 },
   series: [{
   data: [{
-  y: 100.0,
+  y: 45.48,
   custom: {
-  'count': 20
+  'count': 15666
+},
+  name: '1.[-100%, -90%]'
+},
+{
+  y: 0.48,
+  custom: {
+  'count': 167
+},
+  name: '2.[-90%, -80%]'
+},
+{
+  y: 0.48,
+  custom: {
+  'count': 166
+},
+  name: '3.[-80%, -70%]'
+},
+{
+  y: 0.53,
+  custom: {
+  'count': 184
+},
+  name: '4.[-70%, -60%]'
+},
+{
+  y: 0.47,
+  custom: {
+  'count': 162
+},
+  name: '5.[-60%, -50%]'
+},
+{
+  y: 0.46,
+  custom: {
+  'count': 159
+},
+  name: '6.[-50%, -40%]'
+},
+{
+  y: 0.44,
+  custom: {
+  'count': 153
+},
+  name: '7.[-40%, -30%]'
+},
+{
+  y: 0.47,
+  custom: {
+  'count': 161
+},
+  name: '8.[-30%, -20%]'
+},
+{
+  y: 0.52,
+  custom: {
+  'count': 178
+},
+  name: '9.[-20%, -10%]'
+},
+{
+  y: 0.22,
+  custom: {
+  'count': 75
+},
+  name: '10.[-10%, 0%]'
+},
+{
+  y: 0.72,
+  custom: {
+  'count': 248
 },
   name: '11.[0%, 10%]'
+},
+{
+  y: 0.49,
+  custom: {
+  'count': 168
+},
+  name: '12.[10%, 20%]'
+},
+{
+  y: 0.48,
+  custom: {
+  'count': 165
+},
+  name: '13.[20%, 30%]'
+},
+{
+  y: 0.51,
+  custom: {
+  'count': 176
+},
+  name: '14.[30%, 40%]'
+},
+{
+  y: 0.51,
+  custom: {
+  'count': 174
+},
+  name: '15.[40%, 50%]'
+},
+{
+  y: 2.49,
+  custom: {
+  'count': 859
+},
+  name: '16.[50%, 100%]'
+},
+{
+  y: 4.78,
+  custom: {
+  'count': 1648
+},
+  name: '17.[100%, 200%]'
+},
+{
+  y: 14.94,
+  custom: {
+  'count': 5147
+},
+  name: '18.[200%, 500%]'
+},
+{
+  y: 25.25,
+  custom: {
+  'count': 8696
+},
+  name: '19.[500%, 1000%]'
+},
+{
+  y: 0.27,
+  custom: {
+  'count': 93
+},
+  name: '20.[1000%, 99900%]'
 }],
   name: 'Policy Proportion',
   colorByPoint: true,
@@ -1071,7 +1654,26 @@ Highcharts.chart('property-step-2-chart',
   useHTML: true
 },
   xAxis: {
-  categories: ['11.[0%, 10%]'],
+  categories: ['1.[-100%, -90%]',
+'2.[-90%, -80%]',
+'3.[-80%, -70%]',
+'4.[-70%, -60%]',
+'5.[-60%, -50%]',
+'6.[-50%, -40%]',
+'7.[-40%, -30%]',
+'8.[-30%, -20%]',
+'9.[-20%, -10%]',
+'10.[-10%, 0%]',
+'11.[0%, 10%]',
+'12.[10%, 20%]',
+'13.[20%, 30%]',
+'14.[30%, 40%]',
+'15.[40%, 50%]',
+'16.[50%, 100%]',
+'17.[100%, 200%]',
+'18.[200%, 500%]',
+'19.[500%, 1000%]',
+'20.[1000%, 99900%]'],
   labels: {
   rotation: 315,
   style: {'fontSize': '11px', 'fontFamily': 'Verdana, sans-serif'}
@@ -1099,44 +1701,52 @@ Highcharts.chart('waterfall-property-chart',
   renderTo: 'waterfall-property-chart',
   type: 'waterfall'
 },
+  plotOptions: {
+  waterfall: {
+  pointPadding: 0.2,
+  dataLabels: {
+  enabled: true,
+  format: '{y:.1f}%',
+  verticalAlign: 'top'
+},
+  type: 'waterfall'
+}
+},
   series: [{
   data: [{
-  isSum: false,
   y: 100.0,
   color: '#550062',
   custom: {
-  'value_total': 417694.63999999996,
+  'value_total': 719855348.02,
   'value_diff': 0
 },
   name: 'Start'
 },
 {
-  isSum: false,
-  y: -0.21473102934717664,
-  color: '#f7a35c',
+  y: 0.05650731374281251,
+  color: '#90ed7d',
   custom: {
-  'value_total': 416797.72,
-  'value_diff': -896.9199999999837
+  'value_total': 720262118.94,
+  'value_diff': 406770.9200000763
 },
   name: 'Excess Change'
 },
 {
-  isSum: false,
-  y: 0.0,
+  y: 0.012305023536120837,
   color: '#90ed7d',
   custom: {
-  'value_total': 416797.72,
-  'value_diff': 0.0
+  'value_total': 720350697.31,
+  'value_diff': 88578.36999988556
 },
   name: 'Inflation'
 },
 {
   isSum: true,
-  y: 99.78526897065282,
+  y: 100.06881233727893,
   color: '#550062',
   custom: {
-  'value_total': 416797.72,
-  'value_diff': -896.9199999999837
+  'value_total': 720350697.31,
+  'value_diff': 495349.28999996185
 },
   name: 'Final'
 }],
@@ -1145,6 +1755,728 @@ Highcharts.chart('waterfall-property-chart',
 }],
   title: {
   text: 'Property - Waterfall Chart'
+},
+  tooltip: {
+  pointFormat: '<br/>Value: {point.custom.value_total:,.0f}<br/>Step Impact: {point.custom.value_diff:,.0f}'
+},
+  xAxis: {
+  title: {
+  text: 'Stages'
+},
+  type: 'category'
+},
+  yAxis: {
+  title: {
+  text: 'Total Value'
+}
+}
+},
+);
+});
+            
+        
+            // BI charts
+            
+                document.addEventListener('DOMContentLoaded', function() {
+Highcharts.chart('bi-step-0-chart',
+{
+  chart: {
+  renderTo: 'bi-step-0-chart',
+  type: 'column'
+},
+  plotOptions: {
+  column: {
+  borderWidth: 0,
+  pointPadding: 0.2,
+  dataLabels: {
+  enabled: true,
+  format: '{y:.1f}%'
+},
+  type: 'column'
+}
+},
+  series: [{
+  data: [{
+  y: 47.03,
+  custom: {
+  'count': 16200
+},
+  name: '1.[-100%, -90%]'
+},
+{
+  y: 0.45,
+  custom: {
+  'count': 155
+},
+  name: '2.[-90%, -80%]'
+},
+{
+  y: 0.46,
+  custom: {
+  'count': 159
+},
+  name: '3.[-80%, -70%]'
+},
+{
+  y: 0.45,
+  custom: {
+  'count': 155
+},
+  name: '4.[-70%, -60%]'
+},
+{
+  y: 0.5,
+  custom: {
+  'count': 173
+},
+  name: '5.[-60%, -50%]'
+},
+{
+  y: 0.47,
+  custom: {
+  'count': 163
+},
+  name: '6.[-50%, -40%]'
+},
+{
+  y: 0.51,
+  custom: {
+  'count': 176
+},
+  name: '7.[-40%, -30%]'
+},
+{
+  y: 0.47,
+  custom: {
+  'count': 161
+},
+  name: '8.[-30%, -20%]'
+},
+{
+  y: 0.45,
+  custom: {
+  'count': 154
+},
+  name: '9.[-20%, -10%]'
+},
+{
+  y: 0.51,
+  custom: {
+  'count': 175
+},
+  name: '10.[-10%, 0%]'
+},
+{
+  y: 0.47,
+  custom: {
+  'count': 161
+},
+  name: '11.[0%, 10%]'
+},
+{
+  y: 0.41,
+  custom: {
+  'count': 142
+},
+  name: '12.[10%, 20%]'
+},
+{
+  y: 0.43,
+  custom: {
+  'count': 148
+},
+  name: '13.[20%, 30%]'
+},
+{
+  y: 0.49,
+  custom: {
+  'count': 168
+},
+  name: '14.[30%, 40%]'
+},
+{
+  y: 0.44,
+  custom: {
+  'count': 153
+},
+  name: '15.[40%, 50%]'
+},
+{
+  y: 2.43,
+  custom: {
+  'count': 836
+},
+  name: '16.[50%, 100%]'
+},
+{
+  y: 4.24,
+  custom: {
+  'count': 1461
+},
+  name: '17.[100%, 200%]'
+},
+{
+  y: 11.69,
+  custom: {
+  'count': 4027
+},
+  name: '18.[200%, 500%]'
+},
+{
+  y: 14.84,
+  custom: {
+  'count': 5113
+},
+  name: '19.[500%, 1000%]'
+},
+{
+  y: 13.25,
+  custom: {
+  'count': 4565
+},
+  name: '20.[1000%, 99900%]'
+}],
+  name: 'Policy Proportion',
+  colorByPoint: true,
+  type: 'column'
+}],
+  title: {
+  text: 'BI - Overall'
+},
+  tooltip: {
+  headerFormat: '<span style="font-size:10px">{point.key}</span><br/>',
+  pointFormat: 'Count: <b>{point.custom.count}</b>',
+  shared: false,
+  useHTML: true
+},
+  xAxis: {
+  categories: ['1.[-100%, -90%]',
+'2.[-90%, -80%]',
+'3.[-80%, -70%]',
+'4.[-70%, -60%]',
+'5.[-60%, -50%]',
+'6.[-50%, -40%]',
+'7.[-40%, -30%]',
+'8.[-30%, -20%]',
+'9.[-20%, -10%]',
+'10.[-10%, 0%]',
+'11.[0%, 10%]',
+'12.[10%, 20%]',
+'13.[20%, 30%]',
+'14.[30%, 40%]',
+'15.[40%, 50%]',
+'16.[50%, 100%]',
+'17.[100%, 200%]',
+'18.[200%, 500%]',
+'19.[500%, 1000%]',
+'20.[1000%, 99900%]'],
+  labels: {
+  rotation: 315,
+  style: {'fontSize': '11px', 'fontFamily': 'Verdana, sans-serif'}
+},
+  title: {
+  text: 'Difference Bands'
+},
+  type: 'category'
+},
+  yAxis: {
+  max: 100,
+  min: 0,
+  title: {
+  text: 'Proportion of Policies (%)'
+}
+}
+},
+);
+});
+            
+                document.addEventListener('DOMContentLoaded', function() {
+Highcharts.chart('bi-step-1-chart',
+{
+  chart: {
+  renderTo: 'bi-step-1-chart',
+  type: 'column'
+},
+  plotOptions: {
+  column: {
+  borderWidth: 0,
+  pointPadding: 0.2,
+  dataLabels: {
+  enabled: true,
+  format: '{y:.1f}%'
+},
+  type: 'column'
+}
+},
+  series: [{
+  data: [{
+  y: 45.14,
+  custom: {
+  'count': 15549
+},
+  name: '1.[-100%, -90%]'
+},
+{
+  y: 0.56,
+  custom: {
+  'count': 194
+},
+  name: '2.[-90%, -80%]'
+},
+{
+  y: 0.39,
+  custom: {
+  'count': 136
+},
+  name: '3.[-80%, -70%]'
+},
+{
+  y: 0.54,
+  custom: {
+  'count': 186
+},
+  name: '4.[-70%, -60%]'
+},
+{
+  y: 0.63,
+  custom: {
+  'count': 217
+},
+  name: '5.[-60%, -50%]'
+},
+{
+  y: 0.48,
+  custom: {
+  'count': 167
+},
+  name: '6.[-50%, -40%]'
+},
+{
+  y: 0.51,
+  custom: {
+  'count': 176
+},
+  name: '7.[-40%, -30%]'
+},
+{
+  y: 0.53,
+  custom: {
+  'count': 184
+},
+  name: '8.[-30%, -20%]'
+},
+{
+  y: 0.46,
+  custom: {
+  'count': 157
+},
+  name: '9.[-20%, -10%]'
+},
+{
+  y: 0.29,
+  custom: {
+  'count': 101
+},
+  name: '10.[-10%, 0%]'
+},
+{
+  y: 0.8,
+  custom: {
+  'count': 275
+},
+  name: '11.[0%, 10%]'
+},
+{
+  y: 0.44,
+  custom: {
+  'count': 152
+},
+  name: '12.[10%, 20%]'
+},
+{
+  y: 0.47,
+  custom: {
+  'count': 162
+},
+  name: '13.[20%, 30%]'
+},
+{
+  y: 0.51,
+  custom: {
+  'count': 176
+},
+  name: '14.[30%, 40%]'
+},
+{
+  y: 0.47,
+  custom: {
+  'count': 161
+},
+  name: '15.[40%, 50%]'
+},
+{
+  y: 2.44,
+  custom: {
+  'count': 839
+},
+  name: '16.[50%, 100%]'
+},
+{
+  y: 5.01,
+  custom: {
+  'count': 1724
+},
+  name: '17.[100%, 200%]'
+},
+{
+  y: 15.06,
+  custom: {
+  'count': 5189
+},
+  name: '18.[200%, 500%]'
+},
+{
+  y: 24.95,
+  custom: {
+  'count': 8595
+},
+  name: '19.[500%, 1000%]'
+},
+{
+  y: 0.3,
+  custom: {
+  'count': 105
+},
+  name: '20.[1000%, 99900%]'
+}],
+  name: 'Policy Proportion',
+  colorByPoint: true,
+  type: 'column'
+}],
+  title: {
+  text: 'BI - Excess Change'
+},
+  tooltip: {
+  headerFormat: '<span style="font-size:10px">{point.key}</span><br/>',
+  pointFormat: 'Count: <b>{point.custom.count}</b>',
+  shared: false,
+  useHTML: true
+},
+  xAxis: {
+  categories: ['1.[-100%, -90%]',
+'2.[-90%, -80%]',
+'3.[-80%, -70%]',
+'4.[-70%, -60%]',
+'5.[-60%, -50%]',
+'6.[-50%, -40%]',
+'7.[-40%, -30%]',
+'8.[-30%, -20%]',
+'9.[-20%, -10%]',
+'10.[-10%, 0%]',
+'11.[0%, 10%]',
+'12.[10%, 20%]',
+'13.[20%, 30%]',
+'14.[30%, 40%]',
+'15.[40%, 50%]',
+'16.[50%, 100%]',
+'17.[100%, 200%]',
+'18.[200%, 500%]',
+'19.[500%, 1000%]',
+'20.[1000%, 99900%]'],
+  labels: {
+  rotation: 315,
+  style: {'fontSize': '11px', 'fontFamily': 'Verdana, sans-serif'}
+},
+  title: {
+  text: 'Difference Bands'
+},
+  type: 'category'
+},
+  yAxis: {
+  max: 100,
+  min: 0,
+  title: {
+  text: 'Proportion of Policies (%)'
+}
+}
+},
+);
+});
+            
+                document.addEventListener('DOMContentLoaded', function() {
+Highcharts.chart('bi-step-2-chart',
+{
+  chart: {
+  renderTo: 'bi-step-2-chart',
+  type: 'column'
+},
+  plotOptions: {
+  column: {
+  borderWidth: 0,
+  pointPadding: 0.2,
+  dataLabels: {
+  enabled: true,
+  format: '{y:.1f}%'
+},
+  type: 'column'
+}
+},
+  series: [{
+  data: [{
+  y: 45.47,
+  custom: {
+  'count': 15662
+},
+  name: '1.[-100%, -90%]'
+},
+{
+  y: 0.45,
+  custom: {
+  'count': 156
+},
+  name: '2.[-90%, -80%]'
+},
+{
+  y: 0.56,
+  custom: {
+  'count': 193
+},
+  name: '3.[-80%, -70%]'
+},
+{
+  y: 0.48,
+  custom: {
+  'count': 165
+},
+  name: '4.[-70%, -60%]'
+},
+{
+  y: 0.48,
+  custom: {
+  'count': 165
+},
+  name: '5.[-60%, -50%]'
+},
+{
+  y: 0.46,
+  custom: {
+  'count': 158
+},
+  name: '6.[-50%, -40%]'
+},
+{
+  y: 0.46,
+  custom: {
+  'count': 157
+},
+  name: '7.[-40%, -30%]'
+},
+{
+  y: 0.49,
+  custom: {
+  'count': 169
+},
+  name: '8.[-30%, -20%]'
+},
+{
+  y: 0.44,
+  custom: {
+  'count': 150
+},
+  name: '9.[-20%, -10%]'
+},
+{
+  y: 0.28,
+  custom: {
+  'count': 96
+},
+  name: '10.[-10%, 0%]'
+},
+{
+  y: 0.71,
+  custom: {
+  'count': 246
+},
+  name: '11.[0%, 10%]'
+},
+{
+  y: 0.48,
+  custom: {
+  'count': 166
+},
+  name: '12.[10%, 20%]'
+},
+{
+  y: 0.48,
+  custom: {
+  'count': 166
+},
+  name: '13.[20%, 30%]'
+},
+{
+  y: 0.47,
+  custom: {
+  'count': 162
+},
+  name: '14.[30%, 40%]'
+},
+{
+  y: 0.54,
+  custom: {
+  'count': 185
+},
+  name: '15.[40%, 50%]'
+},
+{
+  y: 2.5,
+  custom: {
+  'count': 860
+},
+  name: '16.[50%, 100%]'
+},
+{
+  y: 4.84,
+  custom: {
+  'count': 1668
+},
+  name: '17.[100%, 200%]'
+},
+{
+  y: 14.92,
+  custom: {
+  'count': 5140
+},
+  name: '18.[200%, 500%]'
+},
+{
+  y: 25.22,
+  custom: {
+  'count': 8686
+},
+  name: '19.[500%, 1000%]'
+},
+{
+  y: 0.28,
+  custom: {
+  'count': 95
+},
+  name: '20.[1000%, 99900%]'
+}],
+  name: 'Policy Proportion',
+  colorByPoint: true,
+  type: 'column'
+}],
+  title: {
+  text: 'BI - Inflation'
+},
+  tooltip: {
+  headerFormat: '<span style="font-size:10px">{point.key}</span><br/>',
+  pointFormat: 'Count: <b>{point.custom.count}</b>',
+  shared: false,
+  useHTML: true
+},
+  xAxis: {
+  categories: ['1.[-100%, -90%]',
+'2.[-90%, -80%]',
+'3.[-80%, -70%]',
+'4.[-70%, -60%]',
+'5.[-60%, -50%]',
+'6.[-50%, -40%]',
+'7.[-40%, -30%]',
+'8.[-30%, -20%]',
+'9.[-20%, -10%]',
+'10.[-10%, 0%]',
+'11.[0%, 10%]',
+'12.[10%, 20%]',
+'13.[20%, 30%]',
+'14.[30%, 40%]',
+'15.[40%, 50%]',
+'16.[50%, 100%]',
+'17.[100%, 200%]',
+'18.[200%, 500%]',
+'19.[500%, 1000%]',
+'20.[1000%, 99900%]'],
+  labels: {
+  rotation: 315,
+  style: {'fontSize': '11px', 'fontFamily': 'Verdana, sans-serif'}
+},
+  title: {
+  text: 'Difference Bands'
+},
+  type: 'category'
+},
+  yAxis: {
+  max: 100,
+  min: 0,
+  title: {
+  text: 'Proportion of Policies (%)'
+}
+}
+},
+);
+});
+            
+                document.addEventListener('DOMContentLoaded', function() {
+Highcharts.chart('waterfall-bi-chart',
+{
+  chart: {
+  renderTo: 'waterfall-bi-chart',
+  type: 'waterfall'
+},
+  plotOptions: {
+  waterfall: {
+  pointPadding: 0.2,
+  dataLabels: {
+  enabled: true,
+  format: '{y:.1f}%',
+  verticalAlign: 'top'
+},
+  type: 'waterfall'
+}
+},
+  series: [{
+  data: [{
+  y: 100.0,
+  color: '#550062',
+  custom: {
+  'value_total': 367172914.04,
+  'value_diff': 0
+},
+  name: 'Start'
+},
+{
+  y: 0.0558702186778555,
+  color: '#90ed7d',
+  custom: {
+  'value_total': 367378054.35,
+  'value_diff': 205140.31000000238
+},
+  name: 'Excess Change'
+},
+{
+  y: 0.020935580229536527,
+  color: '#90ed7d',
+  custom: {
+  'value_total': 367454924.13,
+  'value_diff': 76869.77999997139
+},
+  name: 'Inflation'
+},
+{
+  isSum: true,
+  y: 100.07680579890739,
+  color: '#550062',
+  custom: {
+  'value_total': 367454924.13,
+  'value_diff': 282010.0899999738
+},
+  name: 'Final'
+}],
+  name: 'BI',
+  type: 'waterfall'
+}],
+  title: {
+  text: 'BI - Waterfall Chart'
 },
   tooltip: {
   pointFormat: '<br/>Value: {point.custom.value_total:,.0f}<br/>Step Impact: {point.custom.value_diff:,.0f}'
