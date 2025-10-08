@@ -130,7 +130,6 @@ class ImpactChartGenerator:
         waterfall_data.append({
             'name': dict_waterfall[sorted_indices[0]]['stage_name'],
             'y': dict_waterfall[sorted_indices[0]]['value_total_percent'],
-            'isSum': False,
             'color': '#550062',
             'custom': {
                 'value_total': dict_waterfall[sorted_indices[0]]['value_total'],
@@ -145,7 +144,6 @@ class ImpactChartGenerator:
             waterfall_data.append({
                 'name': dict_waterfall[idx]['stage_name'],
                 'y': change,
-                'isSum': False,
                 'color': '#90ed7d' if change >= 0 else '#f7a35c',
                 'custom': {
                     'value_total': dict_waterfall[idx]['value_total'],
@@ -179,24 +177,16 @@ class ImpactChartGenerator:
             tooltip={
                 'pointFormat': '<br/>Value: {point.custom.value_total:,.0f}<br/>Step Impact: {point.custom.value_diff:,.0f}'
             },
-            # plot_options={
-            #     'waterfall': {
-            #         'dataLabels': {
-            #             'enabled': True,
-            #             'formatter': '''function() {
-            #                 if (this.point.isSum) {
-            #                     return this.point.stackTotal.toLocaleString();
-            #                 } else {
-            #                     const percentage = ((this.point.y / this.point.stackTotal) * 100).toFixed(1);
-            #                     return percentage + '%';
-            #                 }
-            #             }''',
-            #             'style': {
-            #                 'fontWeight': 'bold'
-            #             }
-            #         }
-            #     }
-            # },
+            plot_options={
+                'waterfall': {
+                    'pointPadding': 0.2,
+                    'dataLabels': {
+                        'enabled': True,
+                        'verticalAlign': 'top',
+                        'format': '{y:.1f}%'
+                    }
+                }
+            },
             series=[
                 WaterfallSeries(
                     name=title.split(' - ')[0] if ' - ' in title else title,
