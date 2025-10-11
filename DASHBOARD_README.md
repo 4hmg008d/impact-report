@@ -1,128 +1,217 @@
-# Data Tools Dashboard
+# Impact Analysis Dashboard
 
-A comprehensive Dash-based web interface for data conversion and impact analysis tools.
+An interactive web-based dashboard for running and visualizing impact analysis reports.
 
 ## Features
 
-### Page 1: Data Conversion
-- **File Upload**: Drag and drop input data files (Excel/CSV) with live preview
-- **Mapping File Upload**: Upload Excel mapping files with column mapping preview
-- **Configuration Editor**: Real-time YAML configuration editor for `config_data_conversion.yaml`
-- **Live Logging**: Real-time conversion progress and error display
-- **Conversion Controls**: Start conversion and clear logs functionality
+### 1. Configuration Management
+- **Preview Configuration**: View current `config_impact_analysis.yaml` settings
+- **Edit Configuration**: Modify configuration directly in the dashboard
+- **Update Configuration**: Save changes and reload settings with one click
 
-### Page 2: Impact Analysis
-- **Configuration Editor**: Real-time YAML configuration editor for `config_impact_analysis.yaml`
-- **Analysis Controls**: Run impact analysis with results display
-- **Results Visualization**: Display band distribution and analysis results
+### 2. Data Analysis
+- **Run Impact Analysis**: Load data files, calculate comparisons, and generate results
+- **In-Memory Storage**: Data is stored in memory for fast re-calculation with different filters
+- **Automatic Results**: Summary tables and charts are generated automatically
+
+### 3. Interactive Filters
+- **Dynamic Filters**: Filter columns are read from the `filter` parameter in config
+- **Multi-Select Dropdowns**: Each filter shows unique values from the data
+- **Refresh Results**: Apply filters and recalculate without reloading data
+
+### 4. Visualization
+- **Summary Tables**: Total values and differences by stage for each comparison item
+- **Waterfall Charts**: Visual representation of value changes through stages
+- **Distribution Charts**: Band distribution for each step comparison
+- **Interactive Charts**: Powered by Highcharts with zoom, export, and tooltip features
+
+### 5. Export Options
+- **Save as HTML Report**: Export current results as timestamped HTML file
+- **Save Data**: Export filtered data as CSV files (overwrites existing)
 
 ## Installation
 
-1. Install required dependencies:
+1. Install required packages:
 ```bash
 pip install -r requirements.txt
 ```
 
-2. Ensure you have the following files in your project:
-- `config_data_conversion.yaml` - Data conversion configuration
-- `config_impact_analysis.yaml` - Impact analysis configuration
-- Sample data files in `data/input/` directory
-- Mapping files in `mapping/` directory
+Required packages:
+- pandas
+- openpyxl
+- PyYAML
+- xlrd
+- dash
+- dash-bootstrap-components
+- plotly
+- highcharts-core
+- highcharts-maps
+- Jinja2
 
 ## Usage
 
-1. Start the dashboard:
+### Starting the Dashboard
+
+Run the dashboard using the launcher script:
+
 ```bash
-python dashboard_app.py
+python run_dashboard.py
 ```
 
-2. Open your web browser and navigate to: `http://localhost:8050`
+Or specify a custom config file:
 
-3. Use the navigation bar to switch between:
-   - **Data Conversion**: For converting data files using mapping rules
-   - **Impact Analysis**: For analyzing differences between benchmark and target files
+```bash
+python run_dashboard.py path/to/config.yaml
+```
 
-## Data Conversion Workflow
+The dashboard will start at: `http://127.0.0.1:8050`
 
-1. **Upload Data File**: Drag and drop your input data file (Excel or CSV)
-2. **Upload Mapping File**: Drag and drop your mapping Excel file (must contain "column mapping" sheet)
-3. **Edit Configuration**: Modify the YAML configuration as needed
-4. **Start Conversion**: Click "Start Conversion" to begin the process
-5. **Monitor Logs**: Watch the live log display for progress and errors
+### Workflow
 
-## Impact Analysis Workflow
+1. **Review Configuration**
+   - Check the configuration editor
+   - Make any necessary changes
+   - Click "Update Configuration" to save
 
-1. **Edit Configuration**: Modify the impact analysis YAML configuration
-2. **Run Analysis**: Click "Run Impact Analysis" to execute the analysis
-3. **View Results**: See the band distribution and analysis results
+2. **Run Analysis**
+   - Click "Run Impact Analysis" to load data and calculate results
+   - Wait for the success message
+   - Results will appear in the "Analysis Results" section
 
-## Configuration Files
+3. **Apply Filters** (Optional)
+   - Use the filter dropdowns to select specific values
+   - Click "Refresh Results" to recalculate with filtered data
+   - Charts and tables will update automatically
 
-### Data Conversion Configuration (`config_data_conversion.yaml`)
+4. **Export Results**
+   - Click "Save as HTML Report" to create a timestamped HTML file
+   - Click "Save Data" to export CSV files (merged_data.csv, summary_table.csv, band_distribution.csv)
+
+## Dashboard Sections
+
+### Configuration Section
+- YAML editor for config file
+- Buttons for updating config and running analysis
+
+### Filters Section
+- Dynamic dropdowns based on `filter` parameter in config
+- Each dropdown shows unique values from the data
+- Multiple selections allowed per filter
+
+### Analysis Results Section
+- **Summary Tables**: Aggregated totals by stage
+- **Waterfall Charts**: Stage-by-stage value progression
+- **Distribution Charts**: Band distribution for each comparison step
+
+## Configuration File Structure
+
+The dashboard reads `config_impact_analysis.yaml`:
+
 ```yaml
-input:
-  file_path: "data/input/sample_data_with_flags.xlsx"
-  file_type: "auto"
-output:
-  file_path: "data/output/converted_data.csv"
-  file_type: "csv"
+filter:
+  - LOCATION_CITY
+  - PRODUCT_TYPE
+  # Add more columns to filter
+
 mapping:
-  file_path: "mapping/column_mapping.xlsx"
-  sheet_name: "column mapping"
-processing:
-  list_format: "list_in_single_string"
+  file_path: data/impact_analysis_config.xlsx
+  sheet_band: band
+  sheet_input: mapping_column
+  sheet_segment: segment
+
+output:
+  dir: data/output
 ```
 
-### Impact Analysis Configuration (`config_impact_analysis.yaml`)
-```yaml
-benchmark:
-  file_path: "impact_analysis/input/file1.xlsx"
-  premium_column: "PREMIUM_AMOUNT"
-target:
-  file_path: "impact_analysis/input/file2.xlsx"
-  premium_column: "PREMIUM_AMOUNT"
-id_column: "POLICY_NUMBER"
-band_config:
-  file_path: "impact_analysis/impact_analysis_config.xlsx"
-  sheet_name: "bands"
-segment_config:
-  file_path: "impact_analysis/impact_analysis_config.xlsx"
-  sheet_name: "segments"
-output:
-  merged_data_path: "impact_analysis/output/merged_data.csv"
-  band_distribution_path: "impact_analysis/output/band_distribution.csv"
-  report_path: "impact_analysis/output/impact_analysis_report.html"
-```
+### Filter Parameter
+- Lists column names to create filter dropdowns
+- Columns must exist in the merged data
+- Each column becomes a multi-select dropdown
 
 ## File Structure
 
 ```
-data-conversion/
-├── dashboard_app.py          # Main dashboard application
-├── requirements.txt          # Python dependencies
-├── config_data_conversion.yaml    # Data conversion configuration
-├── config_impact_analysis.yaml    # Impact analysis configuration
-├── src/
-│   ├── converter/           # Modular data conversion modules
-│   └── impact_analysis/     # Modular impact analysis modules
-├── data/
-│   ├── input/              # Input data files
-│   └── output/             # Output files
-├── mapping/                # Column mapping files
-└── impact_analysis/        # Impact analysis files
+impact-report/
+├── dashboard_app.py              # Main dashboard application
+├── run_dashboard.py              # Launcher script
+├── impact_analysis/
+│   ├── src/
+│   │   ├── app_dashboard_state.py    # State management
+│   │   ├── app_dash_components.py    # UI components
+│   │   ├── app_callbacks.py          # Callback functions
+│   │   ├── config_loader.py          # Config handling
+│   │   ├── data_processor.py         # Data processing
+│   │   ├── analyzer.py               # Analysis logic
+│   │   ├── chart_generator.py        # Chart generation
+│   │   └── visualizer.py             # HTML report generation
+│   ├── config_impact_analysis.yaml   # Configuration file
+│   └── data/
+│       ├── input/                    # Input Excel files
+│       └── output/                   # Generated reports and CSV
 ```
+
+## Technical Details
+
+### State Management
+- `DashboardState` class manages all in-memory data
+- Merged data is loaded once and reused for filter operations
+- Results are recalculated only when filters change
+
+### Component Architecture
+- **app_dashboard_state.py**: Centralized state management
+- **app_dash_components.py**: Reusable UI components
+- **app_callbacks.py**: Event handlers and business logic
+- **dashboard_app.py**: Main application entry point
+
+### Data Flow
+1. User clicks "Run Impact Analysis"
+2. Data is loaded and merged using existing `ModularImpactAnalyzer`
+3. Results are calculated and stored in memory
+4. User applies filters and clicks "Refresh Results"
+5. Filtered data is extracted from memory
+6. Results are recalculated without reloading files
 
 ## Troubleshooting
 
-- **Module Import Errors**: Ensure all required modules are installed and the `src/` directory structure is correct
-- **File Upload Issues**: Check file formats and ensure files are not corrupted
-- **Configuration Errors**: Verify YAML syntax in configuration editors
-- **Conversion Failures**: Check the live logs for detailed error messages
+### Dashboard won't start
+- Check that all dependencies are installed: `pip install -r requirements.txt`
+- Ensure port 8050 is not in use
+- Check the console for error messages
 
-## Development
+### No data appears
+- Click "Run Impact Analysis" first to load data
+- Check that input files exist in the paths specified in config
+- Review console logs for data loading errors
 
-The dashboard leverages the existing modular codebase:
-- `src/converter/` modules for data conversion
-- `src/impact_analysis/` modules for impact analysis
+### Filters not showing
+- Add column names to the `filter` parameter in config
+- Click "Update Configuration" to reload
+- Run analysis again to populate filter dropdowns
 
-All functionality is integrated through the Dash framework, providing a user-friendly web interface for the underlying Python tools.
+### Charts not displaying
+- Check browser console for JavaScript errors
+- Ensure internet connection (Highcharts loads from CDN)
+- Try refreshing the browser
+
+## Browser Compatibility
+
+Tested with:
+- Chrome 90+
+- Firefox 88+
+- Safari 14+
+- Edge 90+
+
+## Performance Notes
+
+- First run loads all data (may take time for large files)
+- Subsequent filter operations are fast (data in memory)
+- Chart rendering depends on data size
+- Consider filtering to reduce data volume for better performance
+
+## Support
+
+For issues or questions:
+1. Check the console logs for error messages
+2. Review `impact_analysis.log` for detailed logs
+3. Verify configuration file syntax
+4. Ensure all input files are accessible
