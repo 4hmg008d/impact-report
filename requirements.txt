@@ -7,3 +7,4 @@ dash-bootstrap-components
 plotly
 highcharts-core
 highcharts-maps
+Jinja2

@@ -160,6 +160,17 @@ In impact_analysis backend, use the python package of highchart instead of js st
 
 ---
 
+Create a dash dashboard in Python for this impact analysis, it should has the following sections and functions:
+
+- there is a zone for users to preview the current config, which connects to config_impact_analysis.yaml. Users can edit and update through front end through a 'Update Configuration' button
+- next to this button, there is a 'Run Impact Analysis' button, which starts loading data, calculate summary and show the report, but do not output csv data or html report
+- below this is a 'Filters' section which reads the 'filter' parameter from the config yaml file, which is a list that lists out all columns to filter, each filter contains the unique values in that column in a drop down, multiple options list, which enable users to filter values in these columns. next to the 'Run Impact Analysis' button above, there should be a button 'Refresh results' so that after user select new filtered values, the results will be updated
+- below this is 'Analysis Results' section, i want similar thing created in the dashboard app as in the impact analysis html report: total value summary, waterfall chart, distribution chart by steps. The app should utilise as much existing class and functions as possible instead of creating it's own to produce the same result
+- the app should store the merged data in memory so that it can recalculate the results without re-loading the data when user apply different filters
+- next to the 'Refresh results' button above, there should be a button 'Save as HTML report' which outputs the html report, do not overwrite existing html files, use timestamp to differenciate the files for now
+- there should also be a 'Save Data' button to output data csv files, this button should overwrite existing csv files if exist
+- in case you need to create new code/modules in the src folder, you should name any new files with prefix 'app_'
+
 ## To Do
 
 - Refine the output summary data - needs to be useful for readers, and for charts

@@ -1,0 +1,15 @@
+"""
+Launcher script for the Impact Analysis Dashboard
+"""
+
+import os
+import sys
+
+# Add the project root to Python path
+project_root = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, project_root)
+
+from impact_analysis.dashboard_app import main
+
+if __name__ == "__main__":
+    main()
