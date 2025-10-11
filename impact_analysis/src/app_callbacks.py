@@ -9,101 +9,12 @@ from datetime import datetime
 from dash import Input, Output, State, ALL, callback_context
 from dash.exceptions import PreventUpdate
 import pandas as pd
-
-from .app_dashboard_state import dashboard_state
-from .app_dash_components import (
-    create_config_section,
-    create_filters_section,
-    create_summary_table,
-    create_charts_section
-)
-from ..main import ModularImpactAnalyzer
-
-
-logger = logging.getLogger(__name__)
-
-
-def _create_charts_html_for_display(charts_html_dict, dict_distribution_summary):
-    """
-    Create a complete HTML document with embedded charts for iframe display
-    
-    Args:
-        charts_html_dict: Dictionary of chart HTML/JS from chart generator
-        dict_distribution_summary: Distribution summary data
-        
-    Returns:
-        Complete HTML string for iframe display
-    """
-    # Build the chart container divs and scripts
-    chart_containers = []
-    chart_scripts = []
-    
-    for item_name, item_charts in charts_html_dict.items():
-        # Create a section for this item
-        chart_containers.append(f'<div class="item-section">')
-        chart_containers.append(f'<h2>{item_name}</h2>')
-        
-        # Waterfall chart first if available
-        if 'waterfall' in item_charts:
-            chart_id = f"waterfall-{item_name.replace(' ', '_').lower()}-chart"
-            chart_containers.append(f'<div id="{chart_id}" class="chart-container"></div>')
-            chart_scripts.append(item_charts['waterfall'])
-        
-        # Distribution charts by step
-        if 'steps' in dict_distribution_summary.get(item_name, {}):
-            sorted_steps = sorted(dict_distribution_summary[item_name]['steps'].keys())
-            for step_num in sorted_steps:
-                step_key = f'step_{step_num}'
-                if step_key in item_charts:
-                    step_name = dict_distribution_summary[item_name]['steps'][step_num]['step_name']
-                    chart_id = f"{item_name.replace(' ', '_').lower()}-step-{step_num}-chart"
-                    chart_containers.append(f'<h3>{step_name}</h3>')
-                    chart_containers.append(f'<div id="{chart_id}" class="chart-container"></div>')
-                    chart_scripts.append(item_charts[step_key])
-        
-        chart_containers.append('</div>')
-    
-    # Create complete HTML document
-    html = f"""
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>Analysis Charts</title>
-        <script src="https://code.highcharts.com/highcharts.js"></script>
-        <script src="https://code.highcharts.com/modules/exporting.js"></script>
-        <script src="https://code.highcharts.com/highcharts-more.js"></script>
-        <style>
-            body {{ font-family: Arial, sans-serif; margin: 20px; background: white; }}
-            .item-section {{ margin-bottom: 40px; border-bottom: 2px solid #ddd; padding-bottom: 20px; }}
-            .chart-container {{ width: 100%; height: 400px; margin-bottom: 30px; }}
-            h2 {{ color: #333; border-bottom: 1px solid #ddd; padding-bottom: 10px; }}
-            h3 {{ color: #666; margin-top: 20px; }}
-        </style>
-    </head>
-    <body>
-        {''.join(chart_containers)}
-        <script>
-            {' '.join(chart_scripts)}
-        </script>
-    </body>
-    </html>
-    """
-    
-    return html
-
-import os
-import logging
-from datetime import datetime
-from dash import Input, Output, State, ALL, callback_context
-from dash.exceptions import PreventUpdate
-import pandas as pd
 from typing import Dict
 
 from .app_dashboard_state import dashboard_state
 from .app_dash_components import (
     create_config_section,
     create_filters_section,
-    create_summary_table,
     create_charts_section
 )
 from ..main import ModularImpactAnalyzer
@@ -223,8 +134,7 @@ def register_callbacks(app):
     
     
     @app.callback(
-        [Output('results-summary-table', 'children'),
-         Output('results-charts', 'children')],
+        Output('results-charts', 'children'),
         [Input('btn-refresh-results', 'n_clicks'),
          Input('data-loaded-flag', 'data')],
         [State('filter-state', 'data')]
@@ -232,14 +142,14 @@ def register_callbacks(app):
     def refresh_results(n_clicks, data_loaded, filter_state):
         """Refresh results based on current filters"""
         if not data_loaded or not dashboard_state.has_data():
-            return "No data loaded. Run the impact analysis first.", ""
+            return "No data loaded. Run the impact analysis first."
         
         try:
             # Get filtered data
             filtered_df = dashboard_state.get_filtered_data()
             
             if filtered_df is None or len(filtered_df) == 0:
-                return "No data matches the current filters.", ""
+                return "No data matches the current filters."
             
             # Initialize analyzer
             analyzer = ModularImpactAnalyzer(dashboard_state.config_path)
@@ -255,9 +165,6 @@ def register_callbacks(app):
             # Update state with new results
             dashboard_state.set_results(dict_distribution_summary, dict_comparison_summary)
             
-            # Generate summary table (kept for backward compatibility if needed)
-            summary_table = create_summary_table(dict_comparison_summary)
-            
             # Generate charts with tabs and sub-tabs
             charts_html_dict = analyzer.visualizer.chart_generator.generate_all_charts_html(
                 dict_distribution_summary, dict_comparison_summary
@@ -270,13 +177,13 @@ def register_callbacks(app):
                 dict_comparison_summary
             )
             
-            return summary_table, charts_display
+            return charts_display
             
         except Exception as e:
             logger.error(f"Error refreshing results: {e}")
             import traceback
             traceback.print_exc()
-            return f"Error refreshing results: {str(e)}", ""
+            return f"Error refreshing results: {str(e)}"
     
     
     @app.callback(

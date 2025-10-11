@@ -51,14 +51,14 @@ def create_config_section(config_yaml_str: str) -> dbc.Card:
                         disabled=True
                     ),
                     dbc.Button(
-                        "Save as HTML Report",
+                        "Export HTML Report",
                         id='btn-save-html',
                         color='warning',
                         className='me-2',
                         disabled=True
                     ),
                     dbc.Button(
-                        "Save Data",
+                        "Export Data",
                         id='btn-save-data',
                         color='secondary',
                         disabled=True
@@ -121,22 +121,6 @@ def create_loading_indicator() -> html.Div:
             children=html.Div(id="loading-output")
         )
     ])
-
-
-def create_summary_table(dict_comparison_summary: Dict) -> html.Div:
-    """Create summary table from comparison summary"""
-    if not dict_comparison_summary:
-        return html.Div([
-            html.P("No data available. Run the impact analysis first.", className='text-muted')
-        ])
-    
-    # Create tabs for each item
-    tabs = []
-    for item_name, item_data in dict_comparison_summary.items():
-        tab_content = _create_item_summary_table(item_data)
-        tabs.append(dbc.Tab(tab_content, label=item_name, tab_id=f"summary-tab-{item_name}"))
-    
-    return dbc.Tabs(tabs, id="summary-tabs", active_tab=f"summary-tab-{list(dict_comparison_summary.keys())[0]}")
 
 
 def _create_item_summary_table(item_data: Dict) -> dash_table.DataTable:
@@ -341,28 +325,11 @@ def _create_single_chart_html(chart_js: str, chart_id: str, title: str) -> str:
     """
 
 
-def create_charts_section_legacy(charts_html: str) -> html.Div:
-    """Create charts section from generated HTML"""
-    if not charts_html:
-        return html.Div([
-            html.P("No charts available. Run the impact analysis first.", className='text-muted')
-        ])
-    
-    return html.Div([
-        html.Iframe(
-            srcDoc=charts_html,
-            style={'width': '100%', 'height': '800px', 'border': 'none'}
-        )
-    ])
-
-
 def create_results_section() -> dbc.Card:
     """Create the analysis results section"""
     return dbc.Card([
         dbc.CardHeader(html.H4("Analysis Results")),
         dbc.CardBody([
-            # Summary tables are now embedded in item tabs, hide this div
-            html.Div(id='results-summary-table', style={'display': 'none'}),
             html.Div(id='results-charts')
         ])
     ], className='mb-4')
