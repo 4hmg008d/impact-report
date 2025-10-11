@@ -112,69 +112,6 @@ from ..main import ModularImpactAnalyzer
 logger = logging.getLogger(__name__)
 
 
-def _create_charts_html_for_display(charts_html_dict: Dict, dict_distribution_summary: Dict) -> str:
-    """
-    Create a standalone HTML document for displaying charts in iframe
-    This combines the chart JavaScript with the necessary HTML structure
-    """
-    html_parts = []
-    
-    # HTML header with Highcharts libraries
-    html_parts.append("""
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Impact Analysis Charts</title>
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
-    <script src="https://code.highcharts.com/highcharts-more.js"></script>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; background: white; }
-        .chart-section { margin-bottom: 40px; }
-        .chart-container { width: 100%; height: 450px; margin-bottom: 20px; }
-        h2 { color: #333; border-bottom: 2px solid #007bff; padding-bottom: 10px; }
-        h3 { color: #555; margin-top: 30px; }
-    </style>
-</head>
-<body>
-""")
-    
-    # Generate chart containers and scripts for each item
-    for item_name, item_charts in charts_html_dict.items():
-        html_parts.append(f'<div class="chart-section"><h2>{item_name}</h2>')
-        
-        # Waterfall chart first
-        if 'waterfall' in item_charts:
-            waterfall_id = f"waterfall-{item_name.replace(' ', '_').lower()}-chart"
-            html_parts.append(f'<h3>Waterfall Chart</h3>')
-            html_parts.append(f'<div id="{waterfall_id}" class="chart-container"></div>')
-        
-        # Distribution charts by step
-        item_analysis = dict_distribution_summary.get(item_name, {})
-        if 'steps' in item_analysis:
-            sorted_steps = sorted(item_analysis['steps'].keys())
-            for step_num in sorted_steps:
-                step_data = item_analysis['steps'][step_num]
-                step_name = step_data['step_name']
-                chart_id = f"{item_name.replace(' ', '_').lower()}-step-{step_num}-chart"
-                html_parts.append(f'<h3>Distribution: {step_name}</h3>')
-                html_parts.append(f'<div id="{chart_id}" class="chart-container"></div>')
-        
-        html_parts.append('</div>')
-    
-    # Add JavaScript to render charts
-    html_parts.append('<script>')
-    for item_name, item_charts in charts_html_dict.items():
-        for chart_type, chart_js in item_charts.items():
-            html_parts.append(chart_js)
-    html_parts.append('</script>')
-    
-    # Close HTML
-    html_parts.append('</body></html>')
-    
-    return '\n'.join(html_parts)
-
-
 def register_callbacks(app):
     """Register all dashboard callbacks"""
     
@@ -318,20 +255,20 @@ def register_callbacks(app):
             # Update state with new results
             dashboard_state.set_results(dict_distribution_summary, dict_comparison_summary)
             
-            # Generate summary table
+            # Generate summary table (kept for backward compatibility if needed)
             summary_table = create_summary_table(dict_comparison_summary)
             
-            # Generate full HTML report (but don't save it)
-            # We'll create a temporary HTML string for display
+            # Generate charts with tabs and sub-tabs
             charts_html_dict = analyzer.visualizer.chart_generator.generate_all_charts_html(
                 dict_distribution_summary, dict_comparison_summary
             )
             
-            # Create a complete HTML document for iframe display
-            full_html = _create_charts_html_for_display(
-                charts_html_dict, dict_distribution_summary
+            # Create charts display with new tab-based layout including summary tables
+            charts_display = create_charts_section(
+                charts_html_dict, 
+                dict_distribution_summary,
+                dict_comparison_summary
             )
-            charts_display = create_charts_section(full_html)
             
             return summary_table, charts_display
             
