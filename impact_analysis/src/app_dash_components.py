@@ -124,7 +124,7 @@ def create_loading_indicator() -> html.Div:
 
 
 def create_summary_table(dict_comparison_summary: Dict) -> html.Div:
-    """Create transposed summary table from comparison summary"""
+    """Create summary table from comparison summary"""
     if not dict_comparison_summary:
         return html.Div([
             html.P("No data available. Run the impact analysis first.", className='text-muted')
@@ -140,8 +140,8 @@ def create_summary_table(dict_comparison_summary: Dict) -> html.Div:
 
 
 def _create_item_summary_table(item_data: Dict) -> dash_table.DataTable:
-    """Create a transposed summary table for a single item"""
-    # Prepare transposed table data
+    """Create a summary table for a single item"""
+    # Prepare table data
     # First, collect all stage names for the header row
     sorted_stages = sorted(item_data.keys())
     stage_names = [item_data[stage_idx]['stage_name'] for stage_idx in sorted_stages]
