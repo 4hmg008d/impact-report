@@ -1,9 +1,9 @@
-# Data Conversion Tool Configuration for LIST data type testing
-output:
-  dir: "data/output"
-
+filter:
+  - LOCATION_CITY
 mapping:
-  file_path: "data/impact_analysis_config.xlsx"
-  sheet_input: "mapping_column"
-  sheet_segment: "segment"
-  sheet_band: "band"
+  file_path: data/impact_analysis_config.xlsx
+  sheet_band: band
+  sheet_input: mapping_column
+  sheet_segment: segment
+output:
+  dir: data/output
