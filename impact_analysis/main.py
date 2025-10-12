@@ -10,7 +10,7 @@ from typing import Dict
 
 from .src.config_loader import ConfigLoader
 from .src.data_processor import DataProcessor
-from .src.analyzer import ImpactAnalyzer
+from .src.data_analyser import DataAnalyser
 from .src.visualizer import ReportVisualizer
 
 
@@ -27,7 +27,7 @@ class ModularImpactAnalyzer:
         self.logger = self._setup_logging()
         self.config_loader = ConfigLoader(config_path)
         self.data_processor = DataProcessor(self.config_loader)
-        self.analyzer = ImpactAnalyzer(self.config_loader)
+        self.data_analyser = DataAnalyser(self.config_loader)
         
         # Set up visualizer with correct template directory
         module_dir = os.path.dirname(os.path.abspath(__file__))
@@ -61,8 +61,8 @@ class ModularImpactAnalyzer:
         merged_df.to_csv(merged_output_path, index=False)
         self.logger.info(f"Saved merged data to: {merged_output_path}")
         
-        # Generate and save summary table using ImpactAnalyzer
-        dict_comparison_summary = self.data_processor.aggregate_merged_data(merged_df, comparison_mapping)
+        # Generate and save summary table using DataAnalyser
+        dict_comparison_summary = self.data_analyser.aggregate_merged_data(merged_df, comparison_mapping)
 
         # Debug
         # print("dict_comparison_summary:")
@@ -104,7 +104,7 @@ class ModularImpactAnalyzer:
             merged_df_w_diff, comparison_mapping = self.data_processor.process_data()
             
             # Step 2: Analyze data for all comparison items
-            dict_distribution_summary = self.analyzer.generate_distribution_summary(merged_df_w_diff, comparison_mapping)
+            dict_distribution_summary = self.data_analyser.generate_distribution_summary(merged_df_w_diff, comparison_mapping)
             
             # Debug
             # print("Distribution Summary:")
@@ -116,11 +116,9 @@ class ModularImpactAnalyzer:
             # Step 4: Generate HTML report
             output_dir = self.config_loader.get_output_dir()
             html_output_path = os.path.join(output_dir, "impact_analysis_report.html")
-            dict_comparison_summary = self.data_processor.aggregate_merged_data(merged_df_w_diff, comparison_mapping)
-
+            dict_comparison_summary = self.data_analyser.aggregate_merged_data(merged_df_w_diff, comparison_mapping)
 
             self.visualizer.generate_html_report(dict_distribution_summary, dict_comparison_summary, html_output_path)
-
             self.logger.info("Modular impact analysis completed successfully")
             return True
             

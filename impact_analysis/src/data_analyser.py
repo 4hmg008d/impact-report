@@ -7,7 +7,7 @@ from typing import Dict, List, Tuple
 import json
 
 
-class ImpactAnalyzer:
+class DataAnalyser:
     """Analyzes data and generates insights using Pandas"""
     
     def __init__(self, config_loader):
@@ -174,3 +174,69 @@ class ImpactAnalyzer:
             dict_distribution_summary[item_name]['columns'] = item_data['columns']
         
         return dict_distribution_summary
+
+
+    def aggregate_merged_data(self, merged_df: pd.DataFrame, comparison_mapping: Dict[str, Dict]) -> Dict:
+        """Generate aggregated summary table with totals and percentage differences
+        
+        This method:
+        1. Extracts all renamed columns from comparison_mapping for each item and stage
+        2. Aggregates merged_df by summing all rows for each stage column
+        3. Creates a single-row summary DataFrame with column totals
+        4. Calls generate_differences to compute difference columns and percentage differences
+        
+        Args:
+            merged_df: The merged dataframe containing all data rows
+            comparison_mapping: Mapping containing stage information (must have 'stages' component, 
+                      'differences' component is optional and will be computed)
+
+        Returns:
+            dict_comparison_summary: Updated comparison_mapping with 'differences' component
+        """
+        
+        # get all renamed columns for each item and stage
+        impact_items = list(comparison_mapping.keys())
+        renamed_columns = []
+
+        for item in impact_items:
+            item_stages = comparison_mapping[item]['stages']
+            for stage in item_stages:
+                renamed_columns.append(item_stages[stage]['renamed_column'])
+
+        # aggregate merged_df by summing all rows for each stage column
+        summary_data = pd.DataFrame([merged_df[renamed_columns].sum()])
+
+        # convert the df into dict for easier manipulation
+        dict_comparison_summary = {}
+
+        for item_name, item_dict in comparison_mapping.items():
+            
+            dict_comparison_summary[item_name] = {}
+            sorted_stages = sorted(item_dict['stages'].keys())
+            value_total_first_stage = summary_data[item_dict['columns'][sorted_stages[0]]].sum()
+            
+            for idx, stage in enumerate(sorted_stages):
+                stage_name = item_dict['stage_names'][stage]
+                col_name = item_dict['columns'][stage]
+                value_total = summary_data[col_name].sum()
+                value_total_percent = value_total / value_total_first_stage * 100
+                
+                # Calculate the difference for this stage
+                if idx == 0:
+                    value_diff = 0  # First stage has no difference
+                    value_diff_percent = 0
+                else:
+                    prev_stage = sorted_stages[idx - 1]
+                    prev_col_name = item_dict['columns'][prev_stage]
+                    value_diff = value_total - summary_data[prev_col_name].sum()
+                    value_diff_percent = value_diff / value_total_first_stage * 100
+
+                dict_comparison_summary[item_name][idx] = {
+                    'stage_name': stage_name,
+                    'value_total': value_total,
+                    'value_diff': value_diff,
+                    'value_total_percent': value_total_percent,
+                    'value_diff_percent': value_diff_percent
+                }
+
+        return dict_comparison_summary

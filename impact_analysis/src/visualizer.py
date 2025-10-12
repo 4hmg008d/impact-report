@@ -7,7 +7,7 @@ from typing import Dict
 import pandas as pd
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from .chart_generator import ImpactChartGenerator
-from .analyzer import ImpactAnalyzer
+from .data_analyser import DataAnalyser
 
 
 class ReportVisualizer:
@@ -16,7 +16,7 @@ class ReportVisualizer:
     def __init__(self, config_loader=None, template_dir="templates"):
         self.config_loader = config_loader
         self.chart_generator = ImpactChartGenerator(config_loader)
-        self.analyzer = ImpactAnalyzer(config_loader) if config_loader else None
+        self.analyzer = DataAnalyser(config_loader) if config_loader else None
         
         # Set up Jinja2 environment
         self.env = Environment(
@@ -46,4 +46,4 @@ class ReportVisualizer:
             f.write(rendered_html)
         
         print(f"Generated Jinja2 HTML report: {output_path}")
-    
+

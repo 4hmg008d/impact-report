@@ -96,10 +96,10 @@ def register_callbacks(app):
             dashboard_state.set_data(merged_df, comparison_mapping)
             
             # Calculate initial results (unfiltered)
-            dict_distribution_summary = analyzer.analyzer.generate_distribution_summary(
+            dict_distribution_summary = analyzer.data_analyser.generate_distribution_summary(
                 merged_df, comparison_mapping
             )
-            dict_comparison_summary = analyzer.data_processor.aggregate_merged_data(
+            dict_comparison_summary = analyzer.data_analyser.aggregate_merged_data(
                 merged_df, comparison_mapping
             )
             dashboard_state.set_results(dict_distribution_summary, dict_comparison_summary)
@@ -155,10 +155,10 @@ def register_callbacks(app):
             analyzer = ModularImpactAnalyzer(dashboard_state.config_path)
             
             # Recalculate results with filtered data
-            dict_distribution_summary = analyzer.analyzer.generate_distribution_summary(
+            dict_distribution_summary = analyzer.data_analyser.generate_distribution_summary(
                 filtered_df, dashboard_state.comparison_mapping
             )
-            dict_comparison_summary = analyzer.data_processor.aggregate_merged_data(
+            dict_comparison_summary = analyzer.data_analyser.aggregate_merged_data(
                 filtered_df, dashboard_state.comparison_mapping
             )
             

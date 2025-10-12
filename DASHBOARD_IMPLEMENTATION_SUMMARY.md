@@ -62,7 +62,7 @@ A complete Dash-based web dashboard has been created for interactive impact anal
 ### ✓ Impact Analysis Execution
 - **Run Impact Analysis** button loads and processes all data
 - **Data stored in memory** for fast filtering
-- **Reuses existing analysis classes** (ConfigLoader, DataProcessor, ImpactAnalyzer, ReportVisualizer)
+- **Reuses existing analysis classes** (ConfigLoader, DataProcessor, DataAnalyser, ReportVisualizer)
 
 ### ✓ Dynamic Filters
 - **Reads filter columns** from config.yaml `filter` parameter
@@ -130,7 +130,7 @@ A complete Dash-based web dashboard has been created for interactive impact anal
         │  Classes (Reused)      │
         │  • ConfigLoader        │
         │  • DataProcessor       │
-        │  • ImpactAnalyzer      │
+        │  • DataAnalyser      │
         │  • ReportVisualizer    │
         │  • ChartGenerator      │
         └────────────────────────┘
