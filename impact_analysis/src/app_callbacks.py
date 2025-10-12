@@ -165,17 +165,13 @@ def register_callbacks(app):
             # Update state with new results
             dashboard_state.set_results(dict_distribution_summary, dict_comparison_summary)
             
-            # Generate charts with tabs and sub-tabs
-            charts_html_dict = analyzer.visualizer.chart_generator.generate_all_charts_html(
+            # Generate full HTML report using visualizer
+            html_report_content = analyzer.visualizer.generate_html_report(
                 dict_distribution_summary, dict_comparison_summary
             )
             
-            # Create charts display with new tab-based layout including summary tables
-            charts_display = create_charts_section(
-                charts_html_dict, 
-                dict_distribution_summary,
-                dict_comparison_summary
-            )
+            # Create charts display with full HTML report
+            charts_display = create_charts_section(html_report_content)
             
             return charts_display
             

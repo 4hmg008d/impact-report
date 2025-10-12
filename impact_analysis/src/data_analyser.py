@@ -20,7 +20,7 @@ class DataAnalyser:
         merged_df = merged_df.copy()  # Create a copy to avoid modifying a slice
         
         # Create bins from band_df
-        bins = [-float('inf')] + band_df['To'].dropna().tolist()
+        bins = band_df['From'].dropna().tolist() + [float('inf')]
         labels = band_df['Name'].iloc[:len(bins)-1].tolist()
         
         # Map values to bands using pd.cut, handling missing values
