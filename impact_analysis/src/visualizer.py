@@ -27,8 +27,16 @@ class ReportVisualizer:
         # Add custom filters
         self.env.filters['format_percentage'] = lambda x: f"{x:.2f}%"
     
-    def generate_html_report(self, dict_distribution_summary: Dict, dict_comparison_summary: Dict, output_path: str) -> None:
-        """Generate HTML report for multiple comparison items using Jinja2 template"""
+    def generate_html_report(self, dict_distribution_summary: Dict, dict_comparison_summary: Dict) -> str:
+        """Generate HTML report content for multiple comparison items using Jinja2 template
+        
+        Args:
+            dict_distribution_summary: Summary of distribution data
+            dict_comparison_summary: Summary of comparison data
+            
+        Returns:
+            str: Rendered HTML content
+        """
         
         # Generate charts for all comparison items (including waterfall charts)
         charts_html = self.chart_generator.generate_all_charts_html(dict_distribution_summary, dict_comparison_summary)
@@ -41,9 +49,17 @@ class ReportVisualizer:
             charts_html=charts_html
         )
         
-        # Save HTML file
+        return rendered_html
+    
+    def save_report(self, html_content: str, output_path: str) -> None:
+        """Save HTML report content to a file
+        
+        Args:
+            html_content: The HTML content to save
+            output_path: Path where the report should be saved
+        """
         with open(output_path, 'w') as f:
-            f.write(rendered_html)
+            f.write(html_content)
         
         print(f"Generated Jinja2 HTML report: {output_path}")
 

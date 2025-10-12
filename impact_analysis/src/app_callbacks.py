@@ -216,11 +216,11 @@ def register_callbacks(app):
             )
             
             # Generate and save HTML report
-            analyzer.visualizer.generate_html_report(
+            html_content = analyzer.visualizer.generate_html_report(
                 dashboard_state.dict_distribution_summary,
-                dashboard_state.dict_comparison_summary,
-                html_output_path
+                dashboard_state.dict_comparison_summary
             )
+            analyzer.visualizer.save_report(html_content, html_output_path)
             
             logger.info(f"Saved HTML report to {html_output_path}")
             return f"HTML report saved to {html_output_path}", True, 'success'

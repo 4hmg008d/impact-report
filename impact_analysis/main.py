@@ -118,7 +118,8 @@ class ModularImpactAnalyzer:
             html_output_path = os.path.join(output_dir, "impact_analysis_report.html")
             dict_comparison_summary = self.data_analyser.aggregate_merged_data(merged_df_w_diff, comparison_mapping)
 
-            self.visualizer.generate_html_report(dict_distribution_summary, dict_comparison_summary, html_output_path)
+            html_content = self.visualizer.generate_html_report(dict_distribution_summary, dict_comparison_summary)
+            self.visualizer.save_report(html_content, html_output_path)
             self.logger.info("Modular impact analysis completed successfully")
             return True
             

@@ -124,6 +124,10 @@ refactor my code to distinguish the 2 and assign the correct dict name and colum
 
 ---
 
+change visualizer.generate_html_report to output the html content and create a separate function to save the report
+
+
+
 ## Dashboard App
 
 Create a dash dashboard in Python which serves as a front end for 2 functions:
@@ -170,6 +174,10 @@ Create a dash dashboard in Python for this impact analysis, it should has the fo
 - next to the 'Refresh results' button above, there should be a button 'Save as HTML report' which outputs the html report, do not overwrite existing html files, use timestamp to differenciate the files for now
 - there should also be a 'Save Data' button to output data csv files, this button should overwrite existing csv files if exist
 - in case you need to create new code/modules in the src folder, you should name any new files with prefix 'app_'
+
+---
+
+in this dash app, in the create_charts_section function, i can see you are using iframe, is it possible to take the content from visualizer.generate_html_report?
 
 ## To Do
 
