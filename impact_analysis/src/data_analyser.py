@@ -21,7 +21,7 @@ class DataAnalyser:
         
         # Create bins from band_df
         bins = band_df['From'].dropna().tolist() + [float('inf')]
-        labels = band_df['Name'].iloc[:len(bins)-1].tolist()
+        labels = band_df['Name'].dropna().tolist()
         
         # Map values to bands using pd.cut, handling missing values
         merged_df['band'] = pd.cut(
@@ -68,58 +68,9 @@ class DataAnalyser:
         print(f"Mapped differences to {len(band_summary_ordered)} bands")
         return band_summary_ordered
     
-    def get_segment_values(self, merged_df: pd.DataFrame, segment_col: str) -> List[str]:
-        """Get unique values for a segment column using Pandas"""
-        if segment_col in merged_df.columns:
-            unique_values = merged_df[segment_col].dropna().unique().tolist()
-            return [str(val) for val in unique_values]
-        return []
-    
-    def create_summary_by_band_segment(
-        self, merged_df: pd.DataFrame, value_col: str, 
-        band_df: pd.DataFrame, segments: List[str]
-    ) -> Dict[str, List]:
-        """Create data for segment-based tabs using Pandas"""
-        tab_data = {}
-        
-        for segment in segments:
-            # Find matching segment columns (handle benchmark/target variations)
-            segment_cols = [col for col in merged_df.columns if segment in col]
-            
-            if segment_cols:
-                segment_col = segment_cols[0]  # Use first matching column
-                unique_values = self.get_segment_values(merged_df, segment_col)
-                
-                for value in unique_values:
-                    # Filter data for this segment value
-                    filtered_df = merged_df[merged_df[segment_col] == value]
-                    
-                    if len(filtered_df) > 0:
-                        # Map to bands for filtered data
-                        band_summary = self.map_to_bands(filtered_df, value_col, band_df)
-                        
-                        # Prepare chart data
-                        chart_data = []
-                        for _, band_row in band_summary.iterrows():
-                            chart_data.append({
-                                'name': band_row['band'],
-                                'y': int(band_row['Count']),
-                                'percentage': round(band_row['Percentage'], 2)
-                            })
-                        
-                        tab_name = f"{segment}: {value}"
-                        tab_data[tab_name] = {
-                            'chart_data': chart_data,
-                            'total_policies': len(filtered_df),
-                            'segment_value': value
-                        }
-        
-        return tab_data
-    
     def generate_distribution_summary(self, merged_df: pd.DataFrame, comparison_mapping: Dict[str, Dict]) -> Dict:
-        """Generate comprehensive segment analysis for multiple comparison items using Pandas"""
+        """Generate comprehensive analysis for multiple comparison items using Pandas"""
         band_df = self.config_loader.load_band_data()
-        segments = self.config_loader.load_segment_data()
         
         # Process each comparison item
         dict_distribution_summary = {}
@@ -130,8 +81,7 @@ class DataAnalyser:
             # Initialize item analysis
             dict_distribution_summary[item_name] = {
                 'steps': {},
-                'step_names': item_data['step_names'],
-                'segments_available': len(segments) > 0
+                'step_names': item_data['step_names']
             }
             
             # Process each difference column (step comparison)
@@ -146,9 +96,6 @@ class DataAnalyser:
                     
                     # Band distribution for this step comparison
                     summary_by_band = self.map_to_bands(merged_df, diff_col, band_df)
-                    
-                    # Segment-based tab data for this step comparison
-                    summary_by_band_segment = self.create_summary_by_band_segment(merged_df, diff_col, band_df, segments)
                     
                     # Prepare chart data for this step comparison
                     step_chart_data = []
@@ -165,7 +112,6 @@ class DataAnalyser:
                         'chart_data': step_chart_data,
                         'total_policies': len(merged_df),
                         'summary_by_band': summary_by_band.to_dict('records'),
-                        'summary_by_band_segment': summary_by_band_segment,
                         'from_stage': diff_info['from_stage'],
                         'to_stage': diff_info['to_stage']
                     }

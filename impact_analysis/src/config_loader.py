@@ -44,19 +44,6 @@ class ConfigLoader:
         except Exception as e:
             raise ValueError(f"Failed to load mapping file: {e}")
     
-    def load_segment_data(self) -> List[str]:
-        """Load segment columns from Excel file"""
-        mapping_config = self.config['mapping']
-        mapping_file_path = self._abs_path(mapping_config['file_path'])
-        sheet_name = mapping_config['sheet_segment']
-        
-        try:
-            segment_df = pd.read_excel(mapping_file_path, sheet_name=sheet_name)
-            segments = segment_df['Segment'].tolist()
-            return segments
-        except Exception as e:
-            raise ValueError(f"Failed to load segment data: {e}")
-    
     def load_band_data(self) -> pd.DataFrame:
         """Load band mapping from Excel file"""
         mapping_config = self.config['mapping']

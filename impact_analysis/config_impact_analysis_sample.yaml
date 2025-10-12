@@ -4,6 +4,5 @@ mapping:
   file_path: data/impact_analysis_config.xlsx
   sheet_band: band
   sheet_input: mapping_column
-  sheet_segment: segment
 output:
   dir: data/output

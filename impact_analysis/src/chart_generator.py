@@ -255,13 +255,6 @@ class ImpactChartGenerator:
             'Overall Difference Distribution'
         )
         
-        # Segment charts for Dash
-        for segment_name, segment_data in analysis_data['summary_by_band_segment'].items():
-            dash_charts[segment_name] = self.generate_chart_for_dash(
-                segment_data['chart_data'],
-                f'{segment_name} - Difference Distribution'
-            )
-        
         return dash_charts
 
 
