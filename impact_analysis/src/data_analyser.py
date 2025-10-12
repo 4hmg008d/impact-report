@@ -165,7 +165,7 @@ class DataAnalyser:
                 stage_name = item_dict['stage_names'][stage]
                 col_name = item_dict['columns'][stage]
                 value_total = summary_data[col_name].sum()
-                value_total_percent = value_total / value_total_first_stage * 100
+                value_total_percent = value_total / value_total_first_stage
                 
                 # Calculate the difference for this stage
                 if idx == 0:
@@ -175,7 +175,7 @@ class DataAnalyser:
                     prev_stage = sorted_stages[idx - 1]
                     prev_col_name = item_dict['columns'][prev_stage]
                     value_diff = value_total - summary_data[prev_col_name].sum()
-                    value_diff_percent = value_diff / value_total_first_stage * 100
+                    value_diff_percent = value_diff / value_total_first_stage
 
                 dict_comparison_summary[item_name][idx] = {
                     'stage_name': stage_name,

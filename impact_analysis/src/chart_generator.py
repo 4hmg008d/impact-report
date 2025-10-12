@@ -129,7 +129,7 @@ class ImpactChartGenerator:
         # Starting point
         waterfall_data.append({
             'name': dict_waterfall[sorted_indices[0]]['stage_name'],
-            'y': dict_waterfall[sorted_indices[0]]['value_total_percent'],
+            'y': dict_waterfall[sorted_indices[0]]['value_total_percent'] * 100,
             'color': '#550062',
             'custom': {
                 'value_total': dict_waterfall[sorted_indices[0]]['value_total'],
@@ -140,7 +140,7 @@ class ImpactChartGenerator:
         # Intermediate changes
         for i in range(1, len(sorted_indices)):
             idx = sorted_indices[i]
-            change = dict_waterfall[idx]['value_diff_percent']
+            change = dict_waterfall[idx]['value_diff_percent'] * 100
             waterfall_data.append({
                 'name': dict_waterfall[idx]['stage_name'],
                 'y': change,
@@ -154,7 +154,7 @@ class ImpactChartGenerator:
         # Final sum
         waterfall_data.append({
             'name': 'Final',
-            'y': dict_waterfall[sorted_indices[-1]]['value_total_percent'],
+            'y': dict_waterfall[sorted_indices[-1]]['value_total_percent'] * 100,
             'isSum': True,
             'color': '#550062',
             'custom': {

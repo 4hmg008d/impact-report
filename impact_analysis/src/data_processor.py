@@ -201,7 +201,7 @@ class DataProcessor:
                 overall_diff_col_percent = f"percent_diff_{item}_step_0"
                 # Avoid division by zero
                 merged_df_w_diff[overall_diff_col_percent] = merged_df_w_diff.apply(
-                    lambda row: (row[overall_diff_col] / row[first_col] * 100) if row[first_col] != 0 else None, axis=1
+                    lambda row: (row[overall_diff_col] / row[first_col]) if row[first_col] != 0 else None, axis=1
                 )
 
                 # Store overall difference as step 0 with name "Overall"
@@ -235,7 +235,7 @@ class DataProcessor:
                 diff_col_percent = f"percent_diff_{item}_step_{step_num}"
                 # Avoid division by zero
                 merged_df_w_diff[diff_col_percent] = merged_df_w_diff.apply(
-                    lambda row: (row[diff_col] / row[prev_col] * 100) if row[prev_col] != 0 else None, axis=1
+                    lambda row: (row[diff_col] / row[prev_col]) if row[prev_col] != 0 else None, axis=1
                 )
                 
                 # Get the stage name from the target stage (where we're going to)

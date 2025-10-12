@@ -85,13 +85,13 @@
                             <tr>
                                 <td><strong>Difference %</strong></td>
                                 {% for stage_num in dict_comparison_summary[item_name].keys()|sort %}
-                                <td>{{ "{:,.2f}".format(dict_comparison_summary[item_name][stage_num]['value_diff_percent']) }}%</td>
+                                <td>{{ "{:,.2f}".format(dict_comparison_summary[item_name][stage_num]['value_diff_percent'] * 100) }}%</td>
                                 {% endfor %}
                             </tr>
                             <tr>
                                 <td><strong>Total %</strong></td>
                                 {% for stage_num in dict_comparison_summary[item_name].keys()|sort %}
-                                <td>{{ "{:,.2f}".format(dict_comparison_summary[item_name][stage_num]['value_total_percent']) }}%</td>
+                                <td>{{ "{:,.2f}".format(dict_comparison_summary[item_name][stage_num]['value_total_percent'] * 100) }}%</td>
                                 {% endfor %}
                             </tr>
                         </tbody>
