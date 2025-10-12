@@ -51,11 +51,19 @@ class DataAnalyser:
         # Create a mapping from band name to row data
         band_map = {row['band']: row for _, row in band_summary.iterrows()}
         
-        # Create ordered list of bands that exist in the data
+        # Create ordered list of ALL bands from configuration, including those with 0 count
         ordered_bands = []
         for band_name in band_order:
             if band_name in band_map:
+                # Band has data, use existing row
                 ordered_bands.append(band_map[band_name])
+            else:
+                # Band has no data, create row with 0 count and 0% percentage
+                ordered_bands.append({
+                    'band': band_name,
+                    'Count': 0,
+                    'Percentage': 0.0
+                })
         
         # Add any remaining bands that weren't in the original order but have data
         for band_name in band_summary['band']:
