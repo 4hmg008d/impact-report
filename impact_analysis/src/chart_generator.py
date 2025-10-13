@@ -33,8 +33,21 @@ class ImpactChartGenerator:
             return None
 
 
-    def create_bar_chart(self, chart_data: List[Dict], title: str, chart_id: str = None, band_order: List[str] = None) -> Chart:
-        """Create a vertical bar chart from chart data with bands in original order"""
+    def create_bar_chart(self, chart_data: List[Dict], title: str, chart_id: str = None, band_order: List[str] = None, 
+                         renewal_enabled: bool = False, renewal_chart_data: List[Dict] = None) -> Chart:
+        """Create a vertical bar chart from chart data with bands in original order
+        
+        Args:
+            chart_data: Chart data for New Business (or all data if renewal not enabled)
+            title: Chart title
+            chart_id: Optional chart ID for rendering
+            band_order: Optional list of band names in original order
+            renewal_enabled: If True, creates a grouped column chart with two series
+            renewal_chart_data: Chart data for Renewal segment (required if renewal_enabled is True)
+        
+        Returns:
+            Chart object
+        """
         
         # If band_order is provided, reorder chart_data to match the original band order
         if band_order:
@@ -53,18 +66,78 @@ class ImpactChartGenerator:
                     ordered_data.append(item)
             
             chart_data = ordered_data
+            
+            # Also reorder renewal data if provided
+            if renewal_enabled and renewal_chart_data:
+                renewal_data_map = {item['name']: item for item in renewal_chart_data}
+                ordered_renewal_data = []
+                for band_name in band_order:
+                    if band_name in renewal_data_map:
+                        ordered_renewal_data.append(renewal_data_map[band_name])
+                
+                for item in renewal_chart_data:
+                    if item['name'] not in band_order:
+                        ordered_renewal_data.append(item)
+                
+                renewal_chart_data = ordered_renewal_data
         
-        # Prepare series data - use percentage for y-axis (proportion) but include count in custom properties
-        series_data = [
-            {'name': item['name'], 'y': item['percentage'], 'custom': {'count': item['y']}}
-            for item in chart_data
-        ]
-
         # Extract categories for x-axis
         categories = [item['name'] for item in chart_data]
         
-        # Debug: Print the series data to see what's being generated
-        # print(f"Series data: {series_data}")
+        # Create series based on whether renewal is enabled
+        if renewal_enabled and renewal_chart_data:
+            # Grouped column chart with two series: New Business and Renewal
+            nb_series_data = [
+                {'name': item['name'], 'y': item['percentage'], 'custom': {'count': item['y']}}
+                for item in chart_data
+            ]
+            
+            rn_series_data = [
+                {'name': item['name'], 'y': item['percentage'], 'custom': {'count': item['y']}}
+                for item in renewal_chart_data
+            ]
+            
+            series = [
+                ColumnSeries(
+                    name='New Business',
+                    data=nb_series_data,
+                    color='#7cb5ec'  # Blue color for New Business
+                ),
+                ColumnSeries(
+                    name='Renewal',
+                    data=rn_series_data,
+                    color='#90ed7d'  # Green color for Renewal
+                )
+            ]
+            
+            tooltip_config = {
+                'headerFormat': '<span style="font-size:10px">{point.key}</span><br/>',
+                'pointFormat': '<span style="color:{series.color}">{series.name}</span>: <b>{point.y:.1f}%</b><br/>Count: <b>{point.custom.count}</b><br/>',
+                'shared': True,
+                'useHTML': True
+            }
+            
+        else:
+            # Single series chart (original behavior)
+            series_data = [
+                {'name': item['name'], 'y': item['percentage'], 'custom': {'count': item['y']}}
+                for item in chart_data
+            ]
+            
+            series = [
+                ColumnSeries(
+                    name='Policy Proportion',
+                    data=series_data,
+                    color_by_point=True
+                )
+            ]
+            
+            tooltip_config = {
+                'headerFormat': '<span style="font-size:10px">{point.key}</span><br/>',
+                'pointFormat': 'Count: <b>{point.custom.count}</b>',
+                'shared': False,
+                'useHTML': True
+            }
         
         options = HighchartsOptions(
             chart={'type': 'column', 'renderTo': chart_id} if chart_id else {'type': 'column'},
@@ -86,12 +159,7 @@ class ImpactChartGenerator:
                 min=0,
                 max=100
             ),
-            tooltip={
-                'headerFormat': '<span style="font-size:10px">{point.key}</span><br/>',
-                'pointFormat': 'Count: <b>{point.custom.count}</b>',
-                'shared': False,
-                'useHTML': True
-            },
+            tooltip=tooltip_config,
             plot_options={
                 'column': {
                     'pointPadding': 0.2,
@@ -102,17 +170,8 @@ class ImpactChartGenerator:
                     }
                 }
             },
-            series=[
-                ColumnSeries(
-                    name='Policy Proportion',
-                    data=series_data,
-                    color_by_point=True
-                )
-            ]
+            series=series
         )
-        
-        # Debug: Print the options to see what's being generated
-        # print(f"Chart options: {options.to_js_literal()}")
         
         return Chart.from_options(options)
 
@@ -199,11 +258,17 @@ class ImpactChartGenerator:
 
 
     def generate_all_charts_html(self, dict_distribution_summary: Dict, dict_comparison_summary: Dict) -> Dict:
-        """Generate all charts HTML for the analysis data - consistent pattern"""
+        """Generate all charts HTML for the analysis data - consistent pattern
+        
+        Handles both regular and renewal-enabled charts.
+        """
         charts_html = {}
         
         for item_name, item_analysis in dict_distribution_summary.items():
             charts_html[item_name] = {}
+            
+            # Check if renewal is enabled for this item
+            renewal_enabled = item_analysis.get('renewal_enabled', False)
             
             # Generate distribution charts for each step (sorted by step number)
             sorted_steps = sorted(item_analysis['steps'].keys())
@@ -212,7 +277,20 @@ class ImpactChartGenerator:
                 chart_title = f"{item_name} - {chart_data['step_name']}"
                 chart_id = f"{item_name.replace(' ', '_').lower()}-step-{step_num}-chart"
                 band_order = self._get_band_order()
-                chart_html = self.create_bar_chart(chart_data['chart_data'], chart_title, chart_id, band_order).to_js_literal()
+                
+                # Check if renewal data is available for this step
+                renewal_chart_data = chart_data.get('renewal_chart_data', None) if renewal_enabled else None
+                
+                # Create chart with or without renewal data
+                chart_html = self.create_bar_chart(
+                    chart_data['chart_data'], 
+                    chart_title, 
+                    chart_id, 
+                    band_order,
+                    renewal_enabled=renewal_enabled,
+                    renewal_chart_data=renewal_chart_data
+                ).to_js_literal()
+                
                 charts_html[item_name][f'step_{step_num}'] = chart_html
             
             # Generate waterfall chart for this item if summary stats available

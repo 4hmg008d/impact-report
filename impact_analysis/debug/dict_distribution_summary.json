@@ -1,185 +1,4 @@
 {
-  "BI": {
-    "steps": {
-      "0": {
-        "step_name": "Overall",
-        "percent_diff_column": "percent_diff_BI_step_0",
-        "chart_data": [
-          {
-            "name": "18.[200%, 500%]",
-            "y": 1,
-            "percentage": 5.0
-          },
-          {
-            "name": "20.[1000%, 99900%]",
-            "y": 15,
-            "percentage": 75.0
-          },
-          {
-            "name": "21.[99900%, Inf]",
-            "y": 1,
-            "percentage": 5.0
-          },
-          {
-            "name": "Out of Range",
-            "y": 3,
-            "percentage": 15.0
-          }
-        ],
-        "total_policies": 20,
-        "summary_by_band": [
-          {
-            "band": "18.[200%, 500%]",
-            "Count": 1,
-            "Percentage": 5.0
-          },
-          {
-            "band": "20.[1000%, 99900%]",
-            "Count": 15,
-            "Percentage": 75.0
-          },
-          {
-            "band": "21.[99900%, Inf]",
-            "Count": 1,
-            "Percentage": 5.0
-          },
-          {
-            "band": "Out of Range",
-            "Count": 3,
-            "Percentage": 15.0
-          }
-        ],
-        "summary_by_band_segment": {},
-        "from_stage": 1,
-        "to_stage": 3
-      },
-      "1": {
-        "step_name": "Excess Change",
-        "percent_diff_column": "percent_diff_BI_step_1",
-        "chart_data": [
-          {
-            "name": "18.[200%, 500%]",
-            "y": 2,
-            "percentage": 10.0
-          },
-          {
-            "name": "20.[1000%, 99900%]",
-            "y": 17,
-            "percentage": 85.0
-          },
-          {
-            "name": "21.[99900%, Inf]",
-            "y": 1,
-            "percentage": 5.0
-          }
-        ],
-        "total_policies": 20,
-        "summary_by_band": [
-          {
-            "band": "18.[200%, 500%]",
-            "Count": 2,
-            "Percentage": 10.0
-          },
-          {
-            "band": "20.[1000%, 99900%]",
-            "Count": 17,
-            "Percentage": 85.0
-          },
-          {
-            "band": "21.[99900%, Inf]",
-            "Count": 1,
-            "Percentage": 5.0
-          }
-        ],
-        "summary_by_band_segment": {},
-        "from_stage": 1,
-        "to_stage": 2
-      },
-      "2": {
-        "step_name": "Inflation",
-        "percent_diff_column": "percent_diff_BI_step_2",
-        "chart_data": [
-          {
-            "name": "11.[0%, 10%]",
-            "y": 2,
-            "percentage": 10.0
-          },
-          {
-            "name": "13.[20%, 30%]",
-            "y": 1,
-            "percentage": 5.0
-          },
-          {
-            "name": "15.[40%, 50%]",
-            "y": 2,
-            "percentage": 10.0
-          },
-          {
-            "name": "18.[200%, 500%]",
-            "y": 2,
-            "percentage": 10.0
-          },
-          {
-            "name": "20.[1000%, 99900%]",
-            "y": 4,
-            "percentage": 20.0
-          },
-          {
-            "name": "Out of Range",
-            "y": 9,
-            "percentage": 45.0
-          }
-        ],
-        "total_policies": 20,
-        "summary_by_band": [
-          {
-            "band": "11.[0%, 10%]",
-            "Count": 2,
-            "Percentage": 10.0
-          },
-          {
-            "band": "13.[20%, 30%]",
-            "Count": 1,
-            "Percentage": 5.0
-          },
-          {
-            "band": "15.[40%, 50%]",
-            "Count": 2,
-            "Percentage": 10.0
-          },
-          {
-            "band": "18.[200%, 500%]",
-            "Count": 2,
-            "Percentage": 10.0
-          },
-          {
-            "band": "20.[1000%, 99900%]",
-            "Count": 4,
-            "Percentage": 20.0
-          },
-          {
-            "band": "Out of Range",
-            "Count": 9,
-            "Percentage": 45.0
-          }
-        ],
-        "summary_by_band_segment": {},
-        "from_stage": 2,
-        "to_stage": 3
-      }
-    },
-    "step_names": {
-      "0": "Overall",
-      "1": "Excess Change",
-      "2": "Inflation"
-    },
-    "segments_available": false,
-    "columns": {
-      "1": "BI_1",
-      "2": "BI_2",
-      "3": "BI_3"
-    }
-  },
   "Property": {
     "steps": {
       "0": {
@@ -187,166 +6,1248 @@
         "percent_diff_column": "percent_diff_Property_step_0",
         "chart_data": [
           {
-            "name": "11.[0%, 10%]",
+            "name": "1.[-100%, -90%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "2.[-90%, -80%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "3.[-80%, -70%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "4.[-70%, -60%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "5.[-60%, -50%)",
+            "y": 112,
+            "percentage": 0.33
+          },
+          {
+            "name": "6.[-50%, -40%)",
+            "y": 1043,
+            "percentage": 3.03
+          },
+          {
+            "name": "7.[-40%, -30%)",
+            "y": 2107,
+            "percentage": 6.12
+          },
+          {
+            "name": "8.[-30%, -20%)",
+            "y": 5723,
+            "percentage": 16.61
+          },
+          {
+            "name": "9.[-20%, -10%)",
+            "y": 8983,
+            "percentage": 26.08
+          },
+          {
+            "name": "10.[-10%, 0%)",
+            "y": 8403,
+            "percentage": 24.4
+          },
+          {
+            "name": "11.[0%, 10%)",
+            "y": 4626,
+            "percentage": 13.43
+          },
+          {
+            "name": "12.[10%, 20%)",
+            "y": 1855,
+            "percentage": 5.39
+          },
+          {
+            "name": "13.[20%, 30%)",
+            "y": 795,
+            "percentage": 2.31
+          },
+          {
+            "name": "14.[30%, 40%)",
+            "y": 605,
+            "percentage": 1.76
+          },
+          {
+            "name": "15.[40%, 50%)",
+            "y": 191,
+            "percentage": 0.55
+          },
+          {
+            "name": "16.[50%, 100%)",
             "y": 2,
-            "percentage": 10.0
+            "percentage": 0.01
           },
           {
-            "name": "13.[20%, 30%]",
-            "y": 1,
-            "percentage": 5.0
+            "name": "17.[100%, 200%)",
+            "y": 0,
+            "percentage": 0.0
           },
           {
-            "name": "15.[40%, 50%]",
-            "y": 2,
-            "percentage": 10.0
+            "name": "18.[200%, 500%)",
+            "y": 0,
+            "percentage": 0.0
           },
           {
-            "name": "18.[200%, 500%]",
-            "y": 2,
-            "percentage": 10.0
+            "name": "19.[500%, 1000%)",
+            "y": 0,
+            "percentage": 0.0
           },
           {
-            "name": "20.[1000%, 99900%]",
-            "y": 4,
-            "percentage": 20.0
-          },
-          {
-            "name": "Out of Range",
-            "y": 9,
-            "percentage": 45.0
+            "name": "20.[1000%, inf)",
+            "y": 0,
+            "percentage": 0.0
           }
         ],
-        "total_policies": 20,
+        "total_policies": 34445,
         "summary_by_band": [
           {
-            "band": "11.[0%, 10%]",
+            "band": "1.[-100%, -90%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "2.[-90%, -80%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "3.[-80%, -70%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "4.[-70%, -60%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "5.[-60%, -50%)",
+            "Count": 112,
+            "Percentage": 0.33
+          },
+          {
+            "band": "6.[-50%, -40%)",
+            "Count": 1043,
+            "Percentage": 3.03
+          },
+          {
+            "band": "7.[-40%, -30%)",
+            "Count": 2107,
+            "Percentage": 6.12
+          },
+          {
+            "band": "8.[-30%, -20%)",
+            "Count": 5723,
+            "Percentage": 16.61
+          },
+          {
+            "band": "9.[-20%, -10%)",
+            "Count": 8983,
+            "Percentage": 26.08
+          },
+          {
+            "band": "10.[-10%, 0%)",
+            "Count": 8403,
+            "Percentage": 24.4
+          },
+          {
+            "band": "11.[0%, 10%)",
+            "Count": 4626,
+            "Percentage": 13.43
+          },
+          {
+            "band": "12.[10%, 20%)",
+            "Count": 1855,
+            "Percentage": 5.39
+          },
+          {
+            "band": "13.[20%, 30%)",
+            "Count": 795,
+            "Percentage": 2.31
+          },
+          {
+            "band": "14.[30%, 40%)",
+            "Count": 605,
+            "Percentage": 1.76
+          },
+          {
+            "band": "15.[40%, 50%)",
+            "Count": 191,
+            "Percentage": 0.55
+          },
+          {
+            "band": "16.[50%, 100%)",
             "Count": 2,
-            "Percentage": 10.0
+            "Percentage": 0.01
           },
           {
-            "band": "13.[20%, 30%]",
-            "Count": 1,
-            "Percentage": 5.0
+            "band": "17.[100%, 200%)",
+            "Count": 0,
+            "Percentage": 0.0
           },
           {
-            "band": "15.[40%, 50%]",
-            "Count": 2,
-            "Percentage": 10.0
+            "band": "18.[200%, 500%)",
+            "Count": 0,
+            "Percentage": 0.0
           },
           {
-            "band": "18.[200%, 500%]",
-            "Count": 2,
-            "Percentage": 10.0
+            "band": "19.[500%, 1000%)",
+            "Count": 0,
+            "Percentage": 0.0
           },
           {
-            "band": "20.[1000%, 99900%]",
-            "Count": 4,
-            "Percentage": 20.0
-          },
-          {
-            "band": "Out of Range",
-            "Count": 9,
-            "Percentage": 45.0
+            "band": "20.[1000%, inf)",
+            "Count": 0,
+            "Percentage": 0.0
           }
         ],
-        "summary_by_band_segment": {},
         "from_stage": 1,
-        "to_stage": 3
+        "to_stage": 3,
+        "renewal_chart_data": [
+          {
+            "name": "1.[-100%, -90%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "2.[-90%, -80%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "3.[-80%, -70%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "4.[-70%, -60%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "5.[-60%, -50%)",
+            "y": 599,
+            "percentage": 1.74
+          },
+          {
+            "name": "6.[-50%, -40%)",
+            "y": 1672,
+            "percentage": 4.85
+          },
+          {
+            "name": "7.[-40%, -30%)",
+            "y": 5103,
+            "percentage": 14.81
+          },
+          {
+            "name": "8.[-30%, -20%)",
+            "y": 9572,
+            "percentage": 27.79
+          },
+          {
+            "name": "9.[-20%, -10%)",
+            "y": 9425,
+            "percentage": 27.36
+          },
+          {
+            "name": "10.[-10%, 0%)",
+            "y": 4926,
+            "percentage": 14.3
+          },
+          {
+            "name": "11.[0%, 10%)",
+            "y": 1770,
+            "percentage": 5.14
+          },
+          {
+            "name": "12.[10%, 20%)",
+            "y": 806,
+            "percentage": 2.34
+          },
+          {
+            "name": "13.[20%, 30%)",
+            "y": 524,
+            "percentage": 1.52
+          },
+          {
+            "name": "14.[30%, 40%)",
+            "y": 48,
+            "percentage": 0.14
+          },
+          {
+            "name": "15.[40%, 50%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "16.[50%, 100%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "17.[100%, 200%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "18.[200%, 500%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "19.[500%, 1000%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "20.[1000%, inf)",
+            "y": 0,
+            "percentage": 0.0
+          }
+        ],
+        "renewal_summary_by_band": [
+          {
+            "band": "1.[-100%, -90%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "2.[-90%, -80%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "3.[-80%, -70%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "4.[-70%, -60%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "5.[-60%, -50%)",
+            "Count": 599,
+            "Percentage": 1.74
+          },
+          {
+            "band": "6.[-50%, -40%)",
+            "Count": 1672,
+            "Percentage": 4.85
+          },
+          {
+            "band": "7.[-40%, -30%)",
+            "Count": 5103,
+            "Percentage": 14.81
+          },
+          {
+            "band": "8.[-30%, -20%)",
+            "Count": 9572,
+            "Percentage": 27.79
+          },
+          {
+            "band": "9.[-20%, -10%)",
+            "Count": 9425,
+            "Percentage": 27.36
+          },
+          {
+            "band": "10.[-10%, 0%)",
+            "Count": 4926,
+            "Percentage": 14.3
+          },
+          {
+            "band": "11.[0%, 10%)",
+            "Count": 1770,
+            "Percentage": 5.14
+          },
+          {
+            "band": "12.[10%, 20%)",
+            "Count": 806,
+            "Percentage": 2.34
+          },
+          {
+            "band": "13.[20%, 30%)",
+            "Count": 524,
+            "Percentage": 1.52
+          },
+          {
+            "band": "14.[30%, 40%)",
+            "Count": 48,
+            "Percentage": 0.14
+          },
+          {
+            "band": "15.[40%, 50%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "16.[50%, 100%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "17.[100%, 200%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "18.[200%, 500%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "19.[500%, 1000%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "20.[1000%, inf)",
+            "Count": 0,
+            "Percentage": 0.0
+          }
+        ],
+        "renewal_percent_diff_column": "percent_diff_Property_step_0_rn"
       },
       "1": {
         "step_name": "Excess Change",
         "percent_diff_column": "percent_diff_Property_step_1",
         "chart_data": [
           {
-            "name": "11.[0%, 10%]",
-            "y": 2,
-            "percentage": 10.0
+            "name": "1.[-100%, -90%)",
+            "y": 0,
+            "percentage": 0.0
           },
           {
-            "name": "13.[20%, 30%]",
-            "y": 1,
-            "percentage": 5.0
+            "name": "2.[-90%, -80%)",
+            "y": 0,
+            "percentage": 0.0
           },
           {
-            "name": "15.[40%, 50%]",
-            "y": 2,
-            "percentage": 10.0
+            "name": "3.[-80%, -70%)",
+            "y": 0,
+            "percentage": 0.0
           },
           {
-            "name": "18.[200%, 500%]",
-            "y": 2,
-            "percentage": 10.0
+            "name": "4.[-70%, -60%)",
+            "y": 0,
+            "percentage": 0.0
           },
           {
-            "name": "20.[1000%, 99900%]",
-            "y": 4,
-            "percentage": 20.0
+            "name": "5.[-60%, -50%)",
+            "y": 0,
+            "percentage": 0.0
           },
           {
-            "name": "Out of Range",
-            "y": 9,
-            "percentage": 45.0
+            "name": "6.[-50%, -40%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "7.[-40%, -30%)",
+            "y": 238,
+            "percentage": 0.69
+          },
+          {
+            "name": "8.[-30%, -20%)",
+            "y": 2956,
+            "percentage": 8.58
+          },
+          {
+            "name": "9.[-20%, -10%)",
+            "y": 8052,
+            "percentage": 23.38
+          },
+          {
+            "name": "10.[-10%, 0%)",
+            "y": 10390,
+            "percentage": 30.16
+          },
+          {
+            "name": "11.[0%, 10%)",
+            "y": 8483,
+            "percentage": 24.63
+          },
+          {
+            "name": "12.[10%, 20%)",
+            "y": 3807,
+            "percentage": 11.05
+          },
+          {
+            "name": "13.[20%, 30%)",
+            "y": 501,
+            "percentage": 1.45
+          },
+          {
+            "name": "14.[30%, 40%)",
+            "y": 18,
+            "percentage": 0.05
+          },
+          {
+            "name": "15.[40%, 50%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "16.[50%, 100%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "17.[100%, 200%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "18.[200%, 500%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "19.[500%, 1000%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "20.[1000%, inf)",
+            "y": 0,
+            "percentage": 0.0
           }
         ],
-        "total_policies": 20,
+        "total_policies": 34445,
         "summary_by_band": [
           {
-            "band": "11.[0%, 10%]",
-            "Count": 2,
-            "Percentage": 10.0
+            "band": "1.[-100%, -90%)",
+            "Count": 0,
+            "Percentage": 0.0
           },
           {
-            "band": "13.[20%, 30%]",
-            "Count": 1,
-            "Percentage": 5.0
+            "band": "2.[-90%, -80%)",
+            "Count": 0,
+            "Percentage": 0.0
           },
           {
-            "band": "15.[40%, 50%]",
-            "Count": 2,
-            "Percentage": 10.0
+            "band": "3.[-80%, -70%)",
+            "Count": 0,
+            "Percentage": 0.0
           },
           {
-            "band": "18.[200%, 500%]",
-            "Count": 2,
-            "Percentage": 10.0
+            "band": "4.[-70%, -60%)",
+            "Count": 0,
+            "Percentage": 0.0
           },
           {
-            "band": "20.[1000%, 99900%]",
-            "Count": 4,
-            "Percentage": 20.0
+            "band": "5.[-60%, -50%)",
+            "Count": 0,
+            "Percentage": 0.0
           },
           {
-            "band": "Out of Range",
-            "Count": 9,
-            "Percentage": 45.0
+            "band": "6.[-50%, -40%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "7.[-40%, -30%)",
+            "Count": 238,
+            "Percentage": 0.69
+          },
+          {
+            "band": "8.[-30%, -20%)",
+            "Count": 2956,
+            "Percentage": 8.58
+          },
+          {
+            "band": "9.[-20%, -10%)",
+            "Count": 8052,
+            "Percentage": 23.38
+          },
+          {
+            "band": "10.[-10%, 0%)",
+            "Count": 10390,
+            "Percentage": 30.16
+          },
+          {
+            "band": "11.[0%, 10%)",
+            "Count": 8483,
+            "Percentage": 24.63
+          },
+          {
+            "band": "12.[10%, 20%)",
+            "Count": 3807,
+            "Percentage": 11.05
+          },
+          {
+            "band": "13.[20%, 30%)",
+            "Count": 501,
+            "Percentage": 1.45
+          },
+          {
+            "band": "14.[30%, 40%)",
+            "Count": 18,
+            "Percentage": 0.05
+          },
+          {
+            "band": "15.[40%, 50%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "16.[50%, 100%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "17.[100%, 200%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "18.[200%, 500%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "19.[500%, 1000%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "20.[1000%, inf)",
+            "Count": 0,
+            "Percentage": 0.0
           }
         ],
-        "summary_by_band_segment": {},
         "from_stage": 1,
-        "to_stage": 2
+        "to_stage": 2,
+        "renewal_chart_data": [
+          {
+            "name": "1.[-100%, -90%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "2.[-90%, -80%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "3.[-80%, -70%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "4.[-70%, -60%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "5.[-60%, -50%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "6.[-50%, -40%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "7.[-40%, -30%)",
+            "y": 391,
+            "percentage": 1.14
+          },
+          {
+            "name": "8.[-30%, -20%)",
+            "y": 4329,
+            "percentage": 12.57
+          },
+          {
+            "name": "9.[-20%, -10%)",
+            "y": 9350,
+            "percentage": 27.14
+          },
+          {
+            "name": "10.[-10%, 0%)",
+            "y": 10629,
+            "percentage": 30.86
+          },
+          {
+            "name": "11.[0%, 10%)",
+            "y": 7245,
+            "percentage": 21.03
+          },
+          {
+            "name": "12.[10%, 20%)",
+            "y": 2288,
+            "percentage": 6.64
+          },
+          {
+            "name": "13.[20%, 30%)",
+            "y": 213,
+            "percentage": 0.62
+          },
+          {
+            "name": "14.[30%, 40%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "15.[40%, 50%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "16.[50%, 100%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "17.[100%, 200%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "18.[200%, 500%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "19.[500%, 1000%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "20.[1000%, inf)",
+            "y": 0,
+            "percentage": 0.0
+          }
+        ],
+        "renewal_summary_by_band": [
+          {
+            "band": "1.[-100%, -90%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "2.[-90%, -80%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "3.[-80%, -70%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "4.[-70%, -60%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "5.[-60%, -50%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "6.[-50%, -40%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "7.[-40%, -30%)",
+            "Count": 391,
+            "Percentage": 1.14
+          },
+          {
+            "band": "8.[-30%, -20%)",
+            "Count": 4329,
+            "Percentage": 12.57
+          },
+          {
+            "band": "9.[-20%, -10%)",
+            "Count": 9350,
+            "Percentage": 27.14
+          },
+          {
+            "band": "10.[-10%, 0%)",
+            "Count": 10629,
+            "Percentage": 30.86
+          },
+          {
+            "band": "11.[0%, 10%)",
+            "Count": 7245,
+            "Percentage": 21.03
+          },
+          {
+            "band": "12.[10%, 20%)",
+            "Count": 2288,
+            "Percentage": 6.64
+          },
+          {
+            "band": "13.[20%, 30%)",
+            "Count": 213,
+            "Percentage": 0.62
+          },
+          {
+            "band": "14.[30%, 40%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "15.[40%, 50%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "16.[50%, 100%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "17.[100%, 200%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "18.[200%, 500%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "19.[500%, 1000%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "20.[1000%, inf)",
+            "Count": 0,
+            "Percentage": 0.0
+          }
+        ],
+        "renewal_percent_diff_column": "percent_diff_Property_step_1_rn"
       },
       "2": {
         "step_name": "Inflation",
         "percent_diff_column": "percent_diff_Property_step_2",
         "chart_data": [
           {
-            "name": "11.[0%, 10%]",
-            "y": 20,
-            "percentage": 100.0
+            "name": "1.[-100%, -90%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "2.[-90%, -80%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "3.[-80%, -70%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "4.[-70%, -60%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "5.[-60%, -50%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "6.[-50%, -40%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "7.[-40%, -30%)",
+            "y": 58,
+            "percentage": 0.17
+          },
+          {
+            "name": "8.[-30%, -20%)",
+            "y": 1980,
+            "percentage": 5.75
+          },
+          {
+            "name": "9.[-20%, -10%)",
+            "y": 10089,
+            "percentage": 29.29
+          },
+          {
+            "name": "10.[-10%, 0%)",
+            "y": 12692,
+            "percentage": 36.85
+          },
+          {
+            "name": "11.[0%, 10%)",
+            "y": 8019,
+            "percentage": 23.28
+          },
+          {
+            "name": "12.[10%, 20%)",
+            "y": 1607,
+            "percentage": 4.67
+          },
+          {
+            "name": "13.[20%, 30%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "14.[30%, 40%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "15.[40%, 50%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "16.[50%, 100%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "17.[100%, 200%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "18.[200%, 500%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "19.[500%, 1000%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "20.[1000%, inf)",
+            "y": 0,
+            "percentage": 0.0
           }
         ],
-        "total_policies": 20,
+        "total_policies": 34445,
         "summary_by_band": [
           {
-            "band": "11.[0%, 10%]",
-            "Count": 20,
-            "Percentage": 100.0
+            "band": "1.[-100%, -90%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "2.[-90%, -80%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "3.[-80%, -70%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "4.[-70%, -60%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "5.[-60%, -50%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "6.[-50%, -40%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "7.[-40%, -30%)",
+            "Count": 58,
+            "Percentage": 0.17
+          },
+          {
+            "band": "8.[-30%, -20%)",
+            "Count": 1980,
+            "Percentage": 5.75
+          },
+          {
+            "band": "9.[-20%, -10%)",
+            "Count": 10089,
+            "Percentage": 29.29
+          },
+          {
+            "band": "10.[-10%, 0%)",
+            "Count": 12692,
+            "Percentage": 36.85
+          },
+          {
+            "band": "11.[0%, 10%)",
+            "Count": 8019,
+            "Percentage": 23.28
+          },
+          {
+            "band": "12.[10%, 20%)",
+            "Count": 1607,
+            "Percentage": 4.67
+          },
+          {
+            "band": "13.[20%, 30%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "14.[30%, 40%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "15.[40%, 50%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "16.[50%, 100%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "17.[100%, 200%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "18.[200%, 500%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "19.[500%, 1000%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "20.[1000%, inf)",
+            "Count": 0,
+            "Percentage": 0.0
           }
         ],
-        "summary_by_band_segment": {},
         "from_stage": 2,
-        "to_stage": 3
+        "to_stage": 3,
+        "renewal_chart_data": [
+          {
+            "name": "1.[-100%, -90%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "2.[-90%, -80%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "3.[-80%, -70%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "4.[-70%, -60%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "5.[-60%, -50%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "6.[-50%, -40%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "7.[-40%, -30%)",
+            "y": 930,
+            "percentage": 2.7
+          },
+          {
+            "name": "8.[-30%, -20%)",
+            "y": 7764,
+            "percentage": 22.54
+          },
+          {
+            "name": "9.[-20%, -10%)",
+            "y": 12694,
+            "percentage": 36.85
+          },
+          {
+            "name": "10.[-10%, 0%)",
+            "y": 11329,
+            "percentage": 32.89
+          },
+          {
+            "name": "11.[0%, 10%)",
+            "y": 1728,
+            "percentage": 5.02
+          },
+          {
+            "name": "12.[10%, 20%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "13.[20%, 30%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "14.[30%, 40%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "15.[40%, 50%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "16.[50%, 100%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "17.[100%, 200%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "18.[200%, 500%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "19.[500%, 1000%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "20.[1000%, inf)",
+            "y": 0,
+            "percentage": 0.0
+          }
+        ],
+        "renewal_summary_by_band": [
+          {
+            "band": "1.[-100%, -90%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "2.[-90%, -80%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "3.[-80%, -70%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "4.[-70%, -60%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "5.[-60%, -50%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "6.[-50%, -40%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "7.[-40%, -30%)",
+            "Count": 930,
+            "Percentage": 2.7
+          },
+          {
+            "band": "8.[-30%, -20%)",
+            "Count": 7764,
+            "Percentage": 22.54
+          },
+          {
+            "band": "9.[-20%, -10%)",
+            "Count": 12694,
+            "Percentage": 36.85
+          },
+          {
+            "band": "10.[-10%, 0%)",
+            "Count": 11329,
+            "Percentage": 32.89
+          },
+          {
+            "band": "11.[0%, 10%)",
+            "Count": 1728,
+            "Percentage": 5.02
+          },
+          {
+            "band": "12.[10%, 20%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "13.[20%, 30%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "14.[30%, 40%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "15.[40%, 50%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "16.[50%, 100%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "17.[100%, 200%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "18.[200%, 500%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "19.[500%, 1000%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "20.[1000%, inf)",
+            "Count": 0,
+            "Percentage": 0.0
+          }
+        ],
+        "renewal_percent_diff_column": "percent_diff_Property_step_2_rn"
       }
     },
     "step_names": {
@@ -354,11 +1255,1274 @@
       "1": "Excess Change",
       "2": "Inflation"
     },
-    "segments_available": false,
+    "renewal_enabled": true,
     "columns": {
       "1": "Property_1",
       "2": "Property_2",
       "3": "Property_3"
+    }
+  },
+  "BI": {
+    "steps": {
+      "0": {
+        "step_name": "Overall",
+        "percent_diff_column": "percent_diff_BI_step_0",
+        "chart_data": [
+          {
+            "name": "1.[-100%, -90%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "2.[-90%, -80%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "3.[-80%, -70%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "4.[-70%, -60%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "5.[-60%, -50%)",
+            "y": 34,
+            "percentage": 0.1
+          },
+          {
+            "name": "6.[-50%, -40%)",
+            "y": 421,
+            "percentage": 1.22
+          },
+          {
+            "name": "7.[-40%, -30%)",
+            "y": 1619,
+            "percentage": 4.7
+          },
+          {
+            "name": "8.[-30%, -20%)",
+            "y": 3629,
+            "percentage": 10.54
+          },
+          {
+            "name": "9.[-20%, -10%)",
+            "y": 5746,
+            "percentage": 16.68
+          },
+          {
+            "name": "10.[-10%, 0%)",
+            "y": 6869,
+            "percentage": 19.94
+          },
+          {
+            "name": "11.[0%, 10%)",
+            "y": 6250,
+            "percentage": 18.14
+          },
+          {
+            "name": "12.[10%, 20%)",
+            "y": 4550,
+            "percentage": 13.21
+          },
+          {
+            "name": "13.[20%, 30%)",
+            "y": 2709,
+            "percentage": 7.86
+          },
+          {
+            "name": "14.[30%, 40%)",
+            "y": 1500,
+            "percentage": 4.35
+          },
+          {
+            "name": "15.[40%, 50%)",
+            "y": 722,
+            "percentage": 2.1
+          },
+          {
+            "name": "16.[50%, 100%)",
+            "y": 396,
+            "percentage": 1.15
+          },
+          {
+            "name": "17.[100%, 200%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "18.[200%, 500%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "19.[500%, 1000%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "20.[1000%, inf)",
+            "y": 0,
+            "percentage": 0.0
+          }
+        ],
+        "total_policies": 34445,
+        "summary_by_band": [
+          {
+            "band": "1.[-100%, -90%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "2.[-90%, -80%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "3.[-80%, -70%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "4.[-70%, -60%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "5.[-60%, -50%)",
+            "Count": 34,
+            "Percentage": 0.1
+          },
+          {
+            "band": "6.[-50%, -40%)",
+            "Count": 421,
+            "Percentage": 1.22
+          },
+          {
+            "band": "7.[-40%, -30%)",
+            "Count": 1619,
+            "Percentage": 4.7
+          },
+          {
+            "band": "8.[-30%, -20%)",
+            "Count": 3629,
+            "Percentage": 10.54
+          },
+          {
+            "band": "9.[-20%, -10%)",
+            "Count": 5746,
+            "Percentage": 16.68
+          },
+          {
+            "band": "10.[-10%, 0%)",
+            "Count": 6869,
+            "Percentage": 19.94
+          },
+          {
+            "band": "11.[0%, 10%)",
+            "Count": 6250,
+            "Percentage": 18.14
+          },
+          {
+            "band": "12.[10%, 20%)",
+            "Count": 4550,
+            "Percentage": 13.21
+          },
+          {
+            "band": "13.[20%, 30%)",
+            "Count": 2709,
+            "Percentage": 7.86
+          },
+          {
+            "band": "14.[30%, 40%)",
+            "Count": 1500,
+            "Percentage": 4.35
+          },
+          {
+            "band": "15.[40%, 50%)",
+            "Count": 722,
+            "Percentage": 2.1
+          },
+          {
+            "band": "16.[50%, 100%)",
+            "Count": 396,
+            "Percentage": 1.15
+          },
+          {
+            "band": "17.[100%, 200%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "18.[200%, 500%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "19.[500%, 1000%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "20.[1000%, inf)",
+            "Count": 0,
+            "Percentage": 0.0
+          }
+        ],
+        "from_stage": 1,
+        "to_stage": 3,
+        "renewal_chart_data": [
+          {
+            "name": "1.[-100%, -90%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "2.[-90%, -80%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "3.[-80%, -70%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "4.[-70%, -60%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "5.[-60%, -50%)",
+            "y": 198,
+            "percentage": 0.57
+          },
+          {
+            "name": "6.[-50%, -40%)",
+            "y": 1147,
+            "percentage": 3.33
+          },
+          {
+            "name": "7.[-40%, -30%)",
+            "y": 3414,
+            "percentage": 9.91
+          },
+          {
+            "name": "8.[-30%, -20%)",
+            "y": 5947,
+            "percentage": 17.27
+          },
+          {
+            "name": "9.[-20%, -10%)",
+            "y": 7612,
+            "percentage": 22.1
+          },
+          {
+            "name": "10.[-10%, 0%)",
+            "y": 6875,
+            "percentage": 19.96
+          },
+          {
+            "name": "11.[0%, 10%)",
+            "y": 4664,
+            "percentage": 13.54
+          },
+          {
+            "name": "12.[10%, 20%)",
+            "y": 2581,
+            "percentage": 7.49
+          },
+          {
+            "name": "13.[20%, 30%)",
+            "y": 1286,
+            "percentage": 3.73
+          },
+          {
+            "name": "14.[30%, 40%)",
+            "y": 510,
+            "percentage": 1.48
+          },
+          {
+            "name": "15.[40%, 50%)",
+            "y": 172,
+            "percentage": 0.5
+          },
+          {
+            "name": "16.[50%, 100%)",
+            "y": 39,
+            "percentage": 0.11
+          },
+          {
+            "name": "17.[100%, 200%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "18.[200%, 500%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "19.[500%, 1000%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "20.[1000%, inf)",
+            "y": 0,
+            "percentage": 0.0
+          }
+        ],
+        "renewal_summary_by_band": [
+          {
+            "band": "1.[-100%, -90%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "2.[-90%, -80%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "3.[-80%, -70%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "4.[-70%, -60%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "5.[-60%, -50%)",
+            "Count": 198,
+            "Percentage": 0.57
+          },
+          {
+            "band": "6.[-50%, -40%)",
+            "Count": 1147,
+            "Percentage": 3.33
+          },
+          {
+            "band": "7.[-40%, -30%)",
+            "Count": 3414,
+            "Percentage": 9.91
+          },
+          {
+            "band": "8.[-30%, -20%)",
+            "Count": 5947,
+            "Percentage": 17.27
+          },
+          {
+            "band": "9.[-20%, -10%)",
+            "Count": 7612,
+            "Percentage": 22.1
+          },
+          {
+            "band": "10.[-10%, 0%)",
+            "Count": 6875,
+            "Percentage": 19.96
+          },
+          {
+            "band": "11.[0%, 10%)",
+            "Count": 4664,
+            "Percentage": 13.54
+          },
+          {
+            "band": "12.[10%, 20%)",
+            "Count": 2581,
+            "Percentage": 7.49
+          },
+          {
+            "band": "13.[20%, 30%)",
+            "Count": 1286,
+            "Percentage": 3.73
+          },
+          {
+            "band": "14.[30%, 40%)",
+            "Count": 510,
+            "Percentage": 1.48
+          },
+          {
+            "band": "15.[40%, 50%)",
+            "Count": 172,
+            "Percentage": 0.5
+          },
+          {
+            "band": "16.[50%, 100%)",
+            "Count": 39,
+            "Percentage": 0.11
+          },
+          {
+            "band": "17.[100%, 200%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "18.[200%, 500%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "19.[500%, 1000%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "20.[1000%, inf)",
+            "Count": 0,
+            "Percentage": 0.0
+          }
+        ],
+        "renewal_percent_diff_column": "percent_diff_BI_step_0_rn"
+      },
+      "1": {
+        "step_name": "Excess Change",
+        "percent_diff_column": "percent_diff_BI_step_1",
+        "chart_data": [
+          {
+            "name": "1.[-100%, -90%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "2.[-90%, -80%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "3.[-80%, -70%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "4.[-70%, -60%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "5.[-60%, -50%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "6.[-50%, -40%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "7.[-40%, -30%)",
+            "y": 163,
+            "percentage": 0.47
+          },
+          {
+            "name": "8.[-30%, -20%)",
+            "y": 2515,
+            "percentage": 7.3
+          },
+          {
+            "name": "9.[-20%, -10%)",
+            "y": 7195,
+            "percentage": 20.89
+          },
+          {
+            "name": "10.[-10%, 0%)",
+            "y": 8901,
+            "percentage": 25.84
+          },
+          {
+            "name": "11.[0%, 10%)",
+            "y": 8728,
+            "percentage": 25.34
+          },
+          {
+            "name": "12.[10%, 20%)",
+            "y": 5353,
+            "percentage": 15.54
+          },
+          {
+            "name": "13.[20%, 30%)",
+            "y": 1466,
+            "percentage": 4.26
+          },
+          {
+            "name": "14.[30%, 40%)",
+            "y": 124,
+            "percentage": 0.36
+          },
+          {
+            "name": "15.[40%, 50%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "16.[50%, 100%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "17.[100%, 200%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "18.[200%, 500%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "19.[500%, 1000%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "20.[1000%, inf)",
+            "y": 0,
+            "percentage": 0.0
+          }
+        ],
+        "total_policies": 34445,
+        "summary_by_band": [
+          {
+            "band": "1.[-100%, -90%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "2.[-90%, -80%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "3.[-80%, -70%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "4.[-70%, -60%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "5.[-60%, -50%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "6.[-50%, -40%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "7.[-40%, -30%)",
+            "Count": 163,
+            "Percentage": 0.47
+          },
+          {
+            "band": "8.[-30%, -20%)",
+            "Count": 2515,
+            "Percentage": 7.3
+          },
+          {
+            "band": "9.[-20%, -10%)",
+            "Count": 7195,
+            "Percentage": 20.89
+          },
+          {
+            "band": "10.[-10%, 0%)",
+            "Count": 8901,
+            "Percentage": 25.84
+          },
+          {
+            "band": "11.[0%, 10%)",
+            "Count": 8728,
+            "Percentage": 25.34
+          },
+          {
+            "band": "12.[10%, 20%)",
+            "Count": 5353,
+            "Percentage": 15.54
+          },
+          {
+            "band": "13.[20%, 30%)",
+            "Count": 1466,
+            "Percentage": 4.26
+          },
+          {
+            "band": "14.[30%, 40%)",
+            "Count": 124,
+            "Percentage": 0.36
+          },
+          {
+            "band": "15.[40%, 50%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "16.[50%, 100%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "17.[100%, 200%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "18.[200%, 500%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "19.[500%, 1000%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "20.[1000%, inf)",
+            "Count": 0,
+            "Percentage": 0.0
+          }
+        ],
+        "from_stage": 1,
+        "to_stage": 2,
+        "renewal_chart_data": [
+          {
+            "name": "1.[-100%, -90%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "2.[-90%, -80%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "3.[-80%, -70%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "4.[-70%, -60%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "5.[-60%, -50%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "6.[-50%, -40%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "7.[-40%, -30%)",
+            "y": 293,
+            "percentage": 0.85
+          },
+          {
+            "name": "8.[-30%, -20%)",
+            "y": 3716,
+            "percentage": 10.79
+          },
+          {
+            "name": "9.[-20%, -10%)",
+            "y": 8314,
+            "percentage": 24.14
+          },
+          {
+            "name": "10.[-10%, 0%)",
+            "y": 9377,
+            "percentage": 27.22
+          },
+          {
+            "name": "11.[0%, 10%)",
+            "y": 8165,
+            "percentage": 23.7
+          },
+          {
+            "name": "12.[10%, 20%)",
+            "y": 3970,
+            "percentage": 11.53
+          },
+          {
+            "name": "13.[20%, 30%)",
+            "y": 574,
+            "percentage": 1.67
+          },
+          {
+            "name": "14.[30%, 40%)",
+            "y": 36,
+            "percentage": 0.1
+          },
+          {
+            "name": "15.[40%, 50%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "16.[50%, 100%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "17.[100%, 200%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "18.[200%, 500%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "19.[500%, 1000%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "20.[1000%, inf)",
+            "y": 0,
+            "percentage": 0.0
+          }
+        ],
+        "renewal_summary_by_band": [
+          {
+            "band": "1.[-100%, -90%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "2.[-90%, -80%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "3.[-80%, -70%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "4.[-70%, -60%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "5.[-60%, -50%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "6.[-50%, -40%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "7.[-40%, -30%)",
+            "Count": 293,
+            "Percentage": 0.85
+          },
+          {
+            "band": "8.[-30%, -20%)",
+            "Count": 3716,
+            "Percentage": 10.79
+          },
+          {
+            "band": "9.[-20%, -10%)",
+            "Count": 8314,
+            "Percentage": 24.14
+          },
+          {
+            "band": "10.[-10%, 0%)",
+            "Count": 9377,
+            "Percentage": 27.22
+          },
+          {
+            "band": "11.[0%, 10%)",
+            "Count": 8165,
+            "Percentage": 23.7
+          },
+          {
+            "band": "12.[10%, 20%)",
+            "Count": 3970,
+            "Percentage": 11.53
+          },
+          {
+            "band": "13.[20%, 30%)",
+            "Count": 574,
+            "Percentage": 1.67
+          },
+          {
+            "band": "14.[30%, 40%)",
+            "Count": 36,
+            "Percentage": 0.1
+          },
+          {
+            "band": "15.[40%, 50%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "16.[50%, 100%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "17.[100%, 200%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "18.[200%, 500%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "19.[500%, 1000%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "20.[1000%, inf)",
+            "Count": 0,
+            "Percentage": 0.0
+          }
+        ],
+        "renewal_percent_diff_column": "percent_diff_BI_step_1_rn"
+      },
+      "2": {
+        "step_name": "Inflation",
+        "percent_diff_column": "percent_diff_BI_step_2",
+        "chart_data": [
+          {
+            "name": "1.[-100%, -90%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "2.[-90%, -80%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "3.[-80%, -70%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "4.[-70%, -60%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "5.[-60%, -50%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "6.[-50%, -40%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "7.[-40%, -30%)",
+            "y": 26,
+            "percentage": 0.08
+          },
+          {
+            "name": "8.[-30%, -20%)",
+            "y": 917,
+            "percentage": 2.66
+          },
+          {
+            "name": "9.[-20%, -10%)",
+            "y": 6990,
+            "percentage": 20.29
+          },
+          {
+            "name": "10.[-10%, 0%)",
+            "y": 8028,
+            "percentage": 23.31
+          },
+          {
+            "name": "11.[0%, 10%)",
+            "y": 8405,
+            "percentage": 24.4
+          },
+          {
+            "name": "12.[10%, 20%)",
+            "y": 8808,
+            "percentage": 25.57
+          },
+          {
+            "name": "13.[20%, 30%)",
+            "y": 1231,
+            "percentage": 3.57
+          },
+          {
+            "name": "14.[30%, 40%)",
+            "y": 40,
+            "percentage": 0.12
+          },
+          {
+            "name": "15.[40%, 50%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "16.[50%, 100%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "17.[100%, 200%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "18.[200%, 500%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "19.[500%, 1000%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "20.[1000%, inf)",
+            "y": 0,
+            "percentage": 0.0
+          }
+        ],
+        "total_policies": 34445,
+        "summary_by_band": [
+          {
+            "band": "1.[-100%, -90%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "2.[-90%, -80%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "3.[-80%, -70%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "4.[-70%, -60%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "5.[-60%, -50%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "6.[-50%, -40%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "7.[-40%, -30%)",
+            "Count": 26,
+            "Percentage": 0.08
+          },
+          {
+            "band": "8.[-30%, -20%)",
+            "Count": 917,
+            "Percentage": 2.66
+          },
+          {
+            "band": "9.[-20%, -10%)",
+            "Count": 6990,
+            "Percentage": 20.29
+          },
+          {
+            "band": "10.[-10%, 0%)",
+            "Count": 8028,
+            "Percentage": 23.31
+          },
+          {
+            "band": "11.[0%, 10%)",
+            "Count": 8405,
+            "Percentage": 24.4
+          },
+          {
+            "band": "12.[10%, 20%)",
+            "Count": 8808,
+            "Percentage": 25.57
+          },
+          {
+            "band": "13.[20%, 30%)",
+            "Count": 1231,
+            "Percentage": 3.57
+          },
+          {
+            "band": "14.[30%, 40%)",
+            "Count": 40,
+            "Percentage": 0.12
+          },
+          {
+            "band": "15.[40%, 50%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "16.[50%, 100%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "17.[100%, 200%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "18.[200%, 500%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "19.[500%, 1000%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "20.[1000%, inf)",
+            "Count": 0,
+            "Percentage": 0.0
+          }
+        ],
+        "from_stage": 2,
+        "to_stage": 3,
+        "renewal_chart_data": [
+          {
+            "name": "1.[-100%, -90%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "2.[-90%, -80%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "3.[-80%, -70%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "4.[-70%, -60%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "5.[-60%, -50%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "6.[-50%, -40%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "7.[-40%, -30%)",
+            "y": 389,
+            "percentage": 1.13
+          },
+          {
+            "name": "8.[-30%, -20%)",
+            "y": 5195,
+            "percentage": 15.08
+          },
+          {
+            "name": "9.[-20%, -10%)",
+            "y": 8368,
+            "percentage": 24.29
+          },
+          {
+            "name": "10.[-10%, 0%)",
+            "y": 8387,
+            "percentage": 24.35
+          },
+          {
+            "name": "11.[0%, 10%)",
+            "y": 9538,
+            "percentage": 27.69
+          },
+          {
+            "name": "12.[10%, 20%)",
+            "y": 2485,
+            "percentage": 7.21
+          },
+          {
+            "name": "13.[20%, 30%)",
+            "y": 83,
+            "percentage": 0.24
+          },
+          {
+            "name": "14.[30%, 40%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "15.[40%, 50%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "16.[50%, 100%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "17.[100%, 200%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "18.[200%, 500%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "19.[500%, 1000%)",
+            "y": 0,
+            "percentage": 0.0
+          },
+          {
+            "name": "20.[1000%, inf)",
+            "y": 0,
+            "percentage": 0.0
+          }
+        ],
+        "renewal_summary_by_band": [
+          {
+            "band": "1.[-100%, -90%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "2.[-90%, -80%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "3.[-80%, -70%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "4.[-70%, -60%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "5.[-60%, -50%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "6.[-50%, -40%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "7.[-40%, -30%)",
+            "Count": 389,
+            "Percentage": 1.13
+          },
+          {
+            "band": "8.[-30%, -20%)",
+            "Count": 5195,
+            "Percentage": 15.08
+          },
+          {
+            "band": "9.[-20%, -10%)",
+            "Count": 8368,
+            "Percentage": 24.29
+          },
+          {
+            "band": "10.[-10%, 0%)",
+            "Count": 8387,
+            "Percentage": 24.35
+          },
+          {
+            "band": "11.[0%, 10%)",
+            "Count": 9538,
+            "Percentage": 27.69
+          },
+          {
+            "band": "12.[10%, 20%)",
+            "Count": 2485,
+            "Percentage": 7.21
+          },
+          {
+            "band": "13.[20%, 30%)",
+            "Count": 83,
+            "Percentage": 0.24
+          },
+          {
+            "band": "14.[30%, 40%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "15.[40%, 50%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "16.[50%, 100%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "17.[100%, 200%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "18.[200%, 500%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "19.[500%, 1000%)",
+            "Count": 0,
+            "Percentage": 0.0
+          },
+          {
+            "band": "20.[1000%, inf)",
+            "Count": 0,
+            "Percentage": 0.0
+          }
+        ],
+        "renewal_percent_diff_column": "percent_diff_BI_step_2_rn"
+      }
+    },
+    "step_names": {
+      "0": "Overall",
+      "1": "Excess Change",
+      "2": "Inflation"
+    },
+    "renewal_enabled": true,
+    "columns": {
+      "1": "BI_1",
+      "2": "BI_2",
+      "3": "BI_3"
     }
   }
 }

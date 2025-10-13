@@ -32,6 +32,7 @@ class DataProcessor:
         
         Returns:
             Dictionary mapping items to their stage information (without 'differences' component)
+            Also includes renewal column information if renewal feature is enabled
         """
         # Load mapping data - preserve original order from config file
         mapping_df = self.config_loader.load_mapping_data()
@@ -50,13 +51,21 @@ class DataProcessor:
         # Build comparison mapping, maintaining the original order
         comparison_mapping = {}
         
+        # Check if renewal feature is enabled
+        is_renewal_enabled = self.config_loader.is_renewal_enabled()
+        
         for item in impact_items:
             item_mapping = mapping_df[mapping_df['Item'] == item].sort_values('Stage')
             comparison_mapping[item] = {
                 'stages': {},
                 'stage_names': {},
-                'columns': {}
+                'columns': {},
+                'renewal_enabled': is_renewal_enabled
             }
+            
+            # If renewal is enabled, add renewal column info
+            if is_renewal_enabled:
+                comparison_mapping[item]['renewal_columns'] = {}
             
             for _, row in item_mapping.iterrows():
                 stage = row['Stage']
@@ -81,6 +90,17 @@ class DataProcessor:
                 }
                 comparison_mapping[item]['stage_names'][stage] = stage_name
                 comparison_mapping[item]['columns'][stage] = new_col_name
+                
+                # If renewal is enabled and RNColumn exists, add renewal column info
+                if is_renewal_enabled and 'RNColumn' in row and pd.notna(row['RNColumn']):
+                    rn_column = row['RNColumn']
+                    rn_col_name = f"{item}_{stage}_rn"
+                    comparison_mapping[item]['renewal_columns'][stage] = {
+                        'file_path': file_path,
+                        'original_column': rn_column,
+                        'renamed_column': rn_col_name,
+                        'stage_name': stage_name
+                    }
         
         return comparison_mapping
     
@@ -91,7 +111,7 @@ class DataProcessor:
             comparison_mapping: Mapping containing stage information for each item
             
         Returns:
-            Merged DataFrame with renamed columns
+            Merged DataFrame with renamed columns (includes renewal columns if enabled)
         """
         # Load mapping data to get ID column
         mapping_df = self.config_loader.load_mapping_data()
@@ -100,6 +120,9 @@ class DataProcessor:
         
         # Get full file paths
         mapping_df['File'] = mapping_df['File'].apply(self.config_loader._abs_path)
+        
+        # Check if renewal is enabled
+        is_renewal_enabled = self.config_loader.is_renewal_enabled()
         
         #TODO: put the requirement in md file and remove this check
         # Clean up file paths and load all files
@@ -118,8 +141,38 @@ class DataProcessor:
         first_stage_info = comparison_mapping[first_item]['stages'][1]
         first_file = first_stage_info['file_path']
         
-        # Start with ALL columns from the first file (not just ID column)
-        merged_df = dict_data[first_file].copy()
+        # Filter to keep only segment columns + ID (applies regardless of renewal flag)
+        segment_columns = self.config_loader.load_segment_columns()
+        
+        if segment_columns:
+            # Segment columns specified - filter the data
+            print(f"Segment columns to keep: {segment_columns}")
+            
+            # Get all column names from all files
+            all_columns_by_file = {}
+            for file_path in unique_file_paths:
+                all_columns_by_file[file_path] = dict_data[file_path].columns.tolist()
+            
+            # Pick first occurrence of each segment column
+            columns_to_keep = [id_column]  # Always keep ID column
+            for seg_col in segment_columns:
+                # Skip if this is the ID column (already added)
+                if seg_col == id_column:
+                    continue
+                    
+                for file_path in unique_file_paths:
+                    if seg_col in all_columns_by_file[file_path]:
+                        columns_to_keep.append(seg_col)
+                        break  # Only keep first occurrence
+            
+            # Start with filtered columns from first file
+            columns_in_first_file = [col for col in columns_to_keep if col in dict_data[first_file].columns]
+            merged_df = dict_data[first_file][columns_in_first_file].copy()
+            print(f"Starting with {len(columns_in_first_file)} segment columns from first file")
+        else:
+            # No segment columns specified - keep all columns from first file
+            merged_df = dict_data[first_file].copy()
+            print(f"No segment columns specified - keeping all columns from first file")
         
         # Rename comparison columns in the base dataframe
         first_file_rename_map = {}
@@ -130,11 +183,19 @@ class DataProcessor:
                     orig_col = stage_info['original_column']
                     new_col = stage_info['renamed_column']
                     first_file_rename_map[orig_col] = new_col
+            
+            # Also rename renewal columns if enabled
+            if is_renewal_enabled and 'renewal_columns' in comparison_mapping[item]:
+                for stage in sorted(comparison_mapping[item]['renewal_columns'].keys()):
+                    rn_info = comparison_mapping[item]['renewal_columns'][stage]
+                    if rn_info['file_path'] == first_file:
+                        orig_col = rn_info['original_column']
+                        new_col = rn_info['renamed_column']
+                        first_file_rename_map[orig_col] = new_col
         
         if first_file_rename_map:
             merged_df.rename(columns=first_file_rename_map, inplace=True)
         
-
         # Add comparison columns from other files
         for item in impact_items:
             for stage in sorted(comparison_mapping[item]['stages'].keys()):
@@ -152,6 +213,24 @@ class DataProcessor:
                     temp_df = dict_data[file_path][[id_column, orig_col]].copy()
                     temp_df = temp_df.rename(columns={orig_col: new_col})
                     merged_df = merged_df.merge(temp_df, on=id_column, how='inner')
+            
+            # Add renewal columns from other files if enabled
+            if is_renewal_enabled and 'renewal_columns' in comparison_mapping[item]:
+                for stage in sorted(comparison_mapping[item]['renewal_columns'].keys()):
+                    rn_info = comparison_mapping[item]['renewal_columns'][stage]
+                    file_path = rn_info['file_path']
+                    orig_col = rn_info['original_column']
+                    new_col = rn_info['renamed_column']
+                    
+                    # Skip if this column is already in merged_df (from first file)
+                    if new_col in merged_df.columns:
+                        continue
+                    
+                    if orig_col in dict_data[file_path].columns:
+                        # Merge this specific renewal column
+                        temp_df = dict_data[file_path][[id_column, orig_col]].copy()
+                        temp_df = temp_df.rename(columns={orig_col: new_col})
+                        merged_df = merged_df.merge(temp_df, on=id_column, how='inner')
         
         print(f"Merged data: {len(merged_df)} rows")
         print(f"Merged columns: {list(merged_df.columns)}")
@@ -165,6 +244,8 @@ class DataProcessor:
         - Step 0: Overall difference (last stage - first stage)
         - Step N: Difference from stage N to stage N+1 (for N >= 1)
         
+        If renewal is enabled, also generates renewal differences for New Business and Renewal segments.
+        
         Args:
             merged_df: Merged DataFrame
             comparison_mapping: Mapping containing stage information for each item
@@ -176,6 +257,9 @@ class DataProcessor:
         impact_items = list(comparison_mapping.keys())
         merged_df_w_diff = merged_df.copy()
         
+        # Check if renewal is enabled
+        is_renewal_enabled = self.config_loader.is_renewal_enabled()
+        
         # Add a step_names dictionary to keep track of stage names
         dict_step_names = {}
 
@@ -186,6 +270,10 @@ class DataProcessor:
             # Initialize differences dictionary (stores step information)
             if 'differences' not in comparison_mapping[item]:
                 comparison_mapping[item]['differences'] = {}
+            
+            # If renewal is enabled, initialize renewal differences
+            if is_renewal_enabled and 'renewal_columns' in comparison_mapping[item]:
+                comparison_mapping[item]['renewal_differences'] = {}
             
             # Calculate overall difference (last stage vs first stage) - this is Step 0
             if len(stages) >= 2:
@@ -215,6 +303,31 @@ class DataProcessor:
                     'step_name': 'Overall'
                 }
                 dict_step_names[0] = 'Overall'
+                
+                # Calculate renewal differences for overall if enabled
+                if is_renewal_enabled and 'renewal_columns' in comparison_mapping[item]:
+                    if first_stage in comparison_mapping[item]['renewal_columns'] and last_stage in comparison_mapping[item]['renewal_columns']:
+                        first_rn_col = comparison_mapping[item]['renewal_columns'][first_stage]['renamed_column']
+                        last_rn_col = comparison_mapping[item]['renewal_columns'][last_stage]['renamed_column']
+                        
+                        # Create renewal difference column: diff_{Item}_step_0_rn
+                        overall_rn_diff_col = f"diff_{item}_step_0_rn"
+                        merged_df_w_diff[overall_rn_diff_col] = merged_df_w_diff[last_rn_col] - merged_df_w_diff[first_rn_col]
+                        
+                        overall_rn_diff_col_percent = f"percent_diff_{item}_step_0_rn"
+                        merged_df_w_diff[overall_rn_diff_col_percent] = merged_df_w_diff.apply(
+                            lambda row: (row[overall_rn_diff_col] / row[first_rn_col]) if row[first_rn_col] != 0 else None, axis=1
+                        )
+                        
+                        comparison_mapping[item]['renewal_differences'][0] = {
+                            'diff_column': overall_rn_diff_col,
+                            'percent_diff_column': overall_rn_diff_col_percent,
+                            'from_stage': first_stage,
+                            'to_stage': last_stage,
+                            'from_column': first_rn_col,
+                            'to_column': last_rn_col,
+                            'step_name': 'Overall'
+                        }
 
             # Calculate step-by-step differences (step N goes from stage N to stage N+1)
             for i in range(1, len(stages)):
@@ -252,6 +365,31 @@ class DataProcessor:
                     'step_name': step_name
                 }
                 dict_step_names[step_num] = step_name
+                
+                # Calculate renewal differences for this step if enabled
+                if is_renewal_enabled and 'renewal_columns' in comparison_mapping[item]:
+                    if prev_stage in comparison_mapping[item]['renewal_columns'] and curr_stage in comparison_mapping[item]['renewal_columns']:
+                        prev_rn_col = comparison_mapping[item]['renewal_columns'][prev_stage]['renamed_column']
+                        curr_rn_col = comparison_mapping[item]['renewal_columns'][curr_stage]['renamed_column']
+                        
+                        # Create renewal difference column: diff_{Item}_step_{step_num}_rn
+                        rn_diff_col = f"diff_{item}_step_{step_num}_rn"
+                        merged_df_w_diff[rn_diff_col] = merged_df_w_diff[curr_rn_col] - merged_df_w_diff[prev_rn_col]
+                        
+                        rn_diff_col_percent = f"percent_diff_{item}_step_{step_num}_rn"
+                        merged_df_w_diff[rn_diff_col_percent] = merged_df_w_diff.apply(
+                            lambda row: (row[rn_diff_col] / row[prev_rn_col]) if row[prev_rn_col] != 0 else None, axis=1
+                        )
+                        
+                        comparison_mapping[item]['renewal_differences'][step_num] = {
+                            'diff_column': rn_diff_col,
+                            'percent_diff_column': rn_diff_col_percent,
+                            'from_stage': prev_stage,
+                            'to_stage': curr_stage,
+                            'from_column': prev_rn_col,
+                            'to_column': curr_rn_col,
+                            'step_name': step_name
+                        }
         
             comparison_mapping[item]['step_names'] = dict_step_names
         

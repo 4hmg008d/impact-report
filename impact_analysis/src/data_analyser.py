@@ -77,8 +77,14 @@ class DataAnalyser:
         return band_summary_ordered
     
     def generate_distribution_summary(self, merged_df: pd.DataFrame, comparison_mapping: Dict[str, Dict]) -> Dict:
-        """Generate comprehensive analysis for multiple comparison items using Pandas"""
+        """Generate comprehensive analysis for multiple comparison items using Pandas
+        
+        If renewal feature is enabled, generates separate distributions for New Business and Renewal segments.
+        """
         band_df = self.config_loader.load_band_data()
+        
+        # Check if renewal is enabled
+        is_renewal_enabled = any(item_data.get('renewal_enabled', False) for item_data in comparison_mapping.values())
         
         # Process each comparison item
         dict_distribution_summary = {}
@@ -89,7 +95,8 @@ class DataAnalyser:
             # Initialize item analysis
             dict_distribution_summary[item_name] = {
                 'steps': {},
-                'step_names': item_data['step_names']
+                'step_names': item_data['step_names'],
+                'renewal_enabled': item_data.get('renewal_enabled', False)
             }
             
             # Process each difference column (step comparison)
@@ -102,7 +109,7 @@ class DataAnalyser:
                     diff_col = diff_info['percent_diff_column']
                     step_name = item_data['step_names'][step_num]
                     
-                    # Band distribution for this step comparison
+                    # Band distribution for this step comparison (New Business)
                     summary_by_band = self.map_to_bands(merged_df, diff_col, band_df)
                     
                     # Prepare chart data for this step comparison
@@ -123,6 +130,29 @@ class DataAnalyser:
                         'from_stage': diff_info['from_stage'],
                         'to_stage': diff_info['to_stage']
                     }
+                    
+                    # If renewal is enabled, also calculate renewal distribution
+                    if item_data.get('renewal_enabled', False) and 'renewal_differences' in item_data:
+                        if step_num in item_data['renewal_differences']:
+                            rn_diff_info = item_data['renewal_differences'][step_num]
+                            rn_diff_col = rn_diff_info['percent_diff_column']
+                            
+                            # Band distribution for renewal
+                            rn_summary_by_band = self.map_to_bands(merged_df, rn_diff_col, band_df)
+                            
+                            # Prepare renewal chart data
+                            rn_step_chart_data = []
+                            for _, band_row in rn_summary_by_band.iterrows():
+                                rn_step_chart_data.append({
+                                    'name': band_row['band'],
+                                    'y': int(band_row['Count']),
+                                    'percentage': round(band_row['Percentage'], 2)
+                                })
+                            
+                            # Store renewal data alongside main data
+                            dict_distribution_summary[item_name]['steps'][step_num]['renewal_chart_data'] = rn_step_chart_data
+                            dict_distribution_summary[item_name]['steps'][step_num]['renewal_summary_by_band'] = rn_summary_by_band.to_dict('records')
+                            dict_distribution_summary[item_name]['steps'][step_num]['renewal_percent_diff_column'] = rn_diff_col
             
             # Also store column information for summary calculations
             dict_distribution_summary[item_name]['columns'] = item_data['columns']

@@ -8,6 +8,7 @@ import pandas as pd
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from .chart_generator import ImpactChartGenerator
 from .data_analyser import DataAnalyser
+from datetime import datetime
 
 
 class ReportVisualizer:
@@ -52,14 +53,25 @@ class ReportVisualizer:
         return rendered_html
     
     def save_report(self, html_content: str, output_path: str) -> None:
-        """Save HTML report content to a file
+        """Save HTML report content to a file with timestamp
         
         Args:
             html_content: The HTML content to save
             output_path: Path where the report should be saved
         """
-        with open(output_path, 'w') as f:
+        
+        # Split path into directory, filename, and extension
+        dir_name = os.path.dirname(output_path)
+        base_name = os.path.basename(output_path)
+        name, ext = os.path.splitext(base_name)
+        
+        # Add timestamp to filename
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        new_filename = f"{name}_{timestamp}{ext}"
+        new_path = os.path.join(dir_name, new_filename) if dir_name else new_filename
+        
+        with open(new_path, 'w') as f:
             f.write(html_content)
         
-        print(f"Generated Jinja2 HTML report: {output_path}")
+        print(f"Generated Jinja2 HTML report: {new_path}")
 

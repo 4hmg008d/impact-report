@@ -126,7 +126,25 @@ refactor my code to distinguish the 2 and assign the correct dict name and colum
 
 change visualizer.generate_html_report to output the html content and create a separate function to save the report
 
+---
+### New feature - Renewal
+now i want to add a new feature for renewals:
+- in the config file, i've added a new dict called renewal, once this is set to 'true', you will add a new set of columns to the distribution charts, which becomes a grouped column chart - one series for existing values (New Business), one series for new values (Renewal)
+- this new series of values is obtained by comparing the differences between the renewal columns defined in the newly created 'RNColumn' column in tab 'mapping_column' in the xlsx config file
+- you might need to add new functions to the data_processor code to enable:
+  1. refactor functions in config_loader.py to adopt the new renewal flag and config xlsx file
+  2. rename renewal columns with standard naming convention by adding '_rn' as suffix
+  3. change the existing load_and_merge_data to only keep certain non-premium columns in the merged file, these columns are defined in tab 'segment_columns' in the xlsx file, you need to list out all column names from all data files and pick the first occurence of these columns
+  4. merge renewal columns & diff columns into the merged_data
+  5. add renewal related items to comparison_mapping
+  6. add renewal related items to dict_distribution_summary
+  7. refactor create_bar_chart to take a flag of renewal as input, if the flag is yes, create grouped column chart
+  8. enable this renewal flag in places you think it's required, refactor the rest of the code as you see suitable
+  9. this renewal feature should not impact waterfall charts
 
+---
+
+the 'keep only segment columns' in load and merge applies regardless of whether renewal is enabled or not
 
 ## Dashboard App
 

@@ -108,7 +108,8 @@ class ModularImpactAnalyzer:
             
             # Debug
             # print("Distribution Summary:")
-            # print(json.dumps(dict_distribution_summary, indent=2))
+            # open("impact_analysis/debug/dict_distribution_summary.json", "w").write(json.dumps(dict_distribution_summary, indent=2))
+            # return True
 
             # Step 3: Save output files
             self.save_output_files(merged_df_w_diff, dict_distribution_summary, comparison_mapping)
