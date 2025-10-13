@@ -1,5 +1,7 @@
 filter:
-  - LOCATION_CITY
+- LOCATION_CITY
+features:
+  renewal: true
 mapping:
   file_path: data/impact_analysis_config.xlsx
   sheet_band: band
