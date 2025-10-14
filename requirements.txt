@@ -8,3 +8,4 @@ plotly
 highcharts-core
 highcharts-maps
 Jinja2
+python-calamine

@@ -59,11 +59,11 @@ class DataAnalyser:
                 ordered_bands.append(band_map[band_name])
             else:
                 # Band has no data, create row with 0 count and 0% percentage
-                ordered_bands.append({
+                ordered_bands.append(pd.Series({
                     'band': band_name,
                     'Count': 0,
                     'Percentage': 0.0
-                })
+                }))
         
         # Add any remaining bands that weren't in the original order but have data
         for band_name in band_summary['band']:

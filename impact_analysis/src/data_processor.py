@@ -5,6 +5,7 @@ Data processing module for impact analysis tool using Pandas
 import pandas as pd
 from typing import Dict, List, Tuple
 import os
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 
 class DataProcessor:
@@ -16,7 +17,7 @@ class DataProcessor:
     def load_and_deduplicate_file(self, file_path: str, id_column: str) -> pd.DataFrame:
         """Load file and keep only first row for each ID value using Pandas"""
         try:
-            df = pd.read_excel(file_path)
+            df = pd.read_excel(file_path, engine='calamine')
             print(f"Loaded {len(df)} rows from {file_path}")
             
             # Keep only first row for each ID value using Pandas
@@ -124,14 +125,29 @@ class DataProcessor:
         # Check if renewal is enabled
         is_renewal_enabled = self.config_loader.is_renewal_enabled()
         
-        #TODO: put the requirement in md file and remove this check
         # Clean up file paths and load all files
         dict_data = {}
         unique_file_paths = mapping_df['File'].unique()
         
-        # Load and deduplicate all files
-        for file_path in unique_file_paths:
-            dict_data[file_path] = self.load_and_deduplicate_file(file_path, id_column)
+        # Load and deduplicate all files in parallel using ThreadPoolExecutor
+        print(f"Loading {len(unique_file_paths)} files in parallel...")
+        with ThreadPoolExecutor(max_workers=min(len(unique_file_paths), os.cpu_count() or 4)) as executor:
+            # Submit all file loading tasks
+            future_to_filepath = {
+                executor.submit(self.load_and_deduplicate_file, file_path, id_column): file_path
+                for file_path in unique_file_paths
+            }
+            
+            # Collect results as they complete
+            for future in as_completed(future_to_filepath):
+                file_path = future_to_filepath[future]
+                try:
+                    dict_data[file_path] = future.result()
+                except Exception as e:
+                    print(f"Error loading {file_path}: {e}")
+                    raise
+        
+        print(f"All {len(unique_file_paths)} files loaded successfully")
         
         # Get all items
         impact_items = list(comparison_mapping.keys())
@@ -255,10 +271,12 @@ class DataProcessor:
         """
         # Get all items
         impact_items = list(comparison_mapping.keys())
-        merged_df_w_diff = merged_df.copy()
         
         # Check if renewal is enabled
         is_renewal_enabled = self.config_loader.is_renewal_enabled()
+        
+        # Dictionary to store all new columns to be added
+        new_columns = {}
         
         # Add a step_names dictionary to keep track of stage names
         dict_step_names = {}
@@ -284,13 +302,13 @@ class DataProcessor:
                 
                 # Create overall difference column: diff_{Item}_step_0
                 overall_diff_col = f"diff_{item}_step_0"
-                merged_df_w_diff[overall_diff_col] = merged_df_w_diff[last_col] - merged_df_w_diff[first_col]
+                new_columns[overall_diff_col] = merged_df[last_col] - merged_df[first_col]
                 
                 overall_diff_col_percent = f"percent_diff_{item}_step_0"
-                # Avoid division by zero
-                merged_df_w_diff[overall_diff_col_percent] = merged_df_w_diff.apply(
-                    lambda row: (row[overall_diff_col] / row[first_col]) if row[first_col] != 0 else None, axis=1
-                )
+                # Avoid division by zero - use vectorized where instead of apply
+                new_columns[overall_diff_col_percent] = pd.Series(
+                    new_columns[overall_diff_col] / merged_df[first_col]
+                ).where(merged_df[first_col] != 0, None)
 
                 # Store overall difference as step 0 with name "Overall"
                 comparison_mapping[item]['differences'][0] = {
@@ -312,12 +330,12 @@ class DataProcessor:
                         
                         # Create renewal difference column: diff_{Item}_step_0_rn
                         overall_rn_diff_col = f"diff_{item}_step_0_rn"
-                        merged_df_w_diff[overall_rn_diff_col] = merged_df_w_diff[last_rn_col] - merged_df_w_diff[first_rn_col]
+                        new_columns[overall_rn_diff_col] = merged_df[last_rn_col] - merged_df[first_rn_col]
                         
                         overall_rn_diff_col_percent = f"percent_diff_{item}_step_0_rn"
-                        merged_df_w_diff[overall_rn_diff_col_percent] = merged_df_w_diff.apply(
-                            lambda row: (row[overall_rn_diff_col] / row[first_rn_col]) if row[first_rn_col] != 0 else None, axis=1
-                        )
+                        new_columns[overall_rn_diff_col_percent] = pd.Series(
+                            new_columns[overall_rn_diff_col] / merged_df[first_rn_col]
+                        ).where(merged_df[first_rn_col] != 0, None)
                         
                         comparison_mapping[item]['renewal_differences'][0] = {
                             'diff_column': overall_rn_diff_col,
@@ -343,13 +361,13 @@ class DataProcessor:
                 
                 # Create difference column: diff_{Item}_step_{step_num}
                 diff_col = f"diff_{item}_step_{step_num}"
-                merged_df_w_diff[diff_col] = merged_df_w_diff[curr_col] - merged_df_w_diff[prev_col]
+                new_columns[diff_col] = merged_df[curr_col] - merged_df[prev_col]
 
                 diff_col_percent = f"percent_diff_{item}_step_{step_num}"
-                # Avoid division by zero
-                merged_df_w_diff[diff_col_percent] = merged_df_w_diff.apply(
-                    lambda row: (row[diff_col] / row[prev_col]) if row[prev_col] != 0 else None, axis=1
-                )
+                # Avoid division by zero - use vectorized where instead of apply
+                new_columns[diff_col_percent] = pd.Series(
+                    new_columns[diff_col] / merged_df[prev_col]
+                ).where(merged_df[prev_col] != 0, None)
                 
                 # Get the stage name from the target stage (where we're going to)
                 step_name = comparison_mapping[item]['stage_names'][curr_stage]
@@ -374,12 +392,12 @@ class DataProcessor:
                         
                         # Create renewal difference column: diff_{Item}_step_{step_num}_rn
                         rn_diff_col = f"diff_{item}_step_{step_num}_rn"
-                        merged_df_w_diff[rn_diff_col] = merged_df_w_diff[curr_rn_col] - merged_df_w_diff[prev_rn_col]
+                        new_columns[rn_diff_col] = merged_df[curr_rn_col] - merged_df[prev_rn_col]
                         
                         rn_diff_col_percent = f"percent_diff_{item}_step_{step_num}_rn"
-                        merged_df_w_diff[rn_diff_col_percent] = merged_df_w_diff.apply(
-                            lambda row: (row[rn_diff_col] / row[prev_rn_col]) if row[prev_rn_col] != 0 else None, axis=1
-                        )
+                        new_columns[rn_diff_col_percent] = pd.Series(
+                            new_columns[rn_diff_col] / merged_df[prev_rn_col]
+                        ).where(merged_df[prev_rn_col] != 0, None)
                         
                         comparison_mapping[item]['renewal_differences'][step_num] = {
                             'diff_column': rn_diff_col,
@@ -392,6 +410,9 @@ class DataProcessor:
                         }
         
             comparison_mapping[item]['step_names'] = dict_step_names
+        
+        # Add all new columns at once to avoid fragmentation
+        merged_df_w_diff = pd.concat([merged_df, pd.DataFrame(new_columns, index=merged_df.index)], axis=1)
         
         print(f"Difference info generated")
         
