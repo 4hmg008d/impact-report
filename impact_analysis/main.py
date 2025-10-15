@@ -2,7 +2,7 @@
 Main module for modular impact analysis tool using Pandas
 """
 
-import datetime
+from datetime import datetime
 import sys
 import os
 import logging

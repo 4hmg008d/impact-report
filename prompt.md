@@ -127,6 +127,14 @@ refactor my code to distinguish the 2 and assign the correct dict name and colum
 change visualizer.generate_html_report to output the html content and create a separate function to save the report
 
 ---
+
+i want to create multiple functions:
+1. a function to convert the chart_data (list of dict) into ColumnSeries object that's ready to be added to a Chart object - this function can apply to both chart_data and renewal_chart_data, input should be chart_data and band_order
+2. a function to create the canva (foundation) of a bar chart, keep the function name as create_bar_chart, it takes title, chart_id, band_order as input and output a Chart object will as many as options set
+3. a function to add series to the Chart object, this function takes a Chart object and ChartSeries object as input and output another Chart object
+4. finally in the overarhing generate_all_charts_html function, assemble these components and convert to html
+
+
 ### New feature - Renewal
 now i want to add a new feature for renewals:
 - in the config file, i've added a new dict called renewal, once this is set to 'true', you will add a new set of columns to the distribution charts, which becomes a grouped column chart - one series for existing values (New Business), one series for new values (Renewal)
