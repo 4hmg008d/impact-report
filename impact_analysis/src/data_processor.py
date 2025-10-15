@@ -6,6 +6,9 @@ import pandas as pd
 from typing import Dict, List, Tuple
 import os
 from concurrent.futures import ThreadPoolExecutor, as_completed
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class DataProcessor:
@@ -18,11 +21,11 @@ class DataProcessor:
         """Load file and keep only first row for each ID value using Pandas"""
         try:
             df = pd.read_excel(file_path, engine='calamine')
-            print(f"Loaded {len(df)} rows from {file_path}")
+            logger.info(f"Loaded {len(df)} rows from {file_path}")
             
             # Keep only first row for each ID value using Pandas
             df_deduped = df.drop_duplicates(subset=[id_column], keep='first')
-            print(f"After deduplication: {len(df_deduped)} rows")
+            logger.info(f"After deduplication: {len(df_deduped)} rows")
             
             return df_deduped
         except Exception as e:
@@ -40,8 +43,8 @@ class DataProcessor:
         if len(mapping_df) == 0:
             raise ValueError("No mapping data found")
         
-        print("Mapping data loaded:")
-        print(mapping_df[['Item', 'Stage', 'StageName', 'File', 'Column']].head(10))
+        logger.info("Mapping data loaded:")
+        logger.info(f"\n{mapping_df[['Item', 'Stage', 'StageName', 'File', 'Column']].head(10)}")
         
         # Get full file paths
         mapping_df['File'] = mapping_df['File'].apply(self.config_loader._abs_path)
@@ -117,7 +120,7 @@ class DataProcessor:
         # Load mapping data to get ID column
         mapping_df = self.config_loader.load_mapping_data()
         id_column = mapping_df.iloc[0]['ID']
-        print(f"ID Column: {id_column}")
+        logger.info(f"ID Column: {id_column}")
         
         # Get full file paths
         mapping_df['File'] = mapping_df['File'].apply(self.config_loader._abs_path)
@@ -130,7 +133,7 @@ class DataProcessor:
         unique_file_paths = mapping_df['File'].unique()
         
         # Load and deduplicate all files in parallel using ThreadPoolExecutor
-        print(f"Loading {len(unique_file_paths)} files in parallel...")
+        logger.info(f"Loading {len(unique_file_paths)} files in parallel...")
         with ThreadPoolExecutor(max_workers=min(len(unique_file_paths), os.cpu_count() or 4)) as executor:
             # Submit all file loading tasks
             future_to_filepath = {
@@ -147,7 +150,7 @@ class DataProcessor:
                     print(f"Error loading {file_path}: {e}")
                     raise
         
-        print(f"All {len(unique_file_paths)} files loaded successfully")
+        logger.info(f"All {len(unique_file_paths)} files loaded successfully")
         
         # Get all items
         impact_items = list(comparison_mapping.keys())
@@ -184,11 +187,11 @@ class DataProcessor:
             # Start with filtered columns from first file
             columns_in_first_file = [col for col in columns_to_keep if col in dict_data[first_file].columns]
             merged_df = dict_data[first_file][columns_in_first_file].copy()
-            print(f"Starting with {len(columns_in_first_file)} segment columns from first file")
+            logger.info(f"Starting with {len(columns_in_first_file)} segment columns from first file")
         else:
             # No segment columns specified - keep all columns from first file
             merged_df = dict_data[first_file].copy()
-            print(f"No segment columns specified - keeping all columns from first file")
+            logger.info(f"No segment columns specified - keeping all columns from first file")
         
         # Rename comparison columns in the base dataframe
         first_file_rename_map = {}
@@ -247,10 +250,10 @@ class DataProcessor:
                         temp_df = dict_data[file_path][[id_column, orig_col]].copy()
                         temp_df = temp_df.rename(columns={orig_col: new_col})
                         merged_df = merged_df.merge(temp_df, on=id_column, how='inner')
-        
-        print(f"Merged data: {len(merged_df)} rows")
-        print(f"Merged columns: {list(merged_df.columns)}")
-        
+
+        logger.info(f"Merged data: {len(merged_df)} rows")
+        logger.info(f"Merged columns: {list(merged_df.columns)}")
+
         return merged_df
     
     def generate_differences(self, merged_df: pd.DataFrame, comparison_mapping: Dict[str, Dict]) -> Dict[str, Dict]:
@@ -413,9 +416,9 @@ class DataProcessor:
         
         # Add all new columns at once to avoid fragmentation
         merged_df_w_diff = pd.concat([merged_df, pd.DataFrame(new_columns, index=merged_df.index)], axis=1)
-        
-        print(f"Difference info generated")
-        
+
+        logger.info(f"Difference info generated")
+
         return merged_df_w_diff, comparison_mapping
     
     def process_data(self) -> Tuple[pd.DataFrame, Dict[str, Dict]]:

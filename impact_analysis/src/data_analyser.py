@@ -5,6 +5,9 @@ Analysis module for impact analysis tool using Pandas
 import pandas as pd
 from typing import Dict, List, Tuple
 import json
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class DataAnalyser:
@@ -73,7 +76,6 @@ class DataAnalyser:
         # Convert back to DataFrame
         band_summary_ordered = pd.DataFrame(ordered_bands)
         
-        print(f"Mapped differences to {len(band_summary_ordered)} bands")
         return band_summary_ordered
     
     def generate_distribution_summary(self, merged_df: pd.DataFrame, comparison_mapping: Dict[str, Dict]) -> Dict:
@@ -90,7 +92,7 @@ class DataAnalyser:
         dict_distribution_summary = {}
         
         for item_name, item_data in comparison_mapping.items():
-            print(f"Assessing {item_name} Impact...")
+            logger.info(f"Assessing {item_name} Impact...")
             
             # Initialize item analysis
             dict_distribution_summary[item_name] = {
@@ -243,22 +245,22 @@ class DataAnalyser:
         """
         # Validate breakdown columns length
         if len(breakdown_columns) > 3:
-            print(f"Warning: Maximum 3 breakdown columns allowed. Truncating from {len(breakdown_columns)} to 3.")
+            logger.warning(f"Maximum 3 breakdown columns allowed. Truncating from {len(breakdown_columns)} to 3.")
             breakdown_columns = breakdown_columns[:3]
         
         if len(breakdown_columns) == 0:
-            print("Warning: No breakdown columns provided. Returning empty dict.")
+            logger.warning("No breakdown columns provided. Returning empty dict.")
             return {}
         
         # Filter out columns that don't exist in the DataFrame
         valid_breakdown_columns = [col for col in breakdown_columns if col in merged_df.columns]
         if len(valid_breakdown_columns) < len(breakdown_columns):
             missing_cols = set(breakdown_columns) - set(valid_breakdown_columns)
-            print(f"Warning: Columns {missing_cols} not found in data. Using only: {valid_breakdown_columns}")
+            logger.warning(f"Columns {missing_cols} not found in data. Using only: {valid_breakdown_columns}")
             breakdown_columns = valid_breakdown_columns
         
         if len(breakdown_columns) == 0:
-            print("Warning: No valid breakdown columns found in data. Returning empty dict.")
+            logger.warning("No valid breakdown columns found in data. Returning empty dict.")
             return {}
         
         breakdown_results = {}
@@ -274,7 +276,7 @@ class DataAnalyser:
             
             # Check if columns exist in the dataframe
             if first_stage_col not in merged_df.columns or last_stage_col not in merged_df.columns:
-                print(f"Warning: Columns {first_stage_col} or {last_stage_col} not found for {item_name}. Skipping.")
+                logger.warning(f"Columns {first_stage_col} or {last_stage_col} not found for {item_name}. Skipping.")
                 continue
             
             # Group by breakdown columns and calculate aggregates

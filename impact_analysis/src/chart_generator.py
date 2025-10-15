@@ -10,6 +10,9 @@ from highcharts_core.options.series.bar import ColumnSeries
 from highcharts_core.options.series.bar import WaterfallSeries
 from typing import Dict, List, Any
 import pandas as pd
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class ImpactChartGenerator:
@@ -29,7 +32,7 @@ class ImpactChartGenerator:
             # Return band names in the order they appear in the configuration
             return band_df['Name'].tolist()
         except Exception as e:
-            print(f"Warning: Could not load band order from configuration: {e}")
+            logger.warning(f"Could not load band order from configuration: {e}")
             return None
 
 

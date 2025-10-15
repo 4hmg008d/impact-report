@@ -9,6 +9,9 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 from .chart_generator import ImpactChartGenerator
 from .data_analyser import DataAnalyser
 from datetime import datetime
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class ReportVisualizer:
@@ -74,7 +77,7 @@ class ReportVisualizer:
         with open(output_path, 'w') as f:
             f.write(html_content)
 
-        print(f"Generated Jinja2 HTML report: {output_path}")
+        logger.info(f"Generated Jinja2 HTML report: {output_path}")
 
     def generate_summary_table_html(self, dict_comparison_summary: Dict) -> Dict[str, str]:
         """Generate HTML tables for summary statistics from dict_comparison_summary

@@ -6,6 +6,9 @@ import yaml
 import pandas as pd
 from typing import Dict, Any, List
 import os
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class ConfigLoader:
@@ -74,7 +77,7 @@ class ConfigLoader:
             else:
                 return []
         except Exception as e:
-            print(f"Warning: Failed to load segment columns: {e}")
+            logger.warning(f"Failed to load segment columns: {e}")
             return []
     
     def is_renewal_enabled(self) -> bool:

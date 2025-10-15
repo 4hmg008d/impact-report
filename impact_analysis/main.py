@@ -160,10 +160,10 @@ def main():
     success = data_analyser.analyze()
     
     if success:
-        print("Modular impact analysis completed successfully!")
+        logging.info("Modular impact analysis completed successfully!")
         sys.exit(0)
     else:
-        print("Modular impact analysis failed. Check impact_analysis.log for details.")
+        logging.error("Modular impact analysis failed. Check impact_analysis.log for details.")
         sys.exit(1)
 
 
