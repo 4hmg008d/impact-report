@@ -15,7 +15,8 @@ from .app_dashboard_state import dashboard_state
 from .app_dash_components import (
     create_config_section,
     create_filters_section,
-    create_charts_section
+    create_charts_section,
+    log_capture
 )
 from ..main import ModularImpactAnalyzer
 
@@ -25,6 +26,46 @@ logger = logging.getLogger(__name__)
 
 def register_callbacks(app):
     """Register all dashboard callbacks"""
+    
+    @app.callback(
+        Output('log-display', 'children'),
+        [Input('log-interval', 'n_intervals')]
+    )
+    def update_logs(n_intervals):
+        """Update log display with captured logs"""
+        logs = log_capture.get_logs()
+        if not logs:
+            return "No logs yet..."
+        
+        # Join logs with newlines, show most recent last (at bottom)
+        log_text = '\n'.join(logs[-100:])  # Show last 100 logs
+        return log_text
+    
+    
+    @app.callback(
+        Output('logs-collapse', 'is_open'),
+        [Input('btn-toggle-logs', 'n_clicks')],
+        [State('logs-collapse', 'is_open')]
+    )
+    def toggle_logs(n_clicks, is_open):
+        """Toggle log panel visibility"""
+        if n_clicks:
+            return not is_open
+        return is_open
+    
+    
+    @app.callback(
+        Output('log-display', 'children', allow_duplicate=True),
+        [Input('btn-clear-logs', 'n_clicks')],
+        prevent_initial_call=True
+    )
+    def clear_logs(n_clicks):
+        """Clear all captured logs"""
+        if n_clicks:
+            log_capture.clear_logs()
+            return "Logs cleared..."
+        raise PreventUpdate
+    
     
     @app.callback(
         Output('filters-container', 'children'),

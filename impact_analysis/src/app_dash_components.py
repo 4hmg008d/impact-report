@@ -6,6 +6,93 @@ import dash
 from dash import dcc, html, dash_table
 import dash_bootstrap_components as dbc
 from typing import Dict, List
+import io
+import sys
+from collections import deque
+import logging
+
+
+# Global log storage
+class LogCapture:
+    """Capture logs and stdout/stderr for display in dashboard"""
+    def __init__(self, max_lines=1000):
+        self.logs = deque(maxlen=max_lines)
+        self.original_stdout = sys.stdout
+        self.original_stderr = sys.stderr
+        
+    def write(self, message):
+        """Capture stdout/stderr writes"""
+        if message.strip():  # Only capture non-empty messages
+            self.logs.append(message.strip())
+        # Also write to original stdout
+        self.original_stdout.write(message)
+        
+    def flush(self):
+        """Flush method for stdout compatibility"""
+        self.original_stdout.flush()
+        
+    def get_logs(self):
+        """Get all captured logs as a list"""
+        return list(self.logs)
+    
+    def clear_logs(self):
+        """Clear all captured logs"""
+        self.logs.clear()
+
+
+# Global log capture instance
+log_capture = LogCapture()
+
+
+class DashLogHandler(logging.Handler):
+    """Custom logging handler that writes to log_capture"""
+    def emit(self, record):
+        log_entry = self.format(record)
+        log_capture.logs.append(log_entry)
+
+
+def create_log_panel() -> dbc.Card:
+    """Create a collapsible log panel to display logs and stdout"""
+    return dbc.Card([
+        dbc.CardHeader([
+            html.Div([
+                html.H4("Logs", style={'display': 'inline-block', 'marginRight': '15px'}),
+                dbc.Button(
+                    "Toggle Logs",
+                    id='btn-toggle-logs',
+                    color='info',
+                    size='sm',
+                    className='me-2'
+                ),
+                dbc.Button(
+                    "Clear Logs",
+                    id='btn-clear-logs',
+                    color='secondary',
+                    size='sm'
+                )
+            ])
+        ]),
+        dbc.Collapse(
+            dbc.CardBody([
+                html.Div(
+                    id='log-display',
+                    style={
+                        'height': '300px',
+                        'overflowY': 'scroll',
+                        'backgroundColor': '#1e1e1e',
+                        'color': '#d4d4d4',
+                        'fontFamily': 'monospace',
+                        'fontSize': '12px',
+                        'padding': '10px',
+                        'whiteSpace': 'pre-wrap',
+                        'borderRadius': '4px'
+                    }
+                )
+            ]),
+            id='logs-collapse',
+            is_open=False
+        )
+    ], className='mb-4')
 
 
 def create_config_section(config_yaml_str: str) -> dbc.Card:
@@ -32,15 +119,15 @@ def create_config_section(config_yaml_str: str) -> dbc.Card:
             dbc.Row([
                 dbc.Col([
                     dbc.Button(
-                        "Update Configuration",
-                        id='btn-update-config',
-                        color='primary',
+                        "Load Data and Run Report",
+                        id='btn-run-analysis',
+                        color='success',
                         className='me-2'
                     ),
                     dbc.Button(
-                        "Run Impact Analysis",
-                        id='btn-run-analysis',
-                        color='success',
+                        "Update Configuration",
+                        id='btn-update-config',
+                        color='primary',
                         className='me-2'
                     ),
                     dbc.Button(
@@ -170,6 +257,9 @@ def create_main_layout(config_yaml_str: str = "", filter_columns: list = None, f
     return dbc.Container([
         html.H1("Impact Analysis Dashboard", className='text-center my-4'),
         
+        # Log panel at the top
+        create_log_panel(),
+        
         # Config section - initialized directly
         create_config_section(config_yaml_str),
         
@@ -188,5 +278,12 @@ def create_main_layout(config_yaml_str: str = "", filter_columns: list = None, f
         # Hidden divs for storing state
         dcc.Store(id='data-loaded-flag', data=False),
         dcc.Store(id='filter-state', data={}),
+        
+        # Interval component for updating logs
+        dcc.Interval(
+            id='log-interval',
+            interval=1000,  # Update every second
+            n_intervals=0
+        )
         
     ], fluid=True, style={'maxWidth': '1400px'})

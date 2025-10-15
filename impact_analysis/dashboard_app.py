@@ -11,19 +11,24 @@ import os
 import yaml
 
 from .src.app_dashboard_state import dashboard_state
-from .src.app_dash_components import create_main_layout
+from .src.app_dash_components import create_main_layout, log_capture, DashLogHandler
 from .src.app_callbacks import register_callbacks
 
 
-# Setup logging
+# Setup logging to capture in dashboard
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.StreamHandler(sys.stdout)
+        logging.StreamHandler(sys.stdout),
+        DashLogHandler()  # Add custom handler for dashboard
     ]
 )
 logger = logging.getLogger(__name__)
+
+# Redirect stdout and stderr to log capture
+sys.stdout = log_capture
+sys.stderr = log_capture
 
 
 class ImpactAnalysisDashboard:
