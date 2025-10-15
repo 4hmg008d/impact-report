@@ -88,6 +88,21 @@ class ConfigLoader:
         except Exception:
             return False
     
+    def get_breakdown_columns(self) -> List[str]:
+        """Get breakdown columns from configuration
+        
+        Returns:
+            List of column names to use for breakdown analysis (max 3)
+        """
+        try:
+            breakdown_cols = self.config.get('breakdown', [])
+            if isinstance(breakdown_cols, list):
+                return breakdown_cols
+            else:
+                return []
+        except Exception:
+            return []
+    
     def get_output_dir(self) -> str:
         """Get output directory from configuration"""
         return self._abs_path(self.config['output']['dir'])

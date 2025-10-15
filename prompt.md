@@ -146,6 +146,23 @@ now i want to add a new feature for renewals:
 
 the 'keep only segment columns' in load and merge applies regardless of whether renewal is enabled or not
 
+---
+
+### New feature - breakdown
+i want to allow people to see more breakdown, by a maximum of 3 dimensions. i've added a 'breakdown' component in the yaml config, you need to create a new aggregate_merged_data function called aggregate_impact_breakdown in data_analyser, it should work pretty similar to the existing aggregate_merged_data function but it takes the list of columns to break down as an addition parameter and the output should be a pd.df instead of dict. The function should:
+1. validate the length of the list passed in - if longer than 3, cut to 3 and print a warning
+2. the output should have the following columns
+  - the breakdown columns including unique values in those columns, each row should also include unique combination of the values from all breakdown columns, rows ordered by the breakdown column values
+  - value_total_start (total value in the first stage in that segment)
+  - value_total_end (total value in the last stage in that segment)
+  - policy count (count of rows in that segment)
+  - value_diff (between last and first stage only)
+  - value_diff_percent (between last and first stage only)
+
+in visualizer, create a function to convert this df from the above function to html format to display in the html report, overall it should look like an Excel pivot table with subtotal rows and grand total row at the bottom
+
+in html template, create a section called "Segment and Policy Level Rate Change" to present this table
+
 ## Dashboard App
 
 Create a dash dashboard in Python which serves as a front end for 2 functions:

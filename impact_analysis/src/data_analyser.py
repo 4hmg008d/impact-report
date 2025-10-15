@@ -224,3 +224,85 @@ class DataAnalyser:
                 }
 
         return dict_comparison_summary
+
+    def aggregate_impact_breakdown(
+        self, 
+        merged_df: pd.DataFrame, 
+        comparison_mapping: Dict[str, Dict],
+        breakdown_columns: List[str]
+    ) -> Dict[str, pd.DataFrame]:
+        """Generate breakdown analysis by specified dimensions with subtotals
+        
+        Args:
+            merged_df: The merged dataframe containing all data rows
+            comparison_mapping: Mapping containing stage information for each item
+            breakdown_columns: List of columns to break down by (max 3)
+            
+        Returns:
+            Dict mapping item names to their breakdown DataFrames
+        """
+        # Validate breakdown columns length
+        if len(breakdown_columns) > 3:
+            print(f"Warning: Maximum 3 breakdown columns allowed. Truncating from {len(breakdown_columns)} to 3.")
+            breakdown_columns = breakdown_columns[:3]
+        
+        if len(breakdown_columns) == 0:
+            print("Warning: No breakdown columns provided. Returning empty dict.")
+            return {}
+        
+        # Filter out columns that don't exist in the DataFrame
+        valid_breakdown_columns = [col for col in breakdown_columns if col in merged_df.columns]
+        if len(valid_breakdown_columns) < len(breakdown_columns):
+            missing_cols = set(breakdown_columns) - set(valid_breakdown_columns)
+            print(f"Warning: Columns {missing_cols} not found in data. Using only: {valid_breakdown_columns}")
+            breakdown_columns = valid_breakdown_columns
+        
+        if len(breakdown_columns) == 0:
+            print("Warning: No valid breakdown columns found in data. Returning empty dict.")
+            return {}
+        
+        breakdown_results = {}
+        
+        for item_name, item_dict in comparison_mapping.items():
+            # Get first and last stage columns
+            sorted_stages = sorted(item_dict['stages'].keys())
+            first_stage = sorted_stages[0]
+            last_stage = sorted_stages[-1]
+            
+            first_stage_col = item_dict['columns'][first_stage]
+            last_stage_col = item_dict['columns'][last_stage]
+            
+            # Check if columns exist in the dataframe
+            if first_stage_col not in merged_df.columns or last_stage_col not in merged_df.columns:
+                print(f"Warning: Columns {first_stage_col} or {last_stage_col} not found for {item_name}. Skipping.")
+                continue
+            
+            # Group by breakdown columns and calculate aggregates
+            agg_dict = {
+                first_stage_col: 'sum',
+                last_stage_col: 'sum'
+            }
+            
+            grouped = merged_df.groupby(breakdown_columns, dropna=False).agg(agg_dict)
+            grouped['policy_count'] = merged_df.groupby(breakdown_columns, dropna=False).size()
+            grouped = grouped.reset_index()
+            
+            # Rename columns for clarity
+            grouped = grouped.rename(columns={
+                first_stage_col: 'value_total_start',
+                last_stage_col: 'value_total_end'
+            })
+            
+            # Calculate differences
+            grouped['value_diff'] = grouped['value_total_end'] - grouped['value_total_start']
+            grouped['value_diff_percent'] = grouped.apply(
+                lambda row: (row['value_diff'] / row['value_total_start'] * 100) if row['value_total_start'] != 0 else 0,
+                axis=1
+            )
+            
+            # Sort by breakdown columns
+            grouped = grouped.sort_values(by=breakdown_columns).reset_index(drop=True)
+            
+            breakdown_results[item_name] = grouped
+        
+        return breakdown_results

@@ -16,9 +16,9 @@ if __name__ == "__main__":
     script_dir = os.path.dirname(os.path.abspath(__file__))
     config_path = os.path.join(script_dir, 'impact_analysis', 'config_impact_analysis.yaml')
     
-    # Create and run the analyzer
-    analyzer = ModularImpactAnalyzer(config_path)
-    success = analyzer.analyze()
+    # Create and run the data_analyser
+    data_analyser = ModularImpactAnalyzer(config_path)
+    success = data_analyser.analyze()
     
     if success:
         print("Modular impact analysis completed successfully!")

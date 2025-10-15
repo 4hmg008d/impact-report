@@ -88,18 +88,18 @@ def register_callbacks(app):
             if not success:
                 return f"Config error: {message}", False, True, True, True
             
-            # Initialize analyzer
-            analyzer = ModularImpactAnalyzer(dashboard_state.config_path)
+            # Initialize data_analyser
+            data_analyser = ModularImpactAnalyzer(dashboard_state.config_path)
             
             # Load and process data
-            merged_df, comparison_mapping = analyzer.data_processor.process_data()
+            merged_df, comparison_mapping = data_analyser.data_processor.process_data()
             dashboard_state.set_data(merged_df, comparison_mapping)
             
             # Calculate initial results (unfiltered)
-            dict_distribution_summary = analyzer.data_analyser.generate_distribution_summary(
+            dict_distribution_summary = data_analyser.data_analyser.generate_distribution_summary(
                 merged_df, comparison_mapping
             )
-            dict_comparison_summary = analyzer.data_analyser.aggregate_merged_data(
+            dict_comparison_summary = data_analyser.data_analyser.aggregate_merged_data(
                 merged_df, comparison_mapping
             )
             dashboard_state.set_results(dict_distribution_summary, dict_comparison_summary)
@@ -151,23 +151,31 @@ def register_callbacks(app):
             if filtered_df is None or len(filtered_df) == 0:
                 return "No data matches the current filters."
             
-            # Initialize analyzer
-            analyzer = ModularImpactAnalyzer(dashboard_state.config_path)
+            # Initialize data_analyser
+            data_analyser = ModularImpactAnalyzer(dashboard_state.config_path)
             
             # Recalculate results with filtered data
-            dict_distribution_summary = analyzer.data_analyser.generate_distribution_summary(
+            dict_distribution_summary = data_analyser.data_analyser.generate_distribution_summary(
                 filtered_df, dashboard_state.comparison_mapping
             )
-            dict_comparison_summary = analyzer.data_analyser.aggregate_merged_data(
+            dict_comparison_summary = data_analyser.data_analyser.aggregate_merged_data(
                 filtered_df, dashboard_state.comparison_mapping
             )
             
             # Update state with new results
             dashboard_state.set_results(dict_distribution_summary, dict_comparison_summary)
             
+            # Generate breakdown analysis if breakdown columns are configured
+            breakdown_columns = data_analyser.config_loader.get_breakdown_columns()
+            breakdown_data = None
+            if breakdown_columns:
+                breakdown_data = data_analyser.data_analyser.aggregate_impact_breakdown(
+                    filtered_df, dashboard_state.comparison_mapping, breakdown_columns
+                )
+            
             # Generate full HTML report using visualizer
-            html_report_content = analyzer.visualizer.generate_html_report(
-                dict_distribution_summary, dict_comparison_summary
+            html_report_content = data_analyser.visualizer.generate_html_report(
+                dict_distribution_summary, dict_comparison_summary, breakdown_data
             )
             
             # Create charts display with full HTML report
@@ -198,11 +206,11 @@ def register_callbacks(app):
             return "No data available to save.", True, 'warning'
         
         try:
-            # Initialize analyzer
-            analyzer = ModularImpactAnalyzer(dashboard_state.config_path)
+            # Initialize data_analyser
+            data_analyser = ModularImpactAnalyzer(dashboard_state.config_path)
             
             # Generate output path with timestamp
-            output_dir = analyzer.config_loader.get_output_dir()
+            output_dir = data_analyser.config_loader.get_output_dir()
             os.makedirs(output_dir, exist_ok=True)
             
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -211,12 +219,22 @@ def register_callbacks(app):
                 f"impact_analysis_report_{timestamp}.html"
             )
             
+            # Generate breakdown analysis if breakdown columns are configured
+            breakdown_columns = data_analyser.config_loader.get_breakdown_columns()
+            breakdown_data = None
+            if breakdown_columns and dashboard_state.merged_df is not None:
+                filtered_df = dashboard_state.get_filtered_data()
+                breakdown_data = data_analyser.data_analyser.aggregate_impact_breakdown(
+                    filtered_df, dashboard_state.comparison_mapping, breakdown_columns
+                )
+            
             # Generate and save HTML report
-            html_content = analyzer.visualizer.generate_html_report(
+            html_content = data_analyser.visualizer.generate_html_report(
                 dashboard_state.dict_distribution_summary,
-                dashboard_state.dict_comparison_summary
+                dashboard_state.dict_comparison_summary,
+                breakdown_data
             )
-            analyzer.visualizer.save_report(html_content, html_output_path)
+            data_analyser.visualizer.save_report(html_content, html_output_path)
             
             logger.info(f"Saved HTML report to {html_output_path}")
             return f"HTML report saved to {html_output_path}", True, 'success'
@@ -245,17 +263,17 @@ def register_callbacks(app):
             # Get filtered data
             filtered_df = dashboard_state.get_filtered_data()
             
-            # Initialize analyzer
-            analyzer = ModularImpactAnalyzer(dashboard_state.config_path)
+            # Initialize data_analyser
+            data_analyser = ModularImpactAnalyzer(dashboard_state.config_path)
             
             # Save output files (this will overwrite existing)
-            analyzer.save_output_files(
+            data_analyser.save_output_files(
                 filtered_df,
                 dashboard_state.dict_distribution_summary,
                 dashboard_state.comparison_mapping
             )
             
-            output_dir = analyzer.config_loader.get_output_dir()
+            output_dir = data_analyser.config_loader.get_output_dir()
             logger.info(f"Saved data files to {output_dir}")
             return f"Data files saved to {output_dir}", True, 'success'
             

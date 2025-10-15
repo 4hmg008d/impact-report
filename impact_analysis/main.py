@@ -119,7 +119,18 @@ class ModularImpactAnalyzer:
             html_output_path = os.path.join(output_dir, "impact_analysis_report.html")
             dict_comparison_summary = self.data_analyser.aggregate_merged_data(merged_df_w_diff, comparison_mapping)
 
-            html_content = self.visualizer.generate_html_report(dict_distribution_summary, dict_comparison_summary)
+            # Generate breakdown analysis if breakdown columns are configured
+            breakdown_columns = self.config_loader.get_breakdown_columns()
+            breakdown_data = None
+            if breakdown_columns:
+                self.logger.info(f"Generating breakdown analysis for columns: {breakdown_columns}")
+                breakdown_data = self.data_analyser.aggregate_impact_breakdown(
+                    merged_df_w_diff, comparison_mapping, breakdown_columns
+                )
+
+            html_content = self.visualizer.generate_html_report(
+                dict_distribution_summary, dict_comparison_summary, breakdown_data
+            )
             self.visualizer.save_report(html_content, html_output_path)
             self.logger.info("Modular impact analysis completed successfully")
             return True
@@ -138,8 +149,8 @@ def main():
     else:
         config_path = "config_impact_analysis.yaml"
     
-    analyzer = ModularImpactAnalyzer(config_path)
-    success = analyzer.analyze()
+    data_analyser = ModularImpactAnalyzer(config_path)
+    success = data_analyser.analyze()
     
     if success:
         print("Modular impact analysis completed successfully!")
