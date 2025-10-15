@@ -64,27 +64,17 @@ class ReportVisualizer:
         return rendered_html
     
     def save_report(self, html_content: str, output_path: str) -> None:
-        """Save HTML report content to a file with timestamp
+        """Save HTML report content to a file
         
         Args:
             html_content: The HTML content to save
             output_path: Path where the report should be saved
         """
-        
-        # Split path into directory, filename, and extension
-        dir_name = os.path.dirname(output_path)
-        base_name = os.path.basename(output_path)
-        name, ext = os.path.splitext(base_name)
-        
-        # Add timestamp to filename
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        new_filename = f"{name}_{timestamp}{ext}"
-        new_path = os.path.join(dir_name, new_filename) if dir_name else new_filename
-        
-        with open(new_path, 'w') as f:
+
+        with open(output_path, 'w') as f:
             f.write(html_content)
-        
-        print(f"Generated Jinja2 HTML report: {new_path}")
+
+        print(f"Generated Jinja2 HTML report: {output_path}")
 
     def generate_summary_table_html(self, dict_comparison_summary: Dict) -> Dict[str, str]:
         """Generate HTML tables for summary statistics from dict_comparison_summary

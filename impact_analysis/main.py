@@ -2,6 +2,7 @@
 Main module for modular impact analysis tool using Pandas
 """
 
+import datetime
 import sys
 import os
 import logging
@@ -130,6 +131,12 @@ class ModularImpactAnalyzer:
 
             html_content = self.visualizer.generate_html_report(
                 dict_distribution_summary, dict_comparison_summary, breakdown_data
+            )
+
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            html_output_path = os.path.join(
+                output_dir, 
+                f"impact_analysis_report_{timestamp}.html"
             )
             self.visualizer.save_report(html_content, html_output_path)
             self.logger.info("Modular impact analysis completed successfully")

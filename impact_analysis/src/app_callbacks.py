@@ -44,9 +44,11 @@ def register_callbacks(app):
         [Output('config-status-message', 'children'),
          Output('config-status-message', 'is_open'),
          Output('config-status-message', 'color'),
-         Output('config-editor', 'value')],
+         Output('config-editor', 'value'),
+         Output('filters-container', 'children', allow_duplicate=True)],
         [Input('btn-update-config', 'n_clicks')],
-        [State('config-editor', 'value')]
+        [State('config-editor', 'value')],
+        prevent_initial_call=True
     )
     def update_config(n_clicks, config_text):
         """Update configuration from the editor"""
@@ -55,17 +57,26 @@ def register_callbacks(app):
         
         success, message = dashboard_state.update_config_from_yaml_string(config_text)
         
+        # Get current filter options from loaded data (if available)
+        filter_options = {}
+        if dashboard_state.has_data():
+            for col in dashboard_state.filter_columns:
+                filter_options[col] = dashboard_state.get_unique_values_for_filter(col)
+        
+        # Create updated filters section
+        updated_filters = create_filters_section(dashboard_state.filter_columns, filter_options)
+        
         if success:
             # Save to file
             save_success, save_message = dashboard_state.save_config_to_file()
             if save_success:
                 message = f"{message}. {save_message}"
-                return message, True, 'success', config_text
+                return message, True, 'success', config_text, updated_filters
             else:
                 message = f"{message}. Warning: {save_message}"
-                return message, True, 'warning', config_text
+                return message, True, 'warning', config_text, updated_filters
         else:
-            return message, True, 'danger', config_text
+            return message, True, 'danger', config_text, updated_filters
     
     
     @app.callback(
