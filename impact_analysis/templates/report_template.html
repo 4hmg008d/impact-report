@@ -83,23 +83,18 @@
             <div class="tab-content {% if loop.first %}active{% endif %}" id="item-{{ item_name|replace(' ', '_')|replace(':', '_')|lower }}-tab">
                 <h2>{{ item_name }} Analysis</h2>
                 
-                <!-- Segment and Policy Level Rate Change -->
+                <!-- Summary Statistics Table -->
                 {% if breakdown_tables_html and item_name in breakdown_tables_html %}
                 <div class="section">
-                    <h3>Segment and Policy Level Rate Change</h3>
+                    <h3>Summary Statistics</h3>
                     {{ breakdown_tables_html[item_name]|safe }}
                 </div>
                 {% endif %}
 
-                <!-- Summary Statistics Table -->
-                <div class="section">
-                    <h3>Summary Statistics</h3>
-                    {{ summary_tables_html[item_name]|safe }}
-                </div>
-
                 <!-- Waterfall Chart -->
                 <div class="section">
                     <h3>Step Progression Waterfall Chart</h3>
+                    {{ summary_tables_html[item_name]|safe }}
                     <div id="waterfall-{{ item_name|replace(' ', '_')|replace(':', '_')|lower }}-chart" class="chart-container"></div>
                 </div>
 
