@@ -59,27 +59,6 @@ class ConfigLoader:
         except Exception as e:
             raise ValueError(f"Failed to load band data: {e}")
     
-    def load_segment_columns(self) -> List[str]:
-        """Load segment columns from Excel file (segment_columns sheet)
-        
-        Returns:
-            List of column names to keep in merged data
-        """
-        mapping_config = self.config['mapping']
-        mapping_file_path = self._abs_path(mapping_config['file_path'])
-        sheet_name = 'segment_columns'
-        
-        try:
-            segment_df = pd.read_excel(mapping_file_path, sheet_name=sheet_name)
-            # Assuming the first column contains the segment column names
-            if len(segment_df.columns) > 0:
-                return segment_df.iloc[:, 0].dropna().tolist()
-            else:
-                return []
-        except Exception as e:
-            logger.warning(f"Failed to load segment columns: {e}")
-            return []
-    
     def is_renewal_enabled(self) -> bool:
         """Check if renewal feature is enabled in configuration
         

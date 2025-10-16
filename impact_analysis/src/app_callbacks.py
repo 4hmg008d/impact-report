@@ -147,17 +147,8 @@ def register_callbacks(app):
             merged_df, comparison_mapping = data_analyser.data_processor.process_data()
             dashboard_state.set_data(merged_df, comparison_mapping)
             
-            # Calculate initial results (unfiltered)
-            dict_distribution_summary = data_analyser.data_analyser.generate_distribution_summary(
-                merged_df, comparison_mapping
-            )
-            dict_comparison_summary = data_analyser.data_analyser.generate_comparison_summary(
-                merged_df, comparison_mapping
-            )
-            dashboard_state.set_results(dict_distribution_summary, dict_comparison_summary)
-            
-            logger.info("Impact analysis completed successfully")
-            return "Analysis completed successfully!", True, False, False, False
+            logger.info("Data loaded successfully")
+            return "Data loaded successfully!", True, False, False, False
             
         except Exception as e:
             logger.error(f"Error running analysis: {e}")

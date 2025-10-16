@@ -161,38 +161,9 @@ class DataProcessor:
         first_stage_info = comparison_mapping[first_item]['stages'][1]
         first_file = first_stage_info['file_path']
         
-        # Filter to keep only segment columns + ID (applies regardless of renewal flag)
-        segment_columns = self.config_loader.load_segment_columns()
-        
-        if segment_columns:
-            # Segment columns specified - filter the data
-            print(f"Segment columns to keep: {segment_columns}")
-            
-            # Get all column names from all files
-            all_columns_by_file = {}
-            for file_path in unique_file_paths:
-                all_columns_by_file[file_path] = dict_data[file_path].columns.tolist()
-            
-            # Pick first occurrence of each segment column
-            columns_to_keep = [id_column]  # Always keep ID column
-            for seg_col in segment_columns:
-                # Skip if this is the ID column (already added)
-                if seg_col == id_column:
-                    continue
-                    
-                for file_path in unique_file_paths:
-                    if seg_col in all_columns_by_file[file_path]:
-                        columns_to_keep.append(seg_col)
-                        break  # Only keep first occurrence
-            
-            # Start with filtered columns from first file
-            columns_in_first_file = [col for col in columns_to_keep if col in dict_data[first_file].columns]
-            merged_df = dict_data[first_file][columns_in_first_file].copy()
-            logger.info(f"Starting with {len(columns_in_first_file)} segment columns from first file")
-        else:
-            # No segment columns specified - keep all columns from first file
-            merged_df = dict_data[first_file].copy()
-            logger.info(f"No segment columns specified - keeping all columns from first file")
+        # Start with all columns from first file
+        merged_df = dict_data[first_file].copy()
+        logger.info(f"Starting with all columns from first file")
         
         # Rename comparison columns in the base dataframe
         first_file_rename_map = {}
