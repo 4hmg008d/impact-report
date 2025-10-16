@@ -1,11 +1,13 @@
 **/__pycache__/
 **/.vscode/
+**/.venv/
 
 .python-version
 **/*.log
 **/*.DS_Store
 
 **/*.xlsx
+**/*.xlsb
 **/*.csv
 **/*.yaml
 **/*.html
