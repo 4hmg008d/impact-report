@@ -119,7 +119,7 @@ def create_config_section(config_yaml_str: str) -> dbc.Card:
             dbc.Row([
                 dbc.Col([
                     dbc.Button(
-                        "Load Data and Run Report",
+                        "Load Data",
                         id='btn-run-analysis',
                         color='success',
                         className='me-2'
@@ -131,7 +131,7 @@ def create_config_section(config_yaml_str: str) -> dbc.Card:
                         className='me-2'
                     ),
                     dbc.Button(
-                        "Refresh Results",
+                        "(re)Generate Results",
                         id='btn-refresh-results',
                         color='info',
                         className='me-2',
@@ -221,7 +221,7 @@ def create_charts_section(html_report_content: str) -> html.Div:
     """
     if not html_report_content:
         return html.Div([
-            html.P("No report available. Run the impact analysis first.", className='text-muted')
+            html.P("No report available. Generate the report first.", className='text-muted')
         ])
     
     return html.Div([
@@ -242,7 +242,11 @@ def create_results_section() -> dbc.Card:
     return dbc.Card([
         dbc.CardHeader(html.H4("Analysis Results")),
         dbc.CardBody([
-            html.Div(id='results-charts')
+            dcc.Loading(
+                id='loading-results',
+                type='default',
+                children=html.Div(id='results-charts')
+            )
         ])
     ], className='mb-4')
 

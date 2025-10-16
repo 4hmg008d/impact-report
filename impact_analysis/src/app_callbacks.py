@@ -187,12 +187,15 @@ def register_callbacks(app):
     
     @app.callback(
         Output('results-charts', 'children'),
-        [Input('btn-refresh-results', 'n_clicks'),
-         Input('data-loaded-flag', 'data')],
-        [State('filter-state', 'data')]
+        [Input('btn-refresh-results', 'n_clicks')],
+        [State('filter-state', 'data'),
+         State('data-loaded-flag', 'data')]
     )
-    def refresh_results(n_clicks, data_loaded, filter_state):
+    def refresh_results(n_clicks, filter_state, data_loaded):
         """Refresh results based on current filters"""
+        if not n_clicks:
+            raise PreventUpdate
+        
         if not data_loaded or not dashboard_state.has_data():
             return "No data loaded. Run the impact analysis first."
         
