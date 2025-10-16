@@ -159,7 +159,7 @@ def create_config_section(config_yaml_str: str) -> dbc.Card:
                 color='info',
                 is_open=False,
                 dismissable=True,
-                duration=4000
+                duration=20000  # 20 seconds
             )
         ])
     ], className='mb-4')
