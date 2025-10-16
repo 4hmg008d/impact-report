@@ -51,18 +51,40 @@ class DashboardState:
         # Apply each active filter
         for col, values in self.active_filters.items():
             if values and len(values) > 0 and col in filtered_df.columns:
-                # Filter to include only selected values
-                filtered_df = filtered_df[filtered_df[col].isin(values)]
+                # Check if 'NA' is in the filter values
+                if 'NA' in values:
+                    # Create a mask for non-NA values that match the filter
+                    other_values = [v for v in values if v != 'NA']
+                    if other_values:
+                        # Include rows where column is NA OR matches other filter values
+                        mask = filtered_df[col].isna() | filtered_df[col].isin(other_values)
+                    else:
+                        # Only NA is selected
+                        mask = filtered_df[col].isna()
+                    filtered_df = filtered_df[mask]
+                else:
+                    # Filter to include only selected values (exclude NA)
+                    filtered_df = filtered_df[filtered_df[col].isin(values)]
         
         return filtered_df
     
     def get_unique_values_for_filter(self, column: str) -> List:
-        """Get unique values for a filter column from the merged data"""
+        """Get unique values for a filter column from the merged data, including NA as a separate level"""
         if self.merged_df is None or column not in self.merged_df.columns:
             return []
         
+        # Get unique non-NA values
         unique_vals = self.merged_df[column].dropna().unique().tolist()
-        return sorted([str(val) for val in unique_vals])
+        unique_vals_str = sorted([str(val) for val in unique_vals])
+        
+        # Check if there are any NA values in the column
+        has_na = self.merged_df[column].isna().any()
+        
+        # Add NA as a separate level if it exists
+        if has_na:
+            unique_vals_str.append('NA')
+        
+        return unique_vals_str
     
     def update_filters(self, filter_updates: Dict[str, List]):
         """Update active filters"""
