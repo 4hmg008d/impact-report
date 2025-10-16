@@ -280,7 +280,7 @@ class ImpactChartGenerator:
                     chart_data=step_data['chart_data'],
                     band_order=band_order,
                     series_name='New Business' if renewal_enabled else 'Policy Proportion',
-                    color='#7cb5ec' if renewal_enabled else None
+                    color='#7cb5ec'
                 )
                 chart = self.add_series_to_chart(chart, nb_series)
                 
