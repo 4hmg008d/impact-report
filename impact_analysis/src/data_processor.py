@@ -447,3 +447,71 @@ class DataProcessor:
         merged_df_w_diff, comparison_mapping = self.generate_differences(merged_df, comparison_mapping)
         
         return merged_df_w_diff, comparison_mapping
+
+    def filter_data_by_rate_change(
+        self,
+        merged_df: pd.DataFrame,
+        comparison_mapping: Dict[str, Dict],
+        item_name: str,
+        step_num: int,
+        from_threshold: float,
+        to_threshold: float,
+        segment_type: str = 'nb'
+    ) -> pd.DataFrame:
+        """Filter merged data based on rate change thresholds for a specific item and step
+        
+        Args:
+            merged_df: The merged dataframe containing all data
+            comparison_mapping: Mapping containing difference column information
+            item_name: The item name to filter (e.g., "Premium", "Sum Insured")
+            step_num: The step number (0 for overall, 1+ for specific steps)
+            from_threshold: Lower bound of rate change (inclusive), can be negative
+            to_threshold: Upper bound of rate change (inclusive)
+            segment_type: Type of segment - 'nb' for New Business or 'rn' for Renewal
+        
+        Returns:
+            Filtered DataFrame containing only rows where the rate change falls within the specified range
+        
+        Raises:
+            ValueError: If item_name not found, step not found, or thresholds are invalid
+        """
+        # Validate inputs
+        if item_name not in comparison_mapping:
+            raise ValueError(f"Item '{item_name}' not found in comparison mapping. Available items: {list(comparison_mapping.keys())}")
+        
+        # Validate segment_type
+        if segment_type not in ['nb', 'rn']:
+            raise ValueError(f"Invalid segment_type '{segment_type}'. Must be 'nb' or 'rn'")
+        
+        # Get the difference column for this item and step
+        item_dict = comparison_mapping[item_name]
+        
+        # Determine which differences to use based on segment_type
+        if segment_type == 'rn':
+            if 'renewal_differences' not in item_dict:
+                raise ValueError(f"Renewal differences not found for item '{item_name}'. Renewal may not be enabled.")
+            differences_dict = item_dict['renewal_differences']
+        else:
+            if 'differences' not in item_dict:
+                raise ValueError(f"No difference data found for item '{item_name}'")
+            differences_dict = item_dict['differences']
+        
+        if step_num not in differences_dict:
+            available_steps = list(differences_dict.keys())
+            raise ValueError(f"Step {step_num} not found for item '{item_name}' ({segment_type.upper()}). Available steps: {available_steps}")
+        
+        diff_col = differences_dict[step_num]['percent_diff_column']
+        
+        # Check if the difference column exists in the dataframe
+        if diff_col not in merged_df.columns:
+            raise ValueError(f"Difference column '{diff_col}' not found in merged data")
+        
+        # Filter the dataframe
+        filtered_df = merged_df[
+            (merged_df[diff_col] >= from_threshold) & 
+            (merged_df[diff_col] <= to_threshold)
+        ].copy()
+        
+        logger.info(f"Filtered data for {item_name} ({segment_type.upper()}), step {step_num}: {len(filtered_df)} rows (from {from_threshold} to {to_threshold})")
+        
+        return filtered_df

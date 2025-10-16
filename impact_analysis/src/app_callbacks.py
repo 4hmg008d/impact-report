@@ -332,3 +332,155 @@ def register_callbacks(app):
         except Exception as e:
             logger.error(f"Error saving data files: {e}")
             return f"Error saving data files: {str(e)}", True, 'danger'
+    
+    
+    @app.callback(
+        [Output('export-item-dropdown', 'options'),
+         Output('export-step-dropdown', 'options'),
+         Output('btn-export-filtered', 'disabled')],
+        [Input('data-loaded-flag', 'data')]
+    )
+    def update_export_dropdowns(data_loaded):
+        """Update export section dropdowns when data is loaded"""
+        if not data_loaded or not dashboard_state.has_data():
+            return [], [], True
+        
+        try:
+            # Get items from comparison_mapping
+            item_options = [
+                {'label': item_name, 'value': item_name}
+                for item_name in dashboard_state.comparison_mapping.keys()
+            ]
+            
+            # Get steps from the first item (all items should have same steps)
+            if dashboard_state.comparison_mapping:
+                first_item = list(dashboard_state.comparison_mapping.keys())[0]
+                step_dict = dashboard_state.comparison_mapping[first_item].get('differences', {})
+                step_options = []
+                for step_num in sorted(step_dict.keys()):
+                    step_name = dashboard_state.comparison_mapping[first_item]['step_names'].get(step_num, f'Step {step_num}')
+                    step_options.append({'label': step_name, 'value': step_num})
+            else:
+                step_options = []
+            
+            return item_options, step_options, False
+            
+        except Exception as e:
+            logger.error(f"Error updating export dropdowns: {e}")
+            return [], [], True
+    
+    
+    @app.callback(
+        Output('export-segment-selector', 'style'),
+        [Input('data-loaded-flag', 'data')]
+    )
+    def toggle_segment_selector(data_loaded):
+        """Show/hide NB/RN selector based on whether renewal is enabled"""
+        if not data_loaded or not dashboard_state.has_data():
+            return {'display': 'none'}
+        
+        try:
+            # Check if renewal is enabled in any item
+            renewal_enabled = False
+            if dashboard_state.comparison_mapping:
+                for item_dict in dashboard_state.comparison_mapping.values():
+                    if item_dict.get('renewal_enabled', False):
+                        renewal_enabled = True
+                        break
+            
+            if renewal_enabled:
+                return {'display': 'inline-block', 'marginRight': '5px'}
+            else:
+                return {'display': 'none'}
+                
+        except Exception as e:
+            logger.error(f"Error toggling segment selector: {e}")
+            return {'display': 'none'}
+    
+    
+    @app.callback(
+        [Output('export-status-message', 'children'),
+         Output('export-status-message', 'is_open'),
+         Output('export-status-message', 'color')],
+        [Input('btn-export-filtered', 'n_clicks')],
+        [State('export-item-dropdown', 'value'),
+         State('export-step-dropdown', 'value'),
+         State('export-from-input', 'value'),
+         State('export-to-input', 'value'),
+         State('export-segment-radio', 'value')]
+    )
+    def export_filtered_data(n_clicks, item_name, step_num, from_threshold, to_threshold, segment_type):
+        """Export filtered data based on rate change thresholds"""
+        if not n_clicks:
+            raise PreventUpdate
+        
+        # Default segment_type to 'nb' if not provided
+        if segment_type is None:
+            segment_type = 'nb'
+        
+        # Validate inputs
+        if not item_name:
+            return "Please select an item.", True, 'warning'
+        
+        if step_num is None:
+            return "Please select a step.", True, 'warning'
+        
+        if from_threshold is None or to_threshold is None:
+            return "Please enter both 'from' and 'to' threshold values.", True, 'warning'
+        
+        # Validate threshold range
+        if from_threshold < -1:
+            return "The 'from' threshold must be greater than or equal to -1.", True, 'warning'
+        
+        if from_threshold > to_threshold:
+            return "The 'from' threshold must be less than or equal to the 'to' threshold.", True, 'warning'
+        
+        if not dashboard_state.has_data():
+            return "No data available. Please run the analysis first.", True, 'warning'
+        
+        try:
+            # Initialize data_analyser to get data_processor
+            data_analyser = ModularImpactAnalyzer(dashboard_state.config_path)
+            
+            # Get filtered data using the dashboard's current filtered data
+            current_filtered_df = dashboard_state.get_filtered_data()
+            
+            # Apply rate change filter
+            rate_filtered_df = data_analyser.data_processor.filter_data_by_rate_change(
+                merged_df=current_filtered_df,
+                comparison_mapping=dashboard_state.comparison_mapping,
+                item_name=item_name,
+                step_num=step_num,
+                from_threshold=from_threshold,
+                to_threshold=to_threshold,
+                segment_type=segment_type
+            )
+            
+            # Generate output filename with timestamp
+            output_dir = data_analyser.config_loader.get_output_dir()
+            os.makedirs(output_dir, exist_ok=True)
+            
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            step_name = dashboard_state.comparison_mapping[item_name]['step_names'].get(step_num, f'step_{step_num}')
+            # Clean step name for filename
+            step_name_clean = step_name.replace(' ', '_').replace('/', '_')
+            item_name_clean = item_name.replace(' ', '_').replace('/', '_')
+            segment_suffix = f"_{segment_type.upper()}" if segment_type else ""
+            
+            filename = f"filtered_data_{item_name_clean}_{step_name_clean}{segment_suffix}_{timestamp}.csv"
+            output_path = os.path.join(output_dir, filename)
+            
+            # Save to CSV
+            rate_filtered_df.to_csv(output_path, index=False)
+            
+            logger.info(f"Exported filtered data to {output_path}")
+            return f"Successfully exported {len(rate_filtered_df)} rows to {filename}", True, 'success'
+            
+        except ValueError as ve:
+            logger.error(f"Validation error during filtered export: {ve}")
+            return f"Validation error: {str(ve)}", True, 'danger'
+        except Exception as e:
+            logger.error(f"Error exporting filtered data: {e}")
+            import traceback
+            traceback.print_exc()
+            return f"Error exporting data: {str(e)}", True, 'danger'

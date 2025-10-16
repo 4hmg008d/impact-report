@@ -247,6 +247,84 @@ def create_results_section() -> dbc.Card:
     ], className='mb-4')
 
 
+def create_filtered_export_section() -> dbc.Card:
+    """Create the filtered data export section"""
+    return dbc.Card([
+        dbc.CardHeader(html.H4("Export Filtered Data")),
+        dbc.CardBody([
+            html.P("Filter and export data based on rate change thresholds:", className='mb-3'),
+            dbc.Row([
+                dbc.Col([
+                    html.Div([
+                        html.Span("Output data with ", style={'marginRight': '5px'}),
+                        dcc.Dropdown(
+                            id='export-item-dropdown',
+                            placeholder='Select item...',
+                            style={'display': 'inline-block', 'width': '200px', 'height': '38px', 'verticalAlign': 'middle'}
+                        ),
+                        html.Span("'s ", style={'margin': '0 5px'}),
+                        # NB/RN Radio Buttons (hidden by default, shown when renewal is enabled)
+                        html.Span(
+                            id='export-segment-selector',
+                            children=[
+                                dcc.RadioItems(
+                                    id='export-segment-radio',
+                                    options=[
+                                        {'label': 'NB', 'value': 'nb'},
+                                        {'label': 'RN', 'value': 'rn'}
+                                    ],
+                                    value='nb',
+                                    inline=False,
+                                    style={'display': 'inline-block', 'verticalAlign': 'middle', 'lineHeight': '1.3'}
+                                )
+                            ],
+                            style={'display': 'none', 'margin': '5 5px'}  # Hidden by default
+                        ),
+                        html.Span("rate change in step ", style={'margin': '0 5px'}),
+                        dcc.Dropdown(
+                            id='export-step-dropdown',
+                            placeholder='Select step...',
+                            style={'display': 'inline-block', 'width': '150px', 'height': '38px', 'verticalAlign': 'middle'}
+                        ),
+                        html.Span(" is between ", style={'margin': '0 5px'}),
+                        dcc.Input(
+                            id='export-from-input',
+                            type='number',
+                            placeholder='From',
+                            step=0.01,
+                            style={'display': 'inline-block', 'width': '100px', 'height': '38px', 'verticalAlign': 'middle'}
+                        ),
+                        html.Span(" and ", style={'margin': '0 5px'}),
+                        dcc.Input(
+                            id='export-to-input',
+                            type='number',
+                            placeholder='To',
+                            step=0.01,
+                            style={'display': 'inline-block', 'width': '100px', 'height': '38px', 'verticalAlign': 'middle'}
+                        ),
+                        dbc.Button(
+                            "Output Data",
+                            id='btn-export-filtered',
+                            color='primary',
+                            style={'display': 'inline-block', 'marginLeft': '10px', 'verticalAlign': 'middle'},
+                            disabled=True
+                        )
+                    ], style={'lineHeight': '2.5'})
+                ], width=12)
+            ]),
+            html.Br(),
+            dbc.Alert(
+                id='export-status-message',
+                children='',
+                color='info',
+                is_open=False,
+                dismissable=True,
+                duration=20000
+            )
+        ])
+    ], className='mb-4')
+
+
 def create_main_layout(config_yaml_str: str = "", filter_columns: list = None, filter_options: dict = None) -> html.Div:
     """Create the main dashboard layout"""
     if filter_columns is None:
@@ -274,6 +352,9 @@ def create_main_layout(config_yaml_str: str = "", filter_columns: list = None, f
         
         # Results section
         create_results_section(),
+        
+        # Filtered export section
+        create_filtered_export_section(),
         
         # Hidden divs for storing state
         dcc.Store(id='data-loaded-flag', data=False),

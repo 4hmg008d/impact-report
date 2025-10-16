@@ -157,7 +157,7 @@ the 'keep only segment columns' in load and merge applies regardless of whether 
 ---
 
 ### New feature - breakdown
-i want to allow people to see more breakdown, by a maximum of 3 dimensions. i've added a 'breakdown' component in the yaml config, you need to create a new aggregate_merged_data function called aggregate_impact_breakdown in data_analyser, it should work pretty similar to the existing aggregate_merged_data function but it takes the list of columns to break down as an addition parameter and the output should be a pd.df instead of dict. The function should:
+i want to allow people to see more breakdown, by a maximum of 3 dimensions. i've added a 'breakdown' component in the yaml config, you need to create a new generate_comparison_summary function called aggregate_impact_breakdown in data_analyser, it should work pretty similar to the existing generate_comparison_summary function but it takes the list of columns to break down as an addition parameter and the output should be a pd.df instead of dict. The function should:
 1. validate the length of the list passed in - if longer than 3, cut to 3 and print a warning
 2. the output should have the following columns
   - the breakdown columns including unique values in those columns, each row should also include unique combination of the values from all breakdown columns, rows ordered by the breakdown column values
@@ -221,6 +221,21 @@ Create a dash dashboard in Python for this impact analysis, it should has the fo
 ---
 
 in this dash app, in the create_charts_section function, i can see you are using iframe, is it possible to take the content from visualizer.generate_html_report?
+
+## New Feature - Output filtered data
+
+after the result section, at the bottom, create a new part to allow user to filter data to export. This section should look like below:
+
+"Output data with {dropdown:item}'s {nb/rn indicator} rate change in step {dropdown:step} is between {input: from} and {input: to}. {button}"
+
+where
+- {dropdown:item} contains all items from comparison_mapping
+- {dropdown:step} contains all items from comparison_mapping
+- {input: from} and {input: to} are user input, numerical, range from -1 to unlimited, validate the input before running
+- {button}: shows "Output Data", clicking it should output data called "filtered_data_{item name}_{step name}_{timestamp}.csv" in the output folder
+- {nb/rn indicator} only appears if renewal is true in the yaml config
+
+you should create a new function in data_processing module to filter the data, then a call back function to call that function
 
 ## To Do
 
