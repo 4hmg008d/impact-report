@@ -51,20 +51,27 @@ class DashboardState:
         # Apply each active filter
         for col, values in self.active_filters.items():
             if values and len(values) > 0 and col in filtered_df.columns:
+                # Convert boolean columns to string for comparison
+                # This handles the case where Excel reads "True"/"False" as bool
+                if filtered_df[col].dtype == 'bool':
+                    col_for_comparison = filtered_df[col].astype(str)
+                else:
+                    col_for_comparison = filtered_df[col]
+                
                 # Check if 'NA' is in the filter values
                 if 'NA' in values:
                     # Create a mask for non-NA values that match the filter
                     other_values = [v for v in values if v != 'NA']
                     if other_values:
                         # Include rows where column is NA OR matches other filter values
-                        mask = filtered_df[col].isna() | filtered_df[col].isin(other_values)
+                        mask = filtered_df[col].isna() | col_for_comparison.isin(other_values)
                     else:
                         # Only NA is selected
                         mask = filtered_df[col].isna()
                     filtered_df = filtered_df[mask]
                 else:
                     # Filter to include only selected values (exclude NA)
-                    filtered_df = filtered_df[filtered_df[col].isin(values)]
+                    filtered_df = filtered_df[col_for_comparison.isin(values)]
         
         return filtered_df
     

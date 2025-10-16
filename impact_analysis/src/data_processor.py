@@ -18,6 +18,28 @@ class DataProcessor:
     def __init__(self, config_loader):
         self.config_loader = config_loader
     
+    def clean_data(self, df: pd.DataFrame) -> pd.DataFrame:
+        """Clean data by converting blank strings to NA for all string/object columns
+        
+        Args:
+            df: DataFrame to clean
+            
+        Returns:
+            Cleaned DataFrame with blank strings converted to NA
+        """
+        df_cleaned = df.copy()
+        
+        # Iterate through all columns
+        for col in df_cleaned.columns:
+            # Check if column is string/object type
+            if df_cleaned[col].dtype == 'object':
+                # Replace empty strings with NA
+                df_cleaned[col] = df_cleaned[col].apply(
+                    lambda x: pd.NA if isinstance(x, str) and x.strip() == '' else x
+                )
+        
+        return df_cleaned
+    
     def load_and_deduplicate_file(self, file_path: str, id_column: str) -> pd.DataFrame:
         """Load file and keep only first row for each ID value using Pandas"""
         try:
@@ -225,6 +247,9 @@ class DataProcessor:
 
         logger.info(f"Merged data: {len(merged_df)} rows")
         logger.info(f"Merged columns: {list(merged_df.columns)}")
+        
+        # Clean the merged data: convert blank strings to NA
+        merged_df = self.clean_data(merged_df)
 
         return merged_df
     
