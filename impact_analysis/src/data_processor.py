@@ -7,6 +7,7 @@ from typing import Dict, List, Tuple
 import os
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import logging
+import json  # Added for pretty-printing debug info
 
 logger = logging.getLogger(__name__)
 
@@ -434,6 +435,10 @@ class DataProcessor:
         """
         # Step 1: Generate comparison mapping
         comparison_mapping = self.generate_comparison_mapping()
+
+        # Debug
+        # print("Comparison Mapping:")
+        # open("impact_analysis/debug/comparison_mapping.json", "w").write(json.dumps(comparison_mapping, indent=2))
         
         # Step 2: Load and merge data
         merged_df = self.load_and_merge_data(comparison_mapping)

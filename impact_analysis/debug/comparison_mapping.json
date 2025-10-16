@@ -1,0 +1,108 @@
+{
+  "Property": {
+    "stages": {
+      "1": {
+        "file_path": "/home/leyang/Desktop/impact-report/impact_analysis/data/input/file1.xlsx",
+        "original_column": "PREMIUM_AMOUNT_Property",
+        "renamed_column": "Property_1",
+        "stage_name": "Start"
+      },
+      "2": {
+        "file_path": "/home/leyang/Desktop/impact-report/impact_analysis/data/input/file2.xlsx",
+        "original_column": "PREMIUM_AMOUNT_Property",
+        "renamed_column": "Property_2",
+        "stage_name": "Excess Change"
+      },
+      "3": {
+        "file_path": "/home/leyang/Desktop/impact-report/impact_analysis/data/input/file3.xlsx",
+        "original_column": "PREMIUM_AMOUNT_Property",
+        "renamed_column": "Property_3",
+        "stage_name": "Inflation"
+      }
+    },
+    "stage_names": {
+      "1": "Start",
+      "2": "Excess Change",
+      "3": "Inflation"
+    },
+    "columns": {
+      "1": "Property_1",
+      "2": "Property_2",
+      "3": "Property_3"
+    },
+    "renewal_enabled": true,
+    "renewal_columns": {
+      "1": {
+        "file_path": "/home/leyang/Desktop/impact-report/impact_analysis/data/input/file1.xlsx",
+        "original_column": "PREMIUM_AMOUNT_Property",
+        "renamed_column": "Property_1_rn",
+        "stage_name": "Start"
+      },
+      "2": {
+        "file_path": "/home/leyang/Desktop/impact-report/impact_analysis/data/input/file2.xlsx",
+        "original_column": "PREMIUM_AMOUNT_Property_RN",
+        "renamed_column": "Property_2_rn",
+        "stage_name": "Excess Change"
+      },
+      "3": {
+        "file_path": "/home/leyang/Desktop/impact-report/impact_analysis/data/input/file3.xlsx",
+        "original_column": "PREMIUM_AMOUNT_Property_RN",
+        "renamed_column": "Property_3_rn",
+        "stage_name": "Inflation"
+      }
+    }
+  },
+  "BI": {
+    "stages": {
+      "1": {
+        "file_path": "/home/leyang/Desktop/impact-report/impact_analysis/data/input/file1.xlsx",
+        "original_column": "PREMIUM_AMOUNT_BI",
+        "renamed_column": "BI_1",
+        "stage_name": "Start"
+      },
+      "2": {
+        "file_path": "/home/leyang/Desktop/impact-report/impact_analysis/data/input/file2.xlsx",
+        "original_column": "PREMIUM_AMOUNT_BI",
+        "renamed_column": "BI_2",
+        "stage_name": "Excess Change"
+      },
+      "3": {
+        "file_path": "/home/leyang/Desktop/impact-report/impact_analysis/data/input/file3.xlsx",
+        "original_column": "PREMIUM_AMOUNT_BI",
+        "renamed_column": "BI_3",
+        "stage_name": "Inflation"
+      }
+    },
+    "stage_names": {
+      "1": "Start",
+      "2": "Excess Change",
+      "3": "Inflation"
+    },
+    "columns": {
+      "1": "BI_1",
+      "2": "BI_2",
+      "3": "BI_3"
+    },
+    "renewal_enabled": true,
+    "renewal_columns": {
+      "1": {
+        "file_path": "/home/leyang/Desktop/impact-report/impact_analysis/data/input/file1.xlsx",
+        "original_column": "PREMIUM_AMOUNT_BI",
+        "renamed_column": "BI_1_rn",
+        "stage_name": "Start"
+      },
+      "2": {
+        "file_path": "/home/leyang/Desktop/impact-report/impact_analysis/data/input/file2.xlsx",
+        "original_column": "PREMIUM_AMOUNT_BI_RN",
+        "renamed_column": "BI_2_rn",
+        "stage_name": "Excess Change"
+      },
+      "3": {
+        "file_path": "/home/leyang/Desktop/impact-report/impact_analysis/data/input/file3.xlsx",
+        "original_column": "PREMIUM_AMOUNT_BI_RN",
+        "renamed_column": "BI_3_rn",
+        "stage_name": "Inflation"
+      }
+    }
+  }
+}
