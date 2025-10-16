@@ -47,7 +47,7 @@ class ReportVisualizer:
         charts_html = self.chart_generator.generate_all_charts_html(dict_distribution_summary, dict_comparison_summary)
         
         # Generate summary tables HTML for each item
-        summary_tables_html = self.generate_summary_table_html(dict_comparison_summary)
+        summary_tables_html = self.generate_progression_table_html(dict_comparison_summary)
         
         # Generate breakdown tables HTML if provided
         breakdown_tables_html = {}
@@ -79,7 +79,7 @@ class ReportVisualizer:
 
         logger.info(f"Generated Jinja2 HTML report: {output_path}")
 
-    def generate_summary_table_html(self, dict_comparison_summary: Dict) -> Dict[str, str]:
+    def generate_progression_table_html(self, dict_comparison_summary: Dict) -> Dict[str, str]:
         """Generate HTML tables for summary statistics from dict_comparison_summary
         
         Args:

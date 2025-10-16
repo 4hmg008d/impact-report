@@ -151,7 +151,7 @@ def register_callbacks(app):
             dict_distribution_summary = data_analyser.data_analyser.generate_distribution_summary(
                 merged_df, comparison_mapping
             )
-            dict_comparison_summary = data_analyser.data_analyser.aggregate_merged_data(
+            dict_comparison_summary = data_analyser.data_analyser.generate_comparison_summary(
                 merged_df, comparison_mapping
             )
             dashboard_state.set_results(dict_distribution_summary, dict_comparison_summary)
@@ -210,7 +210,7 @@ def register_callbacks(app):
             dict_distribution_summary = data_analyser.data_analyser.generate_distribution_summary(
                 filtered_df, dashboard_state.comparison_mapping
             )
-            dict_comparison_summary = data_analyser.data_analyser.aggregate_merged_data(
+            dict_comparison_summary = data_analyser.data_analyser.generate_comparison_summary(
                 filtered_df, dashboard_state.comparison_mapping
             )
             

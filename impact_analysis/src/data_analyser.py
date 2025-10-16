@@ -162,7 +162,7 @@ class DataAnalyser:
         return dict_distribution_summary
 
 
-    def aggregate_merged_data(self, merged_df: pd.DataFrame, comparison_mapping: Dict[str, Dict]) -> Dict:
+    def generate_comparison_summary(self, merged_df: pd.DataFrame, comparison_mapping: Dict[str, Dict]) -> Dict:
         """Generate aggregated summary table with totals and percentage differences
         
         This method:
@@ -226,6 +226,84 @@ class DataAnalyser:
                 }
 
         return dict_comparison_summary
+
+    def aggregate_item_stage(
+        self,
+        merged_df: pd.DataFrame,
+        comparison_mapping: Dict[str, Dict],
+        segment_type: str = 'nb'
+    ) -> pd.DataFrame:
+        """Summarize merged data by item (vertical) and stage (horizontal)
+        
+        Creates a summary table where:
+        - Rows represent items
+        - Columns represent stages
+        - Values come from renamed_column in comparison_mapping
+        
+        Args:
+            merged_df: The merged dataframe containing all data rows
+            comparison_mapping: Mapping containing stage information for each item
+            segment_type: Type of segment - 'nb' for New Business or 'rn' for Renewal
+        
+        Returns:
+            pd.DataFrame with items as rows and stages as columns, showing total values
+        """
+        summary_rows = []
+        
+        for item_name, item_dict in comparison_mapping.items():
+            row_data = {'Item': item_name}
+            
+            # Get sorted stages
+            sorted_stages = sorted(item_dict['stages'].keys())
+            
+            # Determine which columns to use based on segment_type
+            if segment_type == 'rn':
+                # Check if renewal columns exist
+                if 'renewal_columns' not in item_dict:
+                    logger.warning(f"Renewal columns not found for item '{item_name}'. Skipping.")
+                    continue
+                columns_dict = item_dict['renewal_columns']
+            else:
+                columns_dict = item_dict['stages']
+            
+            # Extract values for each stage
+            for stage in sorted_stages:
+                stage_name = item_dict['stage_names'][stage]
+                
+                # Get the renamed column for this stage
+                if segment_type == 'rn':
+                    if stage not in columns_dict:
+                        row_data[stage_name] = 0
+                        continue
+                    renamed_col = columns_dict[stage]['renamed_column']
+                else:
+                    renamed_col = columns_dict[stage]['renamed_column']
+                
+                # Sum the values for this column
+                if renamed_col in merged_df.columns:
+                    row_data[stage_name] = merged_df[renamed_col].sum()
+                else:
+                    logger.warning(f"Column '{renamed_col}' not found in merged_df for item '{item_name}', stage '{stage_name}'")
+                    row_data[stage_name] = 0
+            
+            summary_rows.append(row_data)
+        
+        # Create DataFrame
+        summary_df = pd.DataFrame(summary_rows)
+        
+        # Reorder columns to have Item first, then stages in order
+        if len(summary_rows) > 0:
+            # Get stage names in order (from the first item)
+            first_item = list(comparison_mapping.keys())[0]
+            sorted_stages = sorted(comparison_mapping[first_item]['stages'].keys())
+            stage_names = [comparison_mapping[first_item]['stage_names'][stage] for stage in sorted_stages]
+            
+            # Reorder columns
+            cols = ['Item'] + stage_names
+            summary_df = summary_df[cols]
+        
+        return summary_df
+
 
     def aggregate_impact_breakdown(
         self, 
