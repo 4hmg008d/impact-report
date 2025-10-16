@@ -63,14 +63,15 @@ class ModularImpactAnalyzer:
         self.logger.info(f"Saved merged data to: {merged_output_path}")
         
         # Generate and save summary table using DataAnalyser
-        dict_comparison_summary = self.data_analyser.aggregate_merged_data(merged_df, comparison_mapping)
+        dict_comparison_summary = self.data_analyser.generate_comparison_summary(merged_df, comparison_mapping)
 
         # Debug
         # print("dict_comparison_summary:")
         # print(json.dumps(dict_comparison_summary, indent=2))
 
         summary_output_path = os.path.join(output_dir, "summary_table.csv")
-        pd.DataFrame(dict_comparison_summary).to_csv(summary_output_path, index=False)
+        df_summary = self.data_analyser.aggregate_item_stage(merged_df, comparison_mapping)
+        df_summary.to_csv(summary_output_path, index=False)
         self.logger.info(f"Saved summary table to: {summary_output_path}")
         
         # Save band distribution for all comparison items and steps
@@ -118,7 +119,7 @@ class ModularImpactAnalyzer:
             # Step 4: Generate HTML report
             output_dir = self.config_loader.get_output_dir()
             html_output_path = os.path.join(output_dir, "impact_analysis_report.html")
-            dict_comparison_summary = self.data_analyser.aggregate_merged_data(merged_df_w_diff, comparison_mapping)
+            dict_comparison_summary = self.data_analyser.generate_comparison_summary(merged_df_w_diff, comparison_mapping)
 
             # Generate breakdown analysis if breakdown columns are configured
             breakdown_columns = self.config_loader.get_breakdown_columns()
